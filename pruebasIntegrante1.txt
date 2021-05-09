@@ -1,0 +1,32 @@
+persona1 = Persona 25 ["Recibirse de ingeniero", "Ser programador"] "Maximiliano" 100 ["Pintura","Java"]
+persona2 = Persona 46 ["Comprar una bicicleta"] "Camila" 250 ["Decir palindromos"]
+persona3 = Persona 12 ["Recibirse de Arquitecto","Conocer una nueva persona"] "Juan Ignacio" 55 ["Construir maquetas","Photoshop"]
+
+---------------------------------------------------------
+Ejercicio 2
+Punto B
+---------------------------------------------------------
+
+*Main> esNombreLargo persona1
+True
+
+*Main> esNombreLargo persona2
+False
+
+*Main> esNombreLargo persona3
+True
+
+
+---------------------------------------------------------
+Ejercicio 3
+Punto B
+---------------------------------------------------------
+
+*Main> recibirseDeUnaCarrera persona1 "Ingenieria"
+Persona {edad = 25, suenios = ["Recibirse de ingeniero","Ser programador"], nombre = "Maximiliano", felicidonios = 10100, habilidades = ["Pintura","Java","Ingenieria"]}
+
+*Main> recibirseDeUnaCarrera persona2 "Comunicacion Social"
+Persona {edad = 46, suenios = ["Comprar una bicicleta"], nombre = "Camila", felicidonios = 19250, habilidades = ["Decir palindromos","Comunicacion Social"]}
+
+*Main> recibirseDeUnaCarrera persona3 "Arquitectura"
+Persona {edad = 12, suenios = ["Recibirse de Arquitecto","Conocer una nueva persona"], nombre = "Juan Ignacio", felicidonios = 12055, habilidades = ["Construir maquetas","Photoshop","Arquitectura"]}

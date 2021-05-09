@@ -3,8 +3,11 @@
 --Ejercicio 1
 data Persona = Persona {edad :: Int, suenios :: [String], nombre :: String, felicidonios :: Int, habilidades :: [String]} deriving Show
 
---juan es un recurso para ejemplos
-juan = Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "juan cruz", felicidonios = 50, habilidades = ["nada", "mas nada"] }
+--Recursos para ejemplos
+juan = Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "juan cruz", felicidonios = 50, habilidades = ["nada", "mas nada"]}
+persona1 = Persona 25 ["Recibirse de ingeniero", "Ser programador"] "Maximiliano" 100 ["Pintura","Java"]
+persona2 = Persona 46 ["Comprar una bicicleta"] "Camila" 250 ["Decir palindromos"]
+persona3 = Persona 12 ["Recibirse de Arquitecto","Conocer una nueva persona"] "Juan Ignacio" 55 ["Construir maquetas","Photoshop"]
 
 --Punto A (Integrante 1: Maximiliano Fiandrino)
 type CoeficienteSatisfaccion = Int
@@ -25,7 +28,7 @@ gradoDeAmbicion unaPersona | felicidonios unaPersona > 100 = (length.suenios $ u
 
 --Punto A (Integrante 1: Maximiliano Fiandrino)
 esNombreLargo :: Persona -> Bool
-esNombreLargo persona = ((>10).length.nombre) persona
+esNombreLargo = ((>10).length.nombre)
 
 --Punto B (Integrante 2: Rodrigo Mollon)
 personaSuertuda :: Persona -> Bool
@@ -36,7 +39,9 @@ personaSuertuda otraPersona = (((3*).calcularCoefSatisfaccion $ otraPersona) `mo
 --Ejercicio 3
 
 --Punto A (Integrante 1: Maximiliano Fiandrino)
-
+type Carrera = String
+recibirseDeUnaCarrera :: Persona -> Carrera -> Persona
+recibirseDeUnaCarrera persona carrera = Persona (edad persona) (suenios persona) (nombre persona) (((+(felicidonios persona)).(*1000).length) carrera) ((habilidades persona) ++ [carrera])
 
 --Punto B (Integrante 2: Rodrigo Mollon)
 cumplirSueño :: String -> [String] -> Persona -> Persona
