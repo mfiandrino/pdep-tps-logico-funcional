@@ -1,0 +1,51 @@
+Información General:
+
+data Persona = Persona {edad :: Int, suenios :: [String], nombre :: String, felicidonios :: Int, habilidades :: [String]} deriving Show
+
+juan = Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "juan cruz", felicidonios = 51, habilidades = ["nada", "mas nada"] }
+pedro = Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "san pedro", felicidonios = 105, habilidades = ["nada", "mas nada"] }
+judas = Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "judas", felicidonios = 50, habilidades = ["nada", "mas nada"] }
+persona1 = Persona 25 ["Recibirse de ingeniero", "Ser programador"] "Maximiliano" 100 ["Pintura","Java"]
+persona2 = Persona 46 ["Comprar una bicicleta"] "Camila" 250 ["Decir palindromos"]
+persona3 = Persona 12 ["Recibirse de Arquitecto","Conocer una nueva persona"] "Juan Ignacio" 55 ["Construir maquetas","Photoshop"]
+
+
+Resultados de Testing punto 1a: Coeficiente de satisfacción
+
+*Main> calcularCoefSatisfaccion juan
+51
+*Main> calcularCoefSatisfaccion judas
+25
+*Main> calcularCoefSatisfaccion persona2
+11500
+
+Resultados de Testing punto 1b: Grado de ambición de una persona
+
+*Main> gradoDeAmbicion juan
+26
+*Main> gradoDeAmbicion pedro
+105
+*Main> gradoDeAmbicion judas
+2
+
+Resultados de Testing punto 2c : Nombre lindo
+
+*Main> esNombreLindo judas
+False
+*Main> esNombreLindo persona2
+True
+*Main> esNombreLindo persona3
+False
+*Main> esNombreLindo juan
+False
+
+Resultados de Testing punto 3c : Enamorarse de otra persona
+
+*Main> unaPersonaSeEnamoraDeOtra juan persona2
+Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "juan cruz", felicidonios = 301, habilidades = ["nada","mas nada"]}
+
+*Main> unaPersonaSeEnamoraDeOtra persona3 persona2
+Persona {edad = 12, suenios = ["Recibirse de Arquitecto","Conocer una nueva persona"], nombre = "Juan Ignacio", felicidonios = 305, habilidades = ["Construir maquetas","Photoshop"]}
+
+*Main> unaPersonaSeEnamoraDeOtra persona1 persona2
+Persona {edad = 25, suenios = ["Recibirse de ingeniero","Ser programador"], nombre = "Maximiliano", felicidonios = 350, habilidades = ["Pintura","Java"]}
