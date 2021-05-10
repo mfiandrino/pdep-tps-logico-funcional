@@ -1,0 +1,40 @@
+juan = Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "juan cruz", felicidonios = 50, habilidades = ["nada", "mas nada"]}
+pedro = Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "san pedro", felicidonios = 105, habilidades = ["nada", "mas nada"] }
+judas = Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "judas", felicidonios = 50, habilidades = ["nada", "mas nada"] }
+persona1 = Persona 25 ["Recibirse de ingeniero", "Ser programador"] "Maximiliano" 100 ["Pintura","Java"]
+persona2 = Persona 46 ["Comprar una bicicleta"] "Camila" 250 ["Decir palindromos"]
+persona3 = Persona 12 ["Recibirse de Arquitecto","Conocer una nueva persona"] "Juan Ignacio" 55 ["Construir maquetas","Photoshop"]
+
+---------------------------------------------------------
+Ejercicio 1
+Punto B
+---------------------------------------------------------
+
+*Main> gradoDeAmbicion persona1
+50
+
+*Main> gradoDeAmbicion persona2
+250
+
+*Main> gradoDeAmbicion juan
+2
+
+
+---------------------------------------------------------
+Ejercicio 2
+Punto B
+---------------------------------------------------------
+
+*Main> personaSuertuda juan
+False
+
+*Main> personaSuertuda pedro
+True
+
+---------------------------------------------------------
+Ejercicio 3
+Punto B
+---------------------------------------------------------
+*Main> cumplirSuenio "viajar" ["Roma", "Italia", "Montevideo"] juan
+Persona {edad = 27, suenios = ["hacer algo nuevo"], nombre = "juan cruz", felicidonios = 350, 
+habilidades = ["nada","mas nada"]}

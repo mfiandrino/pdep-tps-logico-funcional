@@ -49,8 +49,8 @@ recibirseDeUnaCarrera :: Persona -> Carrera -> Persona
 recibirseDeUnaCarrera persona carrera = Persona (edad persona) (suenios persona) (nombre persona) (((+(felicidonios persona)).(*1000).length) carrera) ((habilidades persona) ++ [carrera])
 
 --Punto B (Integrante 2: Rodrigo Mollon)
-cumplirSueño :: String -> [String] -> Persona -> Persona
-cumplirSueño "viajar" listaCiudades laPersona = Persona {edad = (1+).edad $ laPersona,suenios = suenios laPersona, nombre = nombre laPersona, felicidonios = ((100*).length $ listaCiudades) + (felicidonios laPersona), habilidades = habilidades laPersona }
+cumplirSuenio :: String -> [String] -> Persona -> Persona
+cumplirSuenio "viajar" listaCiudades laPersona = Persona {edad = (1+).edad $ laPersona,suenios = suenios laPersona, nombre = nombre laPersona, felicidonios = ((100*).length $ listaCiudades) + (felicidonios laPersona), habilidades = habilidades laPersona }
 
 --Punto C (Integrante 3: Daniel Kesel)
 unaPersonaSeEnamoraDeOtra :: Persona -> Persona -> Persona 
