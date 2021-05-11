@@ -52,6 +52,15 @@ recibirseDeUnaCarrera persona carrera = Persona (edad persona) (suenios persona)
 cumplirSuenio :: String -> [String] -> Persona -> Persona
 cumplirSuenio "viajar" listaCiudades laPersona = Persona {edad = (1+).edad $ laPersona,suenios = suenios laPersona, nombre = nombre laPersona, felicidonios = ((100*).length $ listaCiudades) + (felicidonios laPersona), habilidades = habilidades laPersona }
 
+
 --Punto C (Integrante 3: Daniel Kesel)
 unaPersonaSeEnamoraDeOtra :: Persona -> Persona -> Persona 
 unaPersonaSeEnamoraDeOtra enamorado deQuienSeEnamoro = Persona (edad enamorado) (suenios enamorado) (nombre enamorado) ((felicidonios enamorado) + (felicidonios deQuienSeEnamoro)) (habilidades enamorado)
+
+--Punto general
+cumplirSuenioConformista :: String -> [String] -> Persona -> Persona
+cumplirSuenioConformista "que todo siga igual" _ alguien = alguien 
+
+comboPerfecto :: [String] -> Persona -> String -> Persona
+comboPerfecto ["Berazategui", "Paris"] estaPersona laCarrera = Persona (edad (recibirseDeUnaCarrera (cumplirSuenio "viajar" ["Berazategui", "Paris"] estaPersona) laCarrera)) (suenios estaPersona) (nombre estaPersona) (felicidonios (recibirseDeUnaCarrera (cumplirSuenio "viajar" ["Berazategui", "Paris"] estaPersona) laCarrera) +100) (habilidades (recibirseDeUnaCarrera (cumplirSuenio "viajar" ["Berazategui", "Paris"] estaPersona) laCarrera))
+comboPerfecto _ estaPersona _ = estaPersona

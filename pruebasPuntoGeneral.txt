@@ -1,0 +1,15 @@
+pedro = Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "san pedro", felicidonios = 105, habilidades = ["nada", "mas nada"] }
+juan = Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "juan cruz", felicidonios = 50, habilidades = ["nada", "mas nada"]}
+
+---------------------------------------------------------
+Ejercicio 3
+Punto General
+---------------------------------------------------------
+*Main> cumplirSuenioConformista "que todo siga igual" [] pedro
+Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "san pedro", felicidonios = 105, habilidades = ["nada","mas nada"]}
+
+*Main> comboPerfecto ["Berazategui", "Paris"] juan "Medicina"
+Persona {edad = 27, suenios = ["hacer algo nuevo"], nombre = "juan cruz", felicidonios = 8350, habilidades = ["nada","mas nada","Medicina"]}
+
+*Main> comboPerfecto ["Berazategui", "Roma"] juan "Medicina" 
+Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "juan cruz", felicidonios = 50, habilidades = ["nada","mas nada"]}
