@@ -27,6 +27,8 @@ gradoDeAmbicion unaPersona | felicidonios unaPersona > 100 = (length.suenios $ u
 --Punto C (Integrante 3: Daniel Kesel) 
     --Ejecución de pruebas : Mirar archivo de texto "Testing TP1 - Puntos 1C 2C 3C- Integrante 3.txt"
 
+
+
 --Ejercicio 2
 
 --Punto A (Integrante 1: Maximiliano Fiandrino)
@@ -41,6 +43,8 @@ personaSuertuda otraPersona = (((3*).calcularCoefSatisfaccion $ otraPersona) `mo
 esNombreLindo :: Persona -> Bool
 esNombreLindo = ((== 'a').last.nombre)
 
+
+
 --Ejercicio 3
 
 --Punto A (Integrante 1: Maximiliano Fiandrino)
@@ -52,15 +56,15 @@ recibirseDeUnaCarrera persona carrera = Persona (edad persona) (suenios persona)
 cumplirSuenio :: String -> [String] -> Persona -> Persona
 cumplirSuenio "viajar" listaCiudades laPersona = Persona {edad = (1+).edad $ laPersona,suenios = suenios laPersona, nombre = nombre laPersona, felicidonios = ((100*).length $ listaCiudades) + (felicidonios laPersona), habilidades = habilidades laPersona }
 
-
 --Punto C (Integrante 3: Daniel Kesel)
 unaPersonaSeEnamoraDeOtra :: Persona -> Persona -> Persona 
 unaPersonaSeEnamoraDeOtra enamorado deQuienSeEnamoro = Persona (edad enamorado) (suenios enamorado) (nombre enamorado) ((felicidonios enamorado) + (felicidonios deQuienSeEnamoro)) (habilidades enamorado)
 
---Punto general
-cumplirSuenioConformista :: String -> [String] -> Persona -> Persona
-cumplirSuenioConformista "que todo siga igual" _ alguien = alguien 
 
-comboPerfecto :: [String] -> Persona -> String -> Persona
-comboPerfecto ["Berazategui", "Paris"] estaPersona laCarrera = Persona (edad (recibirseDeUnaCarrera (cumplirSuenio "viajar" ["Berazategui", "Paris"] estaPersona) laCarrera)) (suenios estaPersona) (nombre estaPersona) (felicidonios (recibirseDeUnaCarrera (cumplirSuenio "viajar" ["Berazategui", "Paris"] estaPersona) laCarrera) +100) (habilidades (recibirseDeUnaCarrera (cumplirSuenio "viajar" ["Berazategui", "Paris"] estaPersona) laCarrera))
-comboPerfecto _ estaPersona _ = estaPersona
+--Punto general
+cumplirSuenioConformista :: String -> Persona -> Persona
+cumplirSuenioConformista "que todo siga igual" alguien = alguien
+cumplirSuenioConformista _ alguien = alguien
+
+comboPerfecto :: Persona -> Persona
+comboPerfecto estaPersona = Persona (edad (cumplirSuenio "viajar" ["Berazategui", "Paris"] estaPersona)) (suenios estaPersona) (nombre estaPersona) ((+100).felicidonios $ (recibirseDeUnaCarrera (cumplirSuenio "viajar" ["Berazategui", "Paris"] estaPersona) "Medicina")) (habilidades (recibirseDeUnaCarrera estaPersona "Medicina"))

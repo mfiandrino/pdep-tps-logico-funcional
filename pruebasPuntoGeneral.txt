@@ -1,15 +1,21 @@
-pedro = Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "san pedro", felicidonios = 105, habilidades = ["nada", "mas nada"] }
+persona1 = Persona 25 ["Recibirse de ingeniero", "Ser programador"] "Maximiliano" 100 ["Pintura","Java"]
+persona2 = Persona 46 ["Comprar una bicicleta"] "Camila" 250 ["Decir palindromos"]
 juan = Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "juan cruz", felicidonios = 50, habilidades = ["nada", "mas nada"]}
+
 
 ---------------------------------------------------------
 Ejercicio 3
 Punto General
 ---------------------------------------------------------
-*Main> cumplirSuenioConformista "que todo siga igual" [] pedro
-Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "san pedro", felicidonios = 105, habilidades = ["nada","mas nada"]}
+*Main> cumplirSuenioConformista "que todo siga igual" persona2
+Persona {edad = 46, suenios = ["Comprar una bicicleta"], nombre = "Camila", felicidonios = 250, habilidades = ["Decir palindromos"]}
 
-*Main> comboPerfecto ["Berazategui", "Paris"] juan "Medicina"
-Persona {edad = 27, suenios = ["hacer algo nuevo"], nombre = "juan cruz", felicidonios = 8350, habilidades = ["nada","mas nada","Medicina"]}
-
-*Main> comboPerfecto ["Berazategui", "Roma"] juan "Medicina" 
+*Main> cumplirSuenioConformista "que todo siga igual" juan
 Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "juan cruz", felicidonios = 50, habilidades = ["nada","mas nada"]}
+
+
+*Main> comboPerfecto persona1
+Persona {edad = 26, suenios = ["Recibirse de ingeniero","Ser programador"], nombre = "Maximiliano", felicidonios = 8400, habilidades = ["Pintura","Java","Medicina"]}
+
+*Main> comboPerfecto juan
+Persona {edad = 27, suenios = ["hacer algo nuevo"], nombre = "juan cruz", felicidonios = 8350, habilidades = ["nada","mas nada","Medicina"]}
