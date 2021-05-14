@@ -3,6 +3,7 @@
 --Ejercicio 1
 data Persona = Persona {edad :: Int, suenios :: [String], nombre :: String, felicidonios :: Int, habilidades :: [String]} deriving Show
 
+
 --Recursos para ejemplos
 juan = Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "juan cruz", felicidonios = 50, habilidades = ["nada", "mas nada"]}
 pedro = Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "san pedro", felicidonios = 105, habilidades = ["nada", "mas nada"] }
@@ -11,11 +12,14 @@ persona1 = Persona 25 ["Recibirse de ingeniero", "Ser programador"] "Maximiliano
 persona2 = Persona 46 ["Comprar una bicicleta"] "Camila" 250 ["Decir palindromos"]
 persona3 = Persona 12 ["Recibirse de Arquitecto","Conocer una nueva persona"] "Juan Ignacio" 55 ["Construir maquetas","Photoshop"]
 
+cantidadSuenios :: Persona -> Int
+cantidadSuenios = length.suenios
+
 --Punto A (Integrante 1: Maximiliano Fiandrino)
 type CoeficienteSatisfaccion = Int
 calcularCoefSatisfaccion :: Persona -> CoeficienteSatisfaccion
 calcularCoefSatisfaccion persona    | felicidonios persona > 100 = (felicidonios persona) * (edad persona)
-                                    | felicidonios persona <= 100 && felicidonios persona > 50 = (length.suenios) persona * (felicidonios persona)
+                                    | felicidonios persona > 50 = cantidadSuenios persona * (felicidonios persona)
                                     | otherwise = div (felicidonios persona) 2
 
 --Punto B (Integrante 2: Rodrigo Mollon)
@@ -33,7 +37,7 @@ gradoDeAmbicion unaPersona | felicidonios unaPersona > 100 = (length.suenios $ u
 
 --Punto A (Integrante 1: Maximiliano Fiandrino)
 esNombreLargo :: Persona -> Bool
-esNombreLargo = ((>10).length.nombre)
+esNombreLargo = (>10).length.nombre
 
 --Punto B (Integrante 2: Rodrigo Mollon)
 personaSuertuda :: Persona -> Bool
@@ -61,10 +65,10 @@ unaPersonaSeEnamoraDeOtra :: Persona -> Persona -> Persona
 unaPersonaSeEnamoraDeOtra enamorado deQuienSeEnamoro = Persona (edad enamorado) (suenios enamorado) (nombre enamorado) ((felicidonios enamorado) + (felicidonios deQuienSeEnamoro)) (habilidades enamorado)
 
 
+
 --Punto general
-cumplirSuenioConformista :: String -> Persona -> Persona
-cumplirSuenioConformista "que todo siga igual" alguien = alguien
-cumplirSuenioConformista _ alguien = alguien
+queTodoSigaIgual :: Persona -> Persona
+queTodoSigaIgual = id
 
 comboPerfecto :: Persona -> Persona
 comboPerfecto estaPersona = Persona (edad (cumplirSuenio "viajar" ["Berazategui", "Paris"] estaPersona)) (suenios estaPersona) (nombre estaPersona) ((+100).felicidonios $ (recibirseDeUnaCarrera (cumplirSuenio "viajar" ["Berazategui", "Paris"] estaPersona) "Medicina")) (habilidades (recibirseDeUnaCarrera estaPersona "Medicina"))
