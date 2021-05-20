@@ -2,7 +2,7 @@
 
 --Ejercicio 1
 data Persona = Persona {edad :: Int, suenios :: [String], nombre :: String, felicidonios :: Int, habilidades :: [String]} deriving Show
-
+--data Persona1 = Persona1 {edad1 :: Int, suenios1 :: [a -> Persona -> Persona], nombre1 :: String, felicidonios1 :: Int, habilidades1 :: [String]} deriving Show
 
 --Recursos para ejemplos
 juan = Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "juan cruz", felicidonios = 50, habilidades = ["nada", "mas nada"]}
@@ -11,6 +11,7 @@ judas = Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "judas", fe
 persona1 = Persona 25 ["Recibirse de ingeniero", "Ser programador"] "Maximiliano" 100 ["Pintura","Java"]
 persona2 = Persona 46 ["Comprar una bicicleta"] "Camila" 250 ["Decir palindromos"]
 persona3 = Persona 12 ["Recibirse de Arquitecto","Conocer una nueva persona"] "Juan Ignacio" 55 ["Construir maquetas","Photoshop"]
+--persona4 = Persona 12 [recibirseDeUnaCarrera,unaPersonaSeEnamoraDeOtra] "Juan Ignacio" 55 ["Construir maquetas","Photoshop"]
 
 cantidadSuenios :: Persona -> Int
 cantidadSuenios = length.suenios
@@ -52,9 +53,20 @@ esNombreLindo = ((== 'a').last.nombre)
 --Ejercicio 3
 
 --Punto A (Integrante 1: Maximiliano Fiandrino)
+--agregarHabilidad :: String -> Persona -> Persona
 type Carrera = String
+agregarFelicidoniosPorCarrera :: Carrera -> Persona -> Persona
+agregarFelicidoniosPorCarrera carrera persona = persona {felicidonios = ((+(felicidonios persona)).(*1000).length) carrera}
+
+type Habilidad = String
+agregarHabilidad :: Habilidad -> Persona -> Persona 
+agregarHabilidad habilidad persona = persona {habilidades = (habilidades persona) ++ [habilidad]}
+
 recibirseDeUnaCarrera :: Persona -> Carrera -> Persona
 recibirseDeUnaCarrera persona carrera = Persona (edad persona) (suenios persona) (nombre persona) (((+(felicidonios persona)).(*1000).length) carrera) ((habilidades persona) ++ [carrera])
+
+recibirseDeUnaCarrera2 :: Carrera -> Persona -> Persona
+recibirseDeUnaCarrera2 carrera persona = persona {felicidonios = felicidonios (agregarFelicidoniosPorCarrera carrera persona), habilidades = habilidades (agregarHabilidad carrera persona)}
 
 --Punto B (Integrante 2: Rodrigo Mollon)
 cumplirSuenio :: String -> [String] -> Persona -> Persona
