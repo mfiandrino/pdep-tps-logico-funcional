@@ -26,7 +26,7 @@ calcularCoefSatisfaccion persona    | felicidonios persona > 100 = (felicidonios
 --Punto B (Integrante 2: Rodrigo Mollon)
 gradoDeAmbicion :: Persona -> Int
 gradoDeAmbicion unaPersona | felicidonios unaPersona > 100 = (length.suenios $ unaPersona) * (felicidonios unaPersona)
-                           | felicidonios unaPersona > 50 && felicidonios unaPersona <= 100 = (length.suenios $ unaPersona) * (edad unaPersona)
+                           | felicidonios unaPersona > 50 = (length.suenios $ unaPersona) * (edad unaPersona)
                            | otherwise = (2*).length.suenios $ unaPersona
 
 --Punto C (Integrante 3: Daniel Kesel) 
@@ -42,7 +42,7 @@ esNombreLargo = (>10).length.nombre
 
 --Punto B (Integrante 2: Rodrigo Mollon)
 personaSuertuda :: Persona -> Bool
-personaSuertuda otraPersona = (((3*).calcularCoefSatisfaccion $ otraPersona) `mod` 2) == 0
+personaSuertuda otraPersona = even.(3*).calcularCoefSatisfaccion $ otraPersona
 
 --Punto C (Integrante 3: Daniel Kesel)
 esNombreLindo :: Persona -> Bool
