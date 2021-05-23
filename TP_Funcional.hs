@@ -79,7 +79,7 @@ agregarFelicidonios (Personas personaDeQuienSeEnamoro) personaEnamorada = person
 
 agregarFelicidonios :: Algo -> Persona -> Int
 agregarFelicidonios (Carrera carrera) persona = (felicidonios persona) + ((*1000).length) carrera
-agregarFelicidonios (ListaCiudades lista) persona = 4 
+agregarFelicidonios (ListaCiudades lista) persona =  (felicidonios persona) + ((100*).length $ lista)
 agregarFelicidonios (Personas personaDeQuienSeEnamoro) personaEnamorada = 3
 
 type Carrera = String
@@ -97,10 +97,9 @@ recibirseDeUnaCarrera carrera persona = persona {felicidonios = agregarFelicidon
 
 
 --Punto B (Integrante 2: Rodrigo Mollon)
-cumplirSuenio :: [String] -> Persona -> Persona
---cumplirSuenio listaCiudades laPersona = laPersona {edad = edad laPersona + 1, felicidonios = felicidonios laPersona + ((100*).length $ listaCiudades)}
+cumplirSuenioViajar :: [String] -> Persona -> Persona
+cumplirSuenioViajar lista laPersona = laPersona {edad = edad laPersona + 1, felicidonios = agregarFelicidonios (ListaCiudades lista) laPersona}
 
-cumplirSuenio listaCiudades laPersona = laPersona {edad = edad laPersona + 1, felicidonios = felicidonios laPersona + ((100*).length $ listaCiudades)}
 
 --Punto C (Integrante 3: Daniel Kesel)
 unaPersonaSeEnamoraDeOtra :: Persona -> Persona -> Persona 
@@ -113,4 +112,4 @@ queTodoSigaIgual :: Persona -> Persona
 queTodoSigaIgual = id
 
 comboPerfecto :: Persona -> Persona
-comboPerfecto estaPersona = Persona (edad (cumplirSuenio ["Berazategui", "Paris"] estaPersona)) (suenios estaPersona) (nombre estaPersona) ((+100).felicidonios $ (recibirseDeUnaCarrera (cumplirSuenio ["Berazategui", "Paris"] estaPersona) "Medicina")) (habilidades (recibirseDeUnaCarrera estaPersona "Medicina"))
+comboPerfecto estaPersona = Persona (edad (cumplirSuenioViajar ["Berazategui", "Paris"] estaPersona)) (suenios estaPersona) (nombre estaPersona) ((+100).felicidonios $ (recibirseDeUnaCarrera "Medicina" (cumplirSuenioViajar ["Berazategui", "Paris"] estaPersona))) (habilidades (recibirseDeUnaCarrera "Medicina" estaPersona))
