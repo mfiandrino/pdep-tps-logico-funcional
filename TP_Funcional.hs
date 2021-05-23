@@ -53,7 +53,7 @@ personaSuertuda otraPersona = even.(3*).calcularCoefSatisfaccion $ otraPersona
 
 --Punto C (Integrante 3: Daniel Kesel)
 esNombreLindo :: Persona -> Bool
-esNombreLindo = ((== 'a').last.nombre)
+esNombreLindo = (== 'a').last.nombre
 
 
 
@@ -80,7 +80,7 @@ agregarFelicidonios (Personas personaDeQuienSeEnamoro) personaEnamorada = person
 agregarFelicidonios :: Algo -> Persona -> Int
 agregarFelicidonios (Carrera carrera) persona = (felicidonios persona) + ((*1000).length) carrera
 agregarFelicidonios (ListaCiudades lista) persona =  (felicidonios persona) + ((100*).length $ lista)
-agregarFelicidonios (Personas personaDeQuienSeEnamoro) personaEnamorada = 3
+agregarFelicidonios (Personas personaDeQuienSeEnamoro) personaEnamorada = felicidonios personaEnamorada + felicidonios personaDeQuienSeEnamoro
 
 type Carrera = String
 agregarFelicidoniosPorCarrera :: Carrera -> Persona -> Persona
@@ -102,8 +102,8 @@ cumplirSuenioViajar lista laPersona = laPersona {edad = edad laPersona + 1, feli
 
 
 --Punto C (Integrante 3: Daniel Kesel)
-unaPersonaSeEnamoraDeOtra :: Persona -> Persona -> Persona 
-unaPersonaSeEnamoraDeOtra enamorado deQuienSeEnamoro = Persona (edad enamorado) (suenios enamorado) (nombre enamorado) ((felicidonios enamorado) + (felicidonios deQuienSeEnamoro)) (habilidades enamorado)
+unaPersonaSeEnamoraDeOtra :: Persona -> Persona -> Persona
+unaPersonaSeEnamoraDeOtra enamorado deQuienSeEnamoro = enamorado {felicidonios = agregarFelicidonios (Personas deQuienSeEnamoro) enamorado}
 
 
 
