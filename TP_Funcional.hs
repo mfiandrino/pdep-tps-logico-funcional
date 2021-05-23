@@ -51,6 +51,8 @@ esNombreLindo = ((== 'a').last.nombre)
 
 
 --Ejercicio 3
+sumarFelicidonios :: Persona -> Int -> Persona
+sumarFelicidonios alguien cantidad = alguien {felicidonios = felicidonios alguien + cantidad}
 
 --Punto A (Integrante 1: Maximiliano Fiandrino)
 --agregarHabilidad :: String -> Persona -> Persona
@@ -70,6 +72,8 @@ recibirseDeUnaCarrera2 carrera persona = persona {felicidonios = felicidonios (a
 
 --Punto B (Integrante 2: Rodrigo Mollon)
 cumplirSuenio :: [String] -> Persona -> Persona
+--cumplirSuenio listaCiudades laPersona = laPersona {edad = edad laPersona + 1, felicidonios = felicidonios laPersona + ((100*).length $ listaCiudades)}
+
 cumplirSuenio listaCiudades laPersona = laPersona {edad = edad laPersona + 1, felicidonios = felicidonios laPersona + ((100*).length $ listaCiudades)}
 
 --Punto C (Integrante 3: Daniel Kesel)
