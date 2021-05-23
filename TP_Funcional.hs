@@ -4,6 +4,13 @@
 data Persona = Persona {edad :: Int, suenios :: [String], nombre :: String, felicidonios :: Int, habilidades :: [String]} deriving Show
 --data Persona1 = Persona1 {edad1 :: Int, suenios1 :: [a -> Persona -> Persona], nombre1 :: String, felicidonios1 :: Int, habilidades1 :: [String]} deriving Show
 
+--En sueños la "a" puede ser:
+--Carrera (String)
+--Lista de Ciudades (Lista de String)
+--Una persona (Persona)
+
+
+
 --Recursos para ejemplos
 juan = Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "juan cruz", felicidonios = 50, habilidades = ["nada", "mas nada"]}
 pedro = Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "san pedro", felicidonios = 105, habilidades = ["nada", "mas nada"] }
@@ -11,7 +18,7 @@ judas = Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "judas", fe
 persona1 = Persona 25 ["Recibirse de ingeniero", "Ser programador"] "Maximiliano" 100 ["Pintura","Java"]
 persona2 = Persona 46 ["Comprar una bicicleta"] "Camila" 250 ["Decir palindromos"]
 persona3 = Persona 12 ["Recibirse de Arquitecto","Conocer una nueva persona"] "Juan Ignacio" 55 ["Construir maquetas","Photoshop"]
---persona4 = Persona 12 [recibirseDeUnaCarrera,unaPersonaSeEnamoraDeOtra] "Juan Ignacio" 55 ["Construir maquetas","Photoshop"]
+--persona4 = Persona 12 [recibirseDeUnaCarrera "Ingenieria",unaPersonaSeEnamoraDeOtra persona1] "Juan Ignacio" 55 ["Construir maquetas","Photoshop"]
 
 cantidadSuenios :: Persona -> Int
 cantidadSuenios = length.suenios
@@ -55,7 +62,26 @@ sumarFelicidonios :: Persona -> Int -> Persona
 sumarFelicidonios alguien cantidad = alguien {felicidonios = felicidonios alguien + cantidad}
 
 --Punto A (Integrante 1: Maximiliano Fiandrino)
---agregarHabilidad :: String -> Persona -> Persona
+--Ese algo puede ser:
+--Carrera (String)
+--Lista de Ciudades (Lista de String)
+--Una persona (Persona)
+
+--type Algo2 = String | [String] | Persona
+
+data Algo = Carrera {carrera :: String} | ListaCiudades {lista :: [String]} | Personas {persona :: Persona}
+{-
+agregarFelicidonios :: Algo -> Persona -> Persona
+agregarFelicidonios (Carrera carrera) persona = persona {felicidonios = ((+(felicidonios persona)).(*1000).length) carrera}
+agregarFelicidonios (ListaCiudades lista) persona = persona 
+agregarFelicidonios (Personas personaDeQuienSeEnamoro) personaEnamorada = personaEnamorada 
+-}
+
+agregarFelicidonios :: Algo -> Persona -> Int
+agregarFelicidonios (Carrera carrera) persona = (felicidonios persona) + ((*1000).length) carrera
+agregarFelicidonios (ListaCiudades lista) persona = 4 
+agregarFelicidonios (Personas personaDeQuienSeEnamoro) personaEnamorada = 3
+
 type Carrera = String
 agregarFelicidoniosPorCarrera :: Carrera -> Persona -> Persona
 agregarFelicidoniosPorCarrera carrera persona = persona {felicidonios = ((+(felicidonios persona)).(*1000).length) carrera}
@@ -64,11 +90,11 @@ type Habilidad = String
 agregarHabilidad :: Habilidad -> Persona -> Persona 
 agregarHabilidad habilidad persona = persona {habilidades = (habilidades persona) ++ [habilidad]}
 
-recibirseDeUnaCarrera :: Persona -> Carrera -> Persona
-recibirseDeUnaCarrera persona carrera = Persona (edad persona) (suenios persona) (nombre persona) (((+(felicidonios persona)).(*1000).length) carrera) ((habilidades persona) ++ [carrera])
+recibirseDeUnaCarrera :: Carrera -> Persona -> Persona
+--recibirseDeUnaCarrera carrera persona = persona {felicidonios = felicidonios (agregarFelicidoniosPorCarrera carrera persona), habilidades = habilidades (agregarHabilidad carrera persona)}
+recibirseDeUnaCarrera carrera persona = persona {felicidonios = agregarFelicidonios (Carrera carrera) persona , habilidades = habilidades (agregarHabilidad carrera persona)}
 
-recibirseDeUnaCarrera2 :: Carrera -> Persona -> Persona
-recibirseDeUnaCarrera2 carrera persona = persona {felicidonios = felicidonios (agregarFelicidoniosPorCarrera carrera persona), habilidades = habilidades (agregarHabilidad carrera persona)}
+
 
 --Punto B (Integrante 2: Rodrigo Mollon)
 cumplirSuenio :: [String] -> Persona -> Persona
