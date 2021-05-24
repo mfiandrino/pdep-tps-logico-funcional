@@ -2,9 +2,9 @@
 
 --Ejercicio 1
 data Persona = Persona {edad :: Int, suenios :: [String], nombre :: String, felicidonios :: Int, habilidades :: [String]} deriving Show
---data Persona1 = Persona1 {edad1 :: Int, suenios1 :: [a -> Persona -> Persona], nombre1 :: String, felicidonios1 :: Int, habilidades1 :: [String]} deriving Show
+--data Persona1 = Persona1 {edad1 :: Int, suenios1 :: [(Algo -> Persona -> Persona)], nombre1 :: String, felicidonios1 :: Int, habilidades1 :: [String]} deriving Show
 
---En sueños la "a" puede ser:
+--En sueños "Algo" puede ser:
 --Carrera (String)
 --Lista de Ciudades (Lista de String)
 --Una persona (Persona)
@@ -62,20 +62,10 @@ sumarFelicidonios :: Persona -> Int -> Persona
 sumarFelicidonios alguien cantidad = alguien {felicidonios = felicidonios alguien + cantidad}
 
 --Punto A (Integrante 1: Maximiliano Fiandrino)
---Ese algo puede ser:
---Carrera (String)
---Lista de Ciudades (Lista de String)
---Una persona (Persona)
 
---type Algo2 = String | [String] | Persona
 
 data Algo = Carrera {carrera :: String} | ListaCiudades {lista :: [String]} | Personas {persona :: Persona}
-{-
-agregarFelicidonios :: Algo -> Persona -> Persona
-agregarFelicidonios (Carrera carrera) persona = persona {felicidonios = ((+(felicidonios persona)).(*1000).length) carrera}
-agregarFelicidonios (ListaCiudades lista) persona = persona 
-agregarFelicidonios (Personas personaDeQuienSeEnamoro) personaEnamorada = personaEnamorada 
--}
+
 
 agregarFelicidonios :: Algo -> Persona -> Int
 agregarFelicidonios (Carrera carrera) persona = (felicidonios persona) + ((*1000).length) carrera
