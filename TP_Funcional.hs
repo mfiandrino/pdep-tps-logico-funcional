@@ -1,24 +1,14 @@
 -- TP Funcional _ Fuente de los Deseos _ Martes noche 2021 _ K2054
+import Text.Show.Functions()
 
 --Ejercicio 1
-data Persona = Persona {edad :: Int, suenios :: [String], nombre :: String, felicidonios :: Int, habilidades :: [String]} deriving Show
---data Persona1 = Persona1 {edad1 :: Int, suenios1 :: [(Algo -> Persona -> Persona)], nombre1 :: String, felicidonios1 :: Int, habilidades1 :: [String]} deriving Show
-
---En sueños "Algo" puede ser:
---Carrera (String)
---Lista de Ciudades (Lista de String)
---Una persona (Persona)
-
-
+data Persona = Persona {edad :: Int, suenios :: [(Persona -> Persona)], nombre :: String, felicidonios :: Int, habilidades :: [String]} deriving Show
 
 --Recursos para ejemplos
-juan = Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "juan cruz", felicidonios = 50, habilidades = ["nada", "mas nada"]}
-pedro = Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "san pedro", felicidonios = 105, habilidades = ["nada", "mas nada"] }
-judas = Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "judas", felicidonios = 50, habilidades = ["nada", "mas nada"] }
-persona1 = Persona 25 ["Recibirse de ingeniero", "Ser programador"] "Maximiliano" 100 ["Pintura","Java"]
-persona2 = Persona 46 ["Comprar una bicicleta"] "Camila" 250 ["Decir palindromos"]
-persona3 = Persona 12 ["Recibirse de Arquitecto","Conocer una nueva persona"] "Juan Ignacio" 55 ["Construir maquetas","Photoshop"]
---persona4 = Persona 12 [recibirseDeUnaCarrera "Ingenieria",unaPersonaSeEnamoraDeOtra persona1] "Juan Ignacio" 55 ["Construir maquetas","Photoshop"]
+persona1 = Persona 25 [recibirseDeUnaCarrera "Arquitectura"] "Maximiliano" 100 ["Pintura","Java"]
+persona2 = Persona 46 [recibirseDeUnaCarrera "Abogacia"] "Camila" 250 ["Decir palindromos"]
+persona3 = Persona 12 [recibirseDeUnaCarrera "Chef"] "Juan Ignacio" 55 ["Construir maquetas","Photoshop"]
+persona4 = Persona 12 [recibirseDeUnaCarrera "Ingenieria"] "Juan Ignacio" 55 ["Construir maquetas","Photoshop"]
 
 cantidadSuenios :: Persona -> Int
 cantidadSuenios = length.suenios
@@ -57,43 +47,46 @@ esNombreLindo = (== 'a').last.nombre
 
 
 
---Ejercicio 3
-sumarFelicidonios :: Persona -> Int -> Persona
-sumarFelicidonios alguien cantidad = alguien {felicidonios = felicidonios alguien + cantidad}
-
---Punto A (Integrante 1: Maximiliano Fiandrino)
-
-
+{-
 data Algo = Carrera {carrera :: String} | ListaCiudades {lista :: [String]} | Personas {persona :: Persona}
-
-
 agregarFelicidonios :: Algo -> Persona -> Int
 agregarFelicidonios (Carrera carrera) persona = (felicidonios persona) + ((*1000).length) carrera
 agregarFelicidonios (ListaCiudades lista) persona =  (felicidonios persona) + ((100*).length $ lista)
 agregarFelicidonios (Personas personaDeQuienSeEnamoro) personaEnamorada = felicidonios personaEnamorada + felicidonios personaDeQuienSeEnamoro
 
+sumarFelicidonios :: Persona -> Int -> Persona
+sumarFelicidonios alguien cantidad = alguien {felicidonios = felicidonios alguien + cantidad}
+-}
+
+--Ejercicio 3
+agregarFelicidonios :: (Persona -> Int) -> Persona -> Int
+agregarFelicidonios funcionFelicidonios persona = funcionFelicidonios persona
+
+--Punto A (Integrante 1: Maximiliano Fiandrino)
 type Carrera = String
-agregarFelicidoniosPorCarrera :: Carrera -> Persona -> Persona
-agregarFelicidoniosPorCarrera carrera persona = persona {felicidonios = ((+(felicidonios persona)).(*1000).length) carrera}
+agregarFelicidoniosPorCarrera :: Carrera -> Persona -> Int
+agregarFelicidoniosPorCarrera carrera persona =((+(felicidonios persona)).(*1000).length) carrera
 
 type Habilidad = String
 agregarHabilidad :: Habilidad -> Persona -> Persona 
 agregarHabilidad habilidad persona = persona {habilidades = (habilidades persona) ++ [habilidad]}
 
 recibirseDeUnaCarrera :: Carrera -> Persona -> Persona
---recibirseDeUnaCarrera carrera persona = persona {felicidonios = felicidonios (agregarFelicidoniosPorCarrera carrera persona), habilidades = habilidades (agregarHabilidad carrera persona)}
-recibirseDeUnaCarrera carrera persona = persona {felicidonios = agregarFelicidonios (Carrera carrera) persona , habilidades = habilidades (agregarHabilidad carrera persona)}
-
-
+recibirseDeUnaCarrera carrera persona = persona {felicidonios = agregarFelicidonios (agregarFelicidoniosPorCarrera carrera) persona , habilidades = habilidades (agregarHabilidad carrera persona)}
 
 --Punto B (Integrante 2: Rodrigo Mollon)
-cumplirSuenioViajar :: [String] -> Persona -> Persona
-cumplirSuenioViajar lista laPersona = laPersona {edad = edad laPersona + 1, felicidonios = agregarFelicidonios (ListaCiudades lista) laPersona}
+agregarFelicidoniosPorViajar :: [String] -> Persona -> Int
+agregarFelicidoniosPorViajar lista persona = (felicidonios persona) + ((100*).length $ lista)
 
+cumplirSuenioViajar :: [String] -> Persona -> Persona
+cumplirSuenioViajar lista laPersona = laPersona {edad = edad laPersona + 1, felicidonios = agregarFelicidonios (agregarFelicidoniosPorViajar lista) laPersona}
 
 --Punto C (Integrante 3: Daniel Kesel)
+agregarFelicidoniosPorEnamorarse :: Persona -> Persona -> Int
+agregarFelicidoniosPorEnamorarse personaEnamorada personaDeQuienSeEnamoro = felicidonios personaEnamorada + felicidonios personaDeQuienSeEnamoro
+
 unaPersonaSeEnamoraDeOtra :: Persona -> Persona -> Persona
-unaPersonaSeEnamoraDeOtra enamorado deQuienSeEnamoro = enamorado {felicidonios = agregarFelicidonios (Personas deQuienSeEnamoro) enamorado}
+unaPersonaSeEnamoraDeOtra enamorado deQuienSeEnamoro = enamorado {felicidonios = agregarFelicidonios (agregarFelicidoniosPorEnamorarse deQuienSeEnamoro) enamorado}
 
 
 
@@ -102,4 +95,6 @@ queTodoSigaIgual :: Persona -> Persona
 queTodoSigaIgual = id
 
 comboPerfecto :: Persona -> Persona
-comboPerfecto estaPersona = Persona (edad (cumplirSuenioViajar ["Berazategui", "Paris"] estaPersona)) (suenios estaPersona) (nombre estaPersona) ((+100).felicidonios $ (recibirseDeUnaCarrera "Medicina" (cumplirSuenioViajar ["Berazategui", "Paris"] estaPersona))) (habilidades (recibirseDeUnaCarrera "Medicina" estaPersona))
+comboPerfecto persona = (cumplirSuenioViajar ["Berazategui","Paris"]).(recibirseDeUnaCarrera "Medicina") $ persona
+
+--({felicidonios = ((+100).felicidonios)}).
