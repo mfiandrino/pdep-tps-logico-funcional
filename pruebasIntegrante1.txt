@@ -1,6 +1,7 @@
-persona1 = Persona 25 ["Recibirse de ingeniero", "Ser programador"] "Maximiliano" 100 ["Pintura","Java"]
-persona2 = Persona 46 ["Comprar una bicicleta"] "Camila" 250 ["Decir palindromos"]
-persona3 = Persona 12 ["Recibirse de Arquitecto","Conocer una nueva persona"] "Juan Ignacio" 55 ["Construir maquetas","Photoshop"]
+persona1 = Persona 25 [recibirseDeUnaCarrera "Arquitectura", cumplirSuenioViajar ["Roma","Oporto"]] "Maximiliano" 100 ["Pintura","Java"]
+persona2 = Persona 46 [recibirseDeUnaCarrera "Comunicacion Social", unaPersonaSeEnamoraDeOtra persona2] "Camila" 250 ["Decir palindromos"]
+persona3 = Persona 12 [recibirseDeUnaCarrera "Chef", cumplirSuenioViajar ["Shangai"]] "Juan Ignacio" 55 ["Construir maquetas","Photoshop"]
+persona4 = Persona 12 [unaPersonaSeEnamoraDeOtra persona3,recibirseDeUnaCarrera "Ingenieria"] "Nicolas" 55 ["Construir maquetas","Photoshop"]
 
 ---------------------------------------------------------
 Ejercicio 2
@@ -22,11 +23,11 @@ Ejercicio 3
 Punto B
 ---------------------------------------------------------
 
-*Main> recibirseDeUnaCarrera persona1 "Ingenieria"
-Persona {edad = 25, suenios = ["Recibirse de ingeniero","Ser programador"], nombre = "Maximiliano", felicidonios = 10100, habilidades = ["Pintura","Java","Ingenieria"]}
+*Main> recibirseDeUnaCarrera "Ingenieria" persona4
+Persona {edad = 12, suenios = [<function>,<function>], nombre = "Nicolas", felicidonios = 10055, habilidades = ["Construir maquetas","Photoshop","Ingenieria"]}
 
-*Main> recibirseDeUnaCarrera persona2 "Comunicacion Social"
-Persona {edad = 46, suenios = ["Comprar una bicicleta"], nombre = "Camila", felicidonios = 19250, habilidades = ["Decir palindromos","Comunicacion Social"]}
+*Main> recibirseDeUnaCarrera "Comunicacion Social" persona2
+Persona {edad = 46, suenios = [<function>,<function>], nombre = "Camila", felicidonios = 19250, habilidades = ["Decir palindromos","Comunicacion Social"]}
 
-*Main> recibirseDeUnaCarrera persona3 "Arquitectura"
-Persona {edad = 12, suenios = ["Recibirse de Arquitecto","Conocer una nueva persona"], nombre = "Juan Ignacio", felicidonios = 12055, habilidades = ["Construir maquetas","Photoshop","Arquitectura"]}
+*Main> recibirseDeUnaCarrera "Chef" persona3
+Persona {edad = 12, suenios = [<function>,<function>], nombre = "Juan Ignacio", felicidonios = 4055, habilidades = ["Construir maquetas","Photoshop","Chef"]}

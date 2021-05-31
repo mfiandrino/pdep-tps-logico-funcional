@@ -1,14 +1,16 @@
 -- TP Funcional _ Fuente de los Deseos _ Martes noche 2021 _ K2054
 import Text.Show.Functions()
 
+
+
 --Ejercicio 1
 data Persona = Persona {edad :: Int, suenios :: [(Persona -> Persona)], nombre :: String, felicidonios :: Int, habilidades :: [String]} deriving Show
 
 --Recursos para ejemplos
-persona1 = Persona 25 [recibirseDeUnaCarrera "Arquitectura"] "Maximiliano" 100 ["Pintura","Java"]
-persona2 = Persona 46 [recibirseDeUnaCarrera "Abogacia"] "Camila" 250 ["Decir palindromos"]
-persona3 = Persona 12 [recibirseDeUnaCarrera "Chef"] "Juan Ignacio" 55 ["Construir maquetas","Photoshop"]
-persona4 = Persona 12 [recibirseDeUnaCarrera "Ingenieria"] "Juan Ignacio" 55 ["Construir maquetas","Photoshop"]
+persona1 = Persona 25 [recibirseDeUnaCarrera "Arquitectura", cumplirSuenioViajar ["Roma","Oporto"]] "Maximiliano" 100 ["Pintura","Java"]
+persona2 = Persona 46 [recibirseDeUnaCarrera "Comunicacion Social", unaPersonaSeEnamoraDeOtra persona1] "Camila" 250 ["Decir palindromos"]
+persona3 = Persona 12 [recibirseDeUnaCarrera "Chef", cumplirSuenioViajar ["Shangai"]] "Juan Ignacio" 55 ["Construir maquetas","Photoshop"]
+persona4 = Persona 12 [unaPersonaSeEnamoraDeOtra persona3,recibirseDeUnaCarrera "Ingenieria"] "Nicolas" 55 ["Construir maquetas","Photoshop"]
 
 cantidadSuenios :: Persona -> Int
 cantidadSuenios = length.suenios
@@ -31,6 +33,7 @@ gradoDeAmbicion unaPersona | felicidonios unaPersona > 100 = (length.suenios $ u
 
 
 
+
 --Ejercicio 2
 
 --Punto A (Integrante 1: Maximiliano Fiandrino)
@@ -47,16 +50,6 @@ esNombreLindo = (== 'a').last.nombre
 
 
 
-{-
-data Algo = Carrera {carrera :: String} | ListaCiudades {lista :: [String]} | Personas {persona :: Persona}
-agregarFelicidonios :: Algo -> Persona -> Int
-agregarFelicidonios (Carrera carrera) persona = (felicidonios persona) + ((*1000).length) carrera
-agregarFelicidonios (ListaCiudades lista) persona =  (felicidonios persona) + ((100*).length $ lista)
-agregarFelicidonios (Personas personaDeQuienSeEnamoro) personaEnamorada = felicidonios personaEnamorada + felicidonios personaDeQuienSeEnamoro
-
-sumarFelicidonios :: Persona -> Int -> Persona
-sumarFelicidonios alguien cantidad = alguien {felicidonios = felicidonios alguien + cantidad}
--}
 
 --Ejercicio 3
 agregarFelicidonios :: (Persona -> Int) -> Persona -> Int
@@ -90,11 +83,10 @@ unaPersonaSeEnamoraDeOtra enamorado deQuienSeEnamoro = enamorado {felicidonios =
 
 
 
+
 --Punto general
 queTodoSigaIgual :: Persona -> Persona
 queTodoSigaIgual = id
 
 comboPerfecto :: Persona -> Persona
-comboPerfecto persona = (cumplirSuenioViajar ["Berazategui","Paris"]).(recibirseDeUnaCarrera "Medicina") $ persona
-
---({felicidonios = ((+100).felicidonios)}).
+comboPerfecto persona = (\persona -> persona {felicidonios = ((+100).felicidonios) persona}).(cumplirSuenioViajar ["Berazategui","Paris"]).(recibirseDeUnaCarrera "Medicina") $ persona

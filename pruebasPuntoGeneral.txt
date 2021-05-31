@@ -1,21 +1,22 @@
-persona1 = Persona 25 ["Recibirse de ingeniero", "Ser programador"] "Maximiliano" 100 ["Pintura","Java"]
-persona2 = Persona 46 ["Comprar una bicicleta"] "Camila" 250 ["Decir palindromos"]
-juan = Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "juan cruz", felicidonios = 50, habilidades = ["nada", "mas nada"]}
+persona1 = Persona 25 [recibirseDeUnaCarrera "Arquitectura", cumplirSuenioViajar ["Roma","Oporto"]] "Maximiliano" 100 ["Pintura","Java"]
+persona2 = Persona 46 [recibirseDeUnaCarrera "Comunicacion Social", unaPersonaSeEnamoraDeOtra persona1] "Camila" 250 ["Decir palindromos"]
+persona3 = Persona 12 [recibirseDeUnaCarrera "Chef", cumplirSuenioViajar ["Shangai"]] "Juan Ignacio" 55 ["Construir maquetas","Photoshop"]
+persona4 = Persona 12 [unaPersonaSeEnamoraDeOtra persona3,recibirseDeUnaCarrera "Ingenieria"] "Nicolas" 55 ["Construir maquetas","Photoshop"]
 
 
 ---------------------------------------------------------
 Ejercicio 3
 Punto General
 ---------------------------------------------------------
-*Main> cumplirSuenioConformista "que todo siga igual" persona2
-Persona {edad = 46, suenios = ["Comprar una bicicleta"], nombre = "Camila", felicidonios = 250, habilidades = ["Decir palindromos"]}
+*Main> queTodoSigaIgual persona2
+Persona {edad = 46, suenios = [<function>,<function>], nombre = "Camila", felicidonios = 250, habilidades = ["Decir palindromos"]}
 
-*Main> cumplirSuenioConformista "que todo siga igual" juan
-Persona {edad = 26, suenios = ["hacer algo nuevo"], nombre = "juan cruz", felicidonios = 50, habilidades = ["nada","mas nada"]}
+*Main> queTodoSigaIgual persona1
+Persona {edad = 25, suenios = [<function>,<function>], nombre = "Maximiliano", felicidonios = 100, habilidades = ["Pintura","Java"]}
 
 
-*Main> comboPerfecto persona1
-Persona {edad = 26, suenios = ["Recibirse de ingeniero","Ser programador"], nombre = "Maximiliano", felicidonios = 8400, habilidades = ["Pintura","Java","Medicina"]}
+*Main> comboPerfecto persona3
+Persona {edad = 13, suenios = [<function>,<function>], nombre = "Juan Ignacio", felicidonios = 8355, habilidades = ["Construir maquetas","Photoshop","Medicina"]}
 
-*Main> comboPerfecto juan
-Persona {edad = 27, suenios = ["hacer algo nuevo"], nombre = "juan cruz", felicidonios = 8350, habilidades = ["nada","mas nada","Medicina"]}
+*Main> comboPerfecto persona4
+Persona {edad = 13, suenios = [<function>,<function>], nombre = "Nicolas", felicidonios = 8355, habilidades = ["Construir maquetas","Photoshop","Medicina"]}
