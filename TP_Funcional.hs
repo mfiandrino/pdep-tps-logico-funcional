@@ -65,7 +65,7 @@ agregarHabilidad habilidad persona = persona {habilidades = (habilidades persona
 
 type Carrera = String
 recibirseDeUnaCarrera :: Carrera -> Persona -> Persona
-recibirseDeUnaCarrera carrera persona = persona {felicidonios = felicidonios.(agregarFelicidonios (((*1000).length) carrera)) $ persona , habilidades = habilidades (agregarHabilidad carrera persona)}
+recibirseDeUnaCarrera carrera persona = (agregarHabilidad carrera).agregarFelicidonios (((*1000).length) carrera) $ persona
 
 --Punto B (Integrante 2: Rodrigo Mollon)
 cumplirSuenioViajar :: [String] -> Suenio
