@@ -4,7 +4,8 @@ import Text.Show.Functions()
 
 
 --Ejercicio 1
-data Persona = Persona {edad :: Int, suenios :: [(Persona -> Persona)], nombre :: String, felicidonios :: Int, habilidades :: [String]} deriving Show
+type Suenio = (Persona -> Persona)
+data Persona = Persona {edad :: Int, suenios :: [Suenio], nombre :: String, felicidonios :: Int, habilidades :: [Habilidad]} deriving Show
 
 --Recursos para ejemplos
 persona1 = Persona 25 [recibirseDeUnaCarrera "Arquitectura", cumplirSuenioViajar ["Roma","Oporto"]] "Maximiliano" 100 ["Pintura","Java"]
@@ -54,34 +55,25 @@ esNombreLindo = (== 'a').last.nombre
 
 
 --Ejercicio 3
-agregarFelicidonios :: (Persona -> Int) -> Persona -> Int
-agregarFelicidonios funcionFelicidonios persona = funcionFelicidonios persona
+agregarFelicidonios :: Int -> Persona -> Persona
+agregarFelicidonios cuenta persona = persona {felicidonios = (+cuenta).felicidonios $ persona}
 
 --Punto A (Integrante 1: Maximiliano Fiandrino)
-type Carrera = String
-agregarFelicidoniosPorCarrera :: Carrera -> Persona -> Int
-agregarFelicidoniosPorCarrera carrera persona =((+(felicidonios persona)).(*1000).length) carrera
-
 type Habilidad = String
 agregarHabilidad :: Habilidad -> Persona -> Persona 
 agregarHabilidad habilidad persona = persona {habilidades = (habilidades persona) ++ [habilidad]}
 
+type Carrera = String
 recibirseDeUnaCarrera :: Carrera -> Persona -> Persona
-recibirseDeUnaCarrera carrera persona = persona {felicidonios = agregarFelicidonios (agregarFelicidoniosPorCarrera carrera) persona , habilidades = habilidades (agregarHabilidad carrera persona)}
+recibirseDeUnaCarrera carrera persona = persona {felicidonios = felicidonios.(agregarFelicidonios (((*1000).length) carrera)) $ persona , habilidades = habilidades (agregarHabilidad carrera persona)}
 
 --Punto B (Integrante 2: Rodrigo Mollon)
-agregarFelicidoniosPorViajar :: [String] -> Persona -> Int
-agregarFelicidoniosPorViajar lista persona = (felicidonios persona) + ((100*).length $ lista)
-
-cumplirSuenioViajar :: [String] -> Persona -> Persona
-cumplirSuenioViajar lista laPersona = laPersona {edad = edad laPersona + 1, felicidonios = agregarFelicidonios (agregarFelicidoniosPorViajar lista) laPersona}
+cumplirSuenioViajar :: [String] -> Suenio
+cumplirSuenioViajar lista laPersona = laPersona {edad = edad laPersona + 1, felicidonios = felicidonios.(agregarFelicidonios ((100*).length $ lista)) $ laPersona}
 
 --Punto C (Integrante 3: Daniel Kesel)
-agregarFelicidoniosPorEnamorarse :: Persona -> Persona -> Int
-agregarFelicidoniosPorEnamorarse personaEnamorada personaDeQuienSeEnamoro = felicidonios personaEnamorada + felicidonios personaDeQuienSeEnamoro
-
-unaPersonaSeEnamoraDeOtra :: Persona -> Persona -> Persona
-unaPersonaSeEnamoraDeOtra enamorado deQuienSeEnamoro = enamorado {felicidonios = agregarFelicidonios (agregarFelicidoniosPorEnamorarse deQuienSeEnamoro) enamorado}
+unaPersonaSeEnamoraDeOtra :: Persona -> Suenio
+unaPersonaSeEnamoraDeOtra deQuienSeEnamoro enamorado = agregarFelicidonios (felicidonios deQuienSeEnamoro) enamorado
 
 
 
@@ -91,4 +83,4 @@ queTodoSigaIgual :: Persona -> Persona
 queTodoSigaIgual = id
 
 comboPerfecto :: Persona -> Persona
-comboPerfecto persona = (\persona -> persona {felicidonios = ((+100).felicidonios) persona}).(cumplirSuenioViajar ["Berazategui","Paris"]).(recibirseDeUnaCarrera "Medicina") $ persona
+comboPerfecto persona = (agregarFelicidonios 100).(cumplirSuenioViajar ["Berazategui","Paris"]).(recibirseDeUnaCarrera "Medicina") $ persona
