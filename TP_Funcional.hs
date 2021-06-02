@@ -29,7 +29,7 @@ calcularCoefSatisfaccion persona    | felicidonios persona > 100 = (felicidonios
 gradoDeAmbicion :: Persona -> Int
 gradoDeAmbicion unaPersona | felicidonios unaPersona > 100 = (cantidadSuenios unaPersona) * (felicidonios unaPersona)
                            | felicidonios unaPersona > 50 = (cantidadSuenios unaPersona) * (edad unaPersona)
-                           | otherwise = (2*).length.suenios $ unaPersona
+                           | otherwise = (2*).cantidadSuenios $ unaPersona
 
 --Punto C (Integrante 3: Daniel Kesel) 
     --Ejecución de pruebas : Mirar archivo de texto "Testing TP1 - Puntos 1C 2C 3C- Integrante 3.txt"
@@ -68,8 +68,11 @@ recibirseDeUnaCarrera :: Carrera -> Persona -> Persona
 recibirseDeUnaCarrera carrera persona = (agregarHabilidad carrera).agregarFelicidonios (((*1000).length) carrera) $ persona
 
 --Punto B (Integrante 2: Rodrigo Mollon)
+cumplirAnio :: Persona -> Persona
+cumplirAnio persona = persona {edad = (edad persona) + 1}
+
 cumplirSuenioViajar :: [String] -> Suenio
-cumplirSuenioViajar lista laPersona = laPersona {edad = edad laPersona + 1, felicidonios = felicidonios.(agregarFelicidonios ((100*).length $ lista)) $ laPersona}
+cumplirSuenioViajar lista laPersona = cumplirAnio.(agregarFelicidonios ((100*).length $ lista)) $ laPersona
 
 --Punto C (Integrante 3: Daniel Kesel)
 unaPersonaSeEnamoraDeOtra :: Persona -> Suenio
