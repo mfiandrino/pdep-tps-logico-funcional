@@ -22,7 +22,7 @@ cantidadSuenios = length.suenios
 type CoeficienteSatisfaccion = Int
 calcularCoefSatisfaccion :: Persona -> CoeficienteSatisfaccion
 calcularCoefSatisfaccion persona    | felicidonios persona > 100 = (felicidonios persona) * (edad persona)
-                                    | felicidonios persona > 50 = cantidadSuenios persona * (felicidonios persona)
+                                    | felicidonios persona > 50 = (cantidadSuenios persona) * (felicidonios persona)
                                     | otherwise = div (felicidonios persona) 2
 
 --Punto B (Integrante 2: Rodrigo Mollon)
