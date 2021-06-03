@@ -64,7 +64,7 @@ agregarHabilidad :: Habilidad -> Persona -> Persona
 agregarHabilidad habilidad persona = persona {habilidades = (habilidades persona) ++ [habilidad]}
 
 type Carrera = String
-recibirseDeUnaCarrera :: Carrera -> Persona -> Persona
+recibirseDeUnaCarrera :: Carrera -> Suenio
 recibirseDeUnaCarrera carrera persona = (agregarHabilidad carrera).agregarFelicidonios (((*1000).length) carrera) $ persona
 
 --Punto B (Integrante 2: Rodrigo Mollon)
@@ -82,8 +82,8 @@ unaPersonaSeEnamoraDeOtra deQuienSeEnamoro enamorado = agregarFelicidonios (feli
 
 
 --Punto general
-queTodoSigaIgual :: Persona -> Persona
+queTodoSigaIgual :: Suenio
 queTodoSigaIgual = id
 
-comboPerfecto :: Persona -> Persona
+comboPerfecto :: Suenio
 comboPerfecto persona = (agregarFelicidonios 100).(cumplirSuenioViajar ["Berazategui","Paris"]).(recibirseDeUnaCarrera "Medicina") $ persona
