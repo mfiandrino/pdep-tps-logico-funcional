@@ -87,3 +87,50 @@ queTodoSigaIgual = id
 
 comboPerfecto :: Suenio
 comboPerfecto persona = (agregarFelicidonios 100).(cumplirSuenioViajar ["Berazategui","Paris"]).(recibirseDeUnaCarrera "Medicina") $ persona
+
+
+
+--Ejercicio 4
+
+quitarSuenios :: [Suenio] -> Persona -> Persona
+quitarSuenios sueniosQueQuedan persona = persona {suenios = sueniosQueQuedan}
+
+--Punto A (Integrante 1: Maximiliano Fiandrino)
+fuenteMinimalista :: Persona -> Persona
+fuenteMinimalista persona = quitarSuenios (tail.suenios $ persona) ((head.suenios $ persona) persona)
+
+--Punto B (Integrante 2: Rodrigo Mollon)
+
+--Punto C (Integrante 3: Daniel Kesel)
+
+
+--Punto D (General)
+fuenteSorda :: Persona -> Persona
+fuenteSorda = id
+--fuenteSorda = queTodoSigaIgual
+
+
+--Ejercicio 5
+type Fuente = (Persona -> Persona)
+listaFuentes = [fuenteSorda,fuenteMinimalista]
+
+--Punto A (Integrante 1: Maximiliano Fiandrino)
+--fuenteGanadora :: [Fuente] -> Persona -> Fuente
+--fuenteGanadora listaFuentes persona = foldl max (listaFuentes)
+
+--Punto B (Integrante 2: Rodrigo Mollon)
+
+
+--Punto C (Integrante 3: Daniel Kesel)
+
+
+
+--Ejercicio 6
+
+--Punto A (Integrante 1: Maximiliano Fiandrino)
+
+
+--Punto B (Integrante 2: Rodrigo Mollon)
+
+
+--Punto C (Integrante 3: Daniel Kesel)
