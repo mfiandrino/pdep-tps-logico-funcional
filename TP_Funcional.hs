@@ -88,7 +88,10 @@ queTodoSigaIgual = id
 comboPerfecto :: Suenio
 comboPerfecto persona = (agregarFelicidonios 100).(cumplirSuenioViajar ["Berazategui","Paris"]).(recibirseDeUnaCarrera "Medicina") $ persona
 
+
 ---------- 2da Parte -----------
+
+data Fuente = Fuente {titulo :: String, accion :: Persona -> Persona}
 
 --Ejercicio 4
 
@@ -101,8 +104,9 @@ fuenteMinimalista :: Persona -> Persona
 fuenteMinimalista persona = quitarSuenios (tail.suenios $ persona) ((head.suenios $ persona) persona)
 
 --Punto B (Integrante 2: Rodrigo Mollon)
-fuenteCopada :: Persona -> Persona
-fuenteCopada persona = quitarSuenios [] (foldl (flip ($)) persona (suenios persona))
+fuenteCopada = Fuente "Fuente Copada" accionFCopada
+accionFCopada :: Persona -> Persona
+accionFCopada persona = quitarSuenios [] (foldl (flip ($)) persona (suenios persona))
 
 --Punto C (Integrante 3: Daniel Kesel)
 cumplirSuenio :: Persona -> Int -> Suenio
@@ -118,15 +122,18 @@ fuenteSorda = id
 
 
 --Ejercicio 5
-type Fuente = (Persona -> Persona)
+--Fuente = (Persona -> Persona)
 type Fuentes = [Fuente]
 listaFuentes = [fuenteSorda,fuenteMinimalista]
+varFuentes = [Fuente "Suente Sorda" fuenteSorda , Fuente "Fuente Minimalista" fuenteMinimalista]
 
 --Punto A (Integrante 1: Maximiliano Fiandrino)
 --fuenteGanadora :: [Fuente] -> Persona -> Fuente
 --fuenteGanadora listaFuentes persona = foldl max (listaFuentes)
 
 --Punto B (Integrante 2: Rodrigo Mollon)
+fuenteMenosFelicidonios :: Fuentes -> Persona -> Persona
+fuenteMenosFelicidonios variasFuentes persona = foldl (flip ($)) persona (map accion variasFuentes)
 
 
 --Punto C (Integrante 3: Daniel Kesel)
