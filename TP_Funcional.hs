@@ -125,7 +125,7 @@ fuenteSorda = queTodoSigaIgual
 
 --Ejercicio 5
 type Fuentes = [Fuente]
-listaFuentes = [Fuente "Suente Sorda" fuenteSorda , Fuente "Fuente Minimalista" fuenteMinimalista, Fuente "Fuente A Pedido" (fuenteAPedido 1)]
+listaFuentes = [Fuente "Fuente Sorda" fuenteSorda , Fuente "Fuente Minimalista" fuenteMinimalista, Fuente "Fuente A Pedido" (fuenteAPedido 1)]
 
 fuenteGanadora :: (Persona -> Int) -> (Int -> Int -> Bool) -> Persona -> Fuentes -> Fuente
 fuenteGanadora _ _ _ [ultimoElemento] = ultimoElemento
