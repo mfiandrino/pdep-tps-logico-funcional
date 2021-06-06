@@ -135,6 +135,8 @@ fuenteGanadora criterio signo persona (fuente1:fuente2:restoDeFuentes)  | signo 
 --Punto A (Integrante 1: Maximiliano Fiandrino)
 
 --Punto B (Integrante 2: Rodrigo Mollon)
+fuenteMinimosFelicidonios :: Fuentes -> Persona -> Fuente
+fuenteMinimosFelicidonios fuentes persona = fuenteGanadora felicidonios (<) persona fuentes
 
 --Punto C (Integrante 3: Daniel Kesel)
 
