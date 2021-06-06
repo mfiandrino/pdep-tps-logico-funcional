@@ -95,6 +95,7 @@ comboPerfecto persona = (agregarFelicidonios 100).(cumplirSuenioViajar ["Berazat
 quitarSuenios :: [Suenio] -> Persona -> Persona
 quitarSuenios sueniosQueQuedan persona = persona {suenios = sueniosQueQuedan}
 
+
 --Punto A (Integrante 1: Maximiliano Fiandrino)
 fuenteMinimalista :: Persona -> Persona
 fuenteMinimalista persona = quitarSuenios (tail.suenios $ persona) ((head.suenios $ persona) persona)
@@ -104,7 +105,11 @@ fuenteCopada :: Persona -> Persona
 fuenteCopada persona = quitarSuenios [] (foldl (flip ($)) persona (suenios persona))
 
 --Punto C (Integrante 3: Daniel Kesel)
+cumplirSuenio :: Persona -> Int -> Suenio
+cumplirSuenio persona nSuenio = (suenios persona) !! nSuenio
 
+fuenteAPedido :: Persona -> Int -> Persona
+fuenteAPedido persona nSuenio = (cumplirSuenio persona nSuenio) persona
 
 --Punto D (General)
 fuenteSorda :: Persona -> Persona
