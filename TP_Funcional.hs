@@ -89,12 +89,13 @@ comboPerfecto :: Suenio
 comboPerfecto persona = (agregarFelicidonios 100).(cumplirSuenioViajar ["Berazategui","Paris"]).(recibirseDeUnaCarrera "Medicina") $ persona
 
 
+
+
 ---------- 2da Parte -----------
 
-data Fuente = Fuente {titulo :: String, accion :: Persona -> Persona}
+data Fuente = Fuente {titulo :: String, accion :: Persona -> Persona} deriving Show
 
 --Ejercicio 4
-
 quitarSuenios :: [Suenio] -> Persona -> Persona
 quitarSuenios sueniosQueQuedan persona = persona {suenios = sueniosQueQuedan}
 
@@ -112,29 +113,28 @@ accionFCopada persona = quitarSuenios [] (foldl (flip ($)) persona (suenios pers
 cumplirSuenio :: Persona -> Int -> Suenio
 cumplirSuenio persona nSuenio = (suenios persona) !! nSuenio
 
-fuenteAPedido :: Persona -> Int -> Persona
-fuenteAPedido persona nSuenio = (cumplirSuenio persona nSuenio) persona
+fuenteAPedido :: Int -> Persona -> Persona
+fuenteAPedido nSuenio persona = (cumplirSuenio persona nSuenio) persona
 
 --Punto D (General)
 fuenteSorda :: Persona -> Persona
-fuenteSorda = id
---fuenteSorda = queTodoSigaIgual
+fuenteSorda = queTodoSigaIgual
+--fuenteSorda = id
+
 
 
 --Ejercicio 5
---Fuente = (Persona -> Persona)
 type Fuentes = [Fuente]
-listaFuentes = [fuenteSorda,fuenteMinimalista]
-varFuentes = [Fuente "Suente Sorda" fuenteSorda , Fuente "Fuente Minimalista" fuenteMinimalista]
+listaFuentes = [Fuente "Suente Sorda" fuenteSorda , Fuente "Fuente Minimalista" fuenteMinimalista, Fuente "Fuente A Pedido" (fuenteAPedido 1)]
+
+fuenteGanadora :: (Persona -> Int) -> (Int -> Int -> Bool) -> Persona -> Fuentes -> Fuente
+fuenteGanadora _ _ _ [ultimoElemento] = ultimoElemento
+fuenteGanadora criterio signo persona (fuente1:fuente2:restoDeFuentes)  | signo (criterio.(accion fuente1) $ persona) (criterio.(accion fuente2) $ persona) = fuenteGanadora criterio signo persona (fuente1:restoDeFuentes)
+                                                                        | otherwise = fuenteGanadora criterio signo persona (fuente2:restoDeFuentes) 
 
 --Punto A (Integrante 1: Maximiliano Fiandrino)
---fuenteGanadora :: [Fuente] -> Persona -> Fuente
---fuenteGanadora listaFuentes persona = foldl max (listaFuentes)
 
 --Punto B (Integrante 2: Rodrigo Mollon)
-fuenteMenosFelicidonios :: Fuentes -> Persona -> Persona
-fuenteMenosFelicidonios variasFuentes persona = foldl (flip ($)) persona (map accion variasFuentes)
-
 
 --Punto C (Integrante 3: Daniel Kesel)
 
