@@ -101,9 +101,7 @@ fuenteMinimalista persona = quitarSuenios (tail.suenios $ persona) ((head.suenio
 
 --Punto B (Integrante 2: Rodrigo Mollon)
 fuenteCopada :: Persona -> Persona
-fuenteCopada persona | cantidadSuenios persona == 0 = persona
-                     | otherwise = fuenteCopada (quitarSuenios (tail.suenios $ persona) ((head.suenios $ persona) persona))
-
+fuenteCopada persona = quitarSuenios [] (foldl (flip ($)) persona (suenios persona))
 
 --Punto C (Integrante 3: Daniel Kesel)
 
@@ -124,7 +122,6 @@ listaFuentes = [fuenteSorda,fuenteMinimalista]
 --fuenteGanadora listaFuentes persona = foldl max (listaFuentes)
 
 --Punto B (Integrante 2: Rodrigo Mollon)
-
 
 
 --Punto C (Integrante 3: Daniel Kesel)
