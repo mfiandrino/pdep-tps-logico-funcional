@@ -40,3 +40,62 @@ Persona {edad = 46, suenios = [<function>,<function>], nombre = "Camila", felici
 
 *Main> cumplirSuenioViajar ["Cordoba", "Ohaio", "Montevideo"] persona2
 Persona {edad = 47, suenios = [<function>,<function>], nombre = "Camila", felicidonios = 550, habilidades = ["Decir palindromos"]}
+
+***************************
+---- Parte 2 ----
+***************************
+
+--Recursos adicionales para ejemplos
+listaFuentes = [Fuente "Fuente Sorda" fuenteSorda , Fuente "Fuente Minimalista" fuenteMinimalista, Fuente "Fuente A Pedido" (fuenteAPedido 1)]
+personaSueniosInfinitos = Persona 12 (cycle [unaPersonaSeEnamoraDeOtra persona4, queTodoSigaIgual, cumplirSuenioViajar ["Barcelona", "Lima", "Caracas"]]) "Nicolas" 46 ["Construir maquetas","Photoshop"]
+persona6 = Persona 12 [unaPersonaSeEnamoraDeOtra persona4, queTodoSigaIgual, cumplirSuenioViajar ["Barcelona", "Lima", "Caracas"]] "Nicolas" 46 ["Construir maquetas","Photoshop"]
+
+Ejercicio 4
+Punto B
+---------------------------------------------------------
+*Main> persona1
+Persona {edad = 25, suenios = [<function>,<function>], nombre = "Maximiliano", felicidonios = 100, habilidades = ["Pintura","Java"]} 
+*Main> accionFuenteCopada persona1
+Persona {edad = 26, suenios = [], nombre = "Maximiliano", felicidonios = 12300, habilidades = ["Pintura","Java","Arquitectura"]}
+
+Ejercicio 5
+Punto B
+---------------------------------------------------------
+*Main> felicidonios ((accion ((!!) listaFuentes 0)) persona1) --primer fuente
+100
+*Main> felicidonios ((accion ((!!) listaFuentes 1)) persona1) --segunda fuente
+12100
+*Main> felicidonios ((accion ((!!) listaFuentes 1)) persona1) --tercer fuente
+300
+*Main> fuenteMinimosFelicidonios listaFuentes persona1
+Fuente {titulo = "Fuente Sorda", accion = <function>}
+*Main> felicidonios (fuenteSorda persona1)
+100
+{- segun fuenteMinimosFelicidonios la que deja a la persona con menos felicidonios
+es fuenteSorda, que lo deja con 100 felicidonios.
+comparando manualmente las 3 fuentes de la lista de ejemplos
+la que deja menos felicidonios es la que lo deja con 100.
+Por lo tanto se comprueba que fuenteMinimosFelicidonios devuelve la fuente pedida.
+-}
+
+
+Ejercicio 6
+Punto B
+---------------------------------------------------------
+*Main> tieneAlgunSuenioRaro persona1
+False
+*Main> tieneAlgunSuenioRaro persona6
+True
+
+
+Ejercicio 7
+Fuente Copada
+---------------------------------------------------------
+{- A la persona "personaSueniosInfinitos" con infinitos sueños, generados con la funcion <cycle>, si 
+le aplico la accion de la fuente "fuenteCopada" desde la consola se genera un loop infinito, esto sucede
+porque la fuente busca cumplir todos los suenios de la persona, y como no busca un sueño especifico no
+se pueden aplicar los conceptos de "lazy evaluation" como si se podria con una fuente hipotetica que cumpla
+un sueño "x" y le quite todos los sueños restantes a la persona.
+De hecho con solo querer imprimir por pantalla el detalle de "personaSueniosInfinitos" se obtiene una
+sucesion infinita de <function> que son los elementos de lista de suenios.
+-}

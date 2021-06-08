@@ -106,9 +106,9 @@ fuenteMinimalista :: Persona -> Persona
 fuenteMinimalista persona = quitarSuenios (tail.suenios $ persona) ((head.suenios $ persona) persona)
 
 --Punto B (Integrante 2: Rodrigo Mollon)
-fuenteCopada = Fuente "Fuente Copada" accionFCopada
-accionFCopada :: Persona -> Persona
-accionFCopada persona = quitarSuenios [] (foldl (flip ($)) persona (suenios persona))
+fuenteCopada = Fuente "Fuente Copada" accionFuenteCopada
+accionFuenteCopada :: Persona -> Persona
+accionFuenteCopada persona = quitarSuenios [] (foldl (flip ($)) persona (suenios persona))
 
 --Punto C (Integrante 3: Daniel Kesel)
 cumplirSuenio :: Persona -> Int -> Suenio
@@ -158,9 +158,20 @@ tieneAlgunSuenioRaro persona = elem (felicidonios persona) (map felicidonios (ma
 
 
 --Ejercicio 7
+personaSueniosInfinitos = Persona 12 (cycle [unaPersonaSeEnamoraDeOtra persona4, queTodoSigaIgual, cumplirSuenioViajar ["Barcelona", "Lima", "Caracas"]]) "Nicolas" 46 ["Construir maquetas","Photoshop"]
+
+
 
 --Punto A (Integrante 1: Maximiliano Fiandrino)
 
 --Punto B (Integrante 2: Rodrigo Mollon)
+{- A la persona "personaSueniosInfinitos" con infinitos sueños, generados con la funcion <cycle>, si 
+le aplico la accion de la fuente "fuenteCopada" desde la consola se genera un loop infinito, esto sucede
+porque la fuente busca cumplir todos los suenios de la persona, y como no busca un sueño especifico no
+se pueden aplicar los conceptos de "lazy evaluation" como si se podria con una fuente hipotetica que cumpla
+un sueño "x" y le quite todos los sueños restantes a la persona.
+De hecho con solo querer imprimir por pantalla el detalle de "personaSueniosInfinitos" se obtiene una
+sucesion infinita de <function> que son los elementos de lista de suenios.
+-}
 
 --Punto C (Integrante 3: Daniel Kesel)
