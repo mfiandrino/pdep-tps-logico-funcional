@@ -13,6 +13,7 @@ persona2 = Persona 46 [recibirseDeUnaCarrera "Comunicacion Social", unaPersonaSe
 persona3 = Persona 12 [recibirseDeUnaCarrera "Chef", cumplirSuenioViajar ["Shangai"]] "Juan Ignacio" 55 ["Construir maquetas","Photoshop"]
 persona4 = Persona 12 [unaPersonaSeEnamoraDeOtra persona3,recibirseDeUnaCarrera "Ingenieria"] "Nicolas" 55 ["Construir maquetas","Photoshop"]
 persona5 = Persona 12 [unaPersonaSeEnamoraDeOtra persona4,recibirseDeUnaCarrera "Ingenieria", cumplirSuenioViajar ["Barcelona", "Lima", "Caracas"]] "Nicolas" 46 ["Construir maquetas","Photoshop"]
+persona6 = Persona 12 [unaPersonaSeEnamoraDeOtra persona4, queTodoSigaIgual, cumplirSuenioViajar ["Barcelona", "Lima", "Caracas"]] "Nicolas" 46 ["Construir maquetas","Photoshop"]
 
 
 cantidadSuenios :: Persona -> Int
@@ -148,6 +149,18 @@ fuenteMinimosFelicidonios fuentes persona = fuenteGanadora felicidonios (<) pers
 
 
 --Punto B (Integrante 2: Rodrigo Mollon)
+tieneAlgunSuenioRaro :: Persona -> Bool
+tieneAlgunSuenioRaro persona = elem (felicidonios persona) (map felicidonios (map (flip ($) persona) (suenios persona)))
 
+--Punto C (Integrante 3: Daniel Kesel)
+
+
+
+
+--Ejercicio 7
+
+--Punto A (Integrante 1: Maximiliano Fiandrino)
+
+--Punto B (Integrante 2: Rodrigo Mollon)
 
 --Punto C (Integrante 3: Daniel Kesel)
