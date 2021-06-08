@@ -134,6 +134,8 @@ fuenteGanadora criterio signo persona (fuente1:fuente2:restoDeFuentes)  | signo 
                                                                         | otherwise = fuenteGanadora criterio signo persona (fuente2:restoDeFuentes) 
 
 --Punto A (Integrante 1: Maximiliano Fiandrino)
+fuenteMaximosFelicidonios :: Fuentes -> Persona -> Fuente
+fuenteMaximosFelicidonios fuentes persona = fuenteGanadora felicidonios (>) persona fuentes
 
 --Punto B (Integrante 2: Rodrigo Mollon)
 fuenteMinimosFelicidonios :: Fuentes -> Persona -> Fuente
@@ -147,6 +149,13 @@ fuenteMinimosFelicidonios fuentes persona = fuenteGanadora felicidonios (<) pers
 
 --Punto A (Integrante 1: Maximiliano Fiandrino)
 
+{-
+La condicion seria algo como (felicidonios.unSuenio $ persona > (+100).felicidonios.unSuenio $ persona) 
+pero no se como individualizar cada suenio para ponerlo en la condicion
+-}
+
+--sueniosValioso :: Persona -> [Suenio]
+--sueniosValioso persona = filter () (suenios persona)
 
 --Punto B (Integrante 2: Rodrigo Mollon)
 tieneAlgunSuenioRaro :: Persona -> Bool
@@ -158,11 +167,24 @@ tieneAlgunSuenioRaro persona = elem (felicidonios persona) (map felicidonios (ma
 
 
 --Ejercicio 7
-personaSueniosInfinitos = Persona 12 (cycle [unaPersonaSeEnamoraDeOtra persona4, queTodoSigaIgual, cumplirSuenioViajar ["Barcelona", "Lima", "Caracas"]]) "Nicolas" 46 ["Construir maquetas","Photoshop"]
+personaSueniosInfinitos = Persona 12 (cycle [cumplirSuenioViajar ["Barcelona", "Lima", "Caracas"],unaPersonaSeEnamoraDeOtra persona4, queTodoSigaIgual]) "Nicolas" 46 ["Construir maquetas","Photoshop"]
 
 
 
 --Punto A (Integrante 1: Maximiliano Fiandrino)
+{-
+Si le aplico la fuenteMinimalista (que solo cumple el primer sueño de la persona) a la personaSueniosInfinito (que tiene infinitos sueños)
+con el comando "fuenteMinimalista personaSueniosInfinitos" en la consola, la fuente satisface a la persona, ya que al solo cumplir el primer sueño
+lo puede aplicar aunque la persona tenga infinitos sueños.
+El único problema es a la hora de mostrar a la persona ya que queda en un loop infinito de suenios (representadas por <function>) y nunca deja ver
+los campos siguientes del tipo de dato Persona.
+Pero al posicionar convenientemente un sueño que modifique la edad como lo es "cumplirSuenioViajar ["Barcelona", "Lima", "Caracas"]", podemos ver
+que la fuente modifica a la persona, por lo tanto concluyo que la fuente satisface a la persona aunque luego no se pueda ver completamente. 
+En la consola se ve: 
+*Main> fuenteMinimalista personaSueniosInfinitos 
+Persona {edad = 13, suenios = [<function>,<function>,<function>,<function>,<function>,<function>,<function>,<function>,<function>,
+<function>,<function>,<function>,<function>,<function>,<function>,<function>,<function>,<function>,<function>,<function>,...(y asi sucesivamente)
+-}
 
 --Punto B (Integrante 2: Rodrigo Mollon)
 {- A la persona "personaSueniosInfinitos" con infinitos sueños, generados con la funcion <cycle>, si 

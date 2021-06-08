@@ -2,10 +2,12 @@ persona1 = Persona 25 [recibirseDeUnaCarrera "Arquitectura", cumplirSuenioViajar
 persona2 = Persona 46 [recibirseDeUnaCarrera "Comunicacion Social", unaPersonaSeEnamoraDeOtra persona2] "Camila" 250 ["Decir palindromos"]
 persona3 = Persona 12 [recibirseDeUnaCarrera "Chef", cumplirSuenioViajar ["Shangai"]] "Juan Ignacio" 55 ["Construir maquetas","Photoshop"]
 persona4 = Persona 12 [unaPersonaSeEnamoraDeOtra persona3,recibirseDeUnaCarrera "Ingenieria"] "Nicolas" 55 ["Construir maquetas","Photoshop"]
+persona5 = Persona 12 [unaPersonaSeEnamoraDeOtra persona4,recibirseDeUnaCarrera "Ingenieria", cumplirSuenioViajar ["Barcelona", "Lima", "Caracas"]] "Nicolas" 46 ["Construir maquetas","Photoshop"]
+persona6 = Persona 12 [unaPersonaSeEnamoraDeOtra persona4, queTodoSigaIgual, cumplirSuenioViajar ["Barcelona", "Lima", "Caracas"]] "Nicolas" 46 ["Construir maquetas","Photoshop"]
 
 ---------------------------------------------------------
 Ejercicio 2
-Punto B
+Punto A
 ---------------------------------------------------------
 
 *Main> esNombreLargo persona1
@@ -20,7 +22,7 @@ True
 
 ---------------------------------------------------------
 Ejercicio 3
-Punto B
+Punto A
 ---------------------------------------------------------
 
 *Main> recibirseDeUnaCarrera "Ingenieria" persona4
@@ -31,3 +33,42 @@ Persona {edad = 46, suenios = [<function>,<function>], nombre = "Camila", felici
 
 *Main> recibirseDeUnaCarrera "Chef" persona3
 Persona {edad = 12, suenios = [<function>,<function>], nombre = "Juan Ignacio", felicidonios = 4055, habilidades = ["Construir maquetas","Photoshop","Chef"]}
+
+
+---------------------------------------------------------
+Ejercicio 4
+Punto A
+---------------------------------------------------------
+
+*Main> fuenteMinimalista persona1
+Persona {edad = 25, suenios = [<function>], nombre = "Maximiliano", felicidonios = 12100, habilidades = ["Pintura","Java","Arquitectura"]}
+
+*Main> fuenteMinimalista persona2
+Persona {edad = 46, suenios = [<function>], nombre = "Camila", felicidonios = 19250, habilidades = ["Decir palindromos","Comunicacion Social"]}
+
+*Main> fuenteMinimalista persona6
+Persona {edad = 12, suenios = [<function>,<function>], nombre = "Nicolas", felicidonios = 101, habilidades = ["Construir maquetas","Photoshop"]}
+
+
+---------------------------------------------------------
+Ejercicio 5
+Punto A
+---------------------------------------------------------
+listaFuentes = [Fuente "Fuente Sorda" fuenteSorda , Fuente "Fuente Minimalista" fuenteMinimalista, Fuente "Fuente A Pedido" (fuenteAPedido 1)]
+
+*Main> fuenteMaximosFelicidonios listaFuentes persona1
+Fuente {titulo = "Fuente Minimalista", accion = <function>}
+
+*Main> fuenteMaximosFelicidonios listaFuentes persona3
+Fuente {titulo = "Fuente Minimalista", accion = <function>}
+
+*Main> fuenteMaximosFelicidonios listaFuentes persona4
+Fuente {titulo = "Fuente A Pedido", accion = <function>}
+
+
+---------------------------------------------------------
+Ejercicio 6
+Punto A
+---------------------------------------------------------
+
+
