@@ -194,3 +194,8 @@ sucesion infinita de <function> que son los elementos de lista de suenios.
 -}
 
 --Punto C (Integrante 3: Daniel Kesel)
+{- Si le aplico a la persona "personaSueniosInfinitos" con infinitos sueños, generados con la funcion <cycle>, la funcion fuenteAPedido
+satisface a la persona ya que puedo cumplir el enésimo sueño que se quiera, lamentablemente no se podrá cumplir el último sueño ya que 
+no se definir con n valro entero el enésimo sueño final si los sueños son infinitos. Por lo tanto, al querer imprimir por pantalla 
+el detalle de "personaSueniosInfinitos" se obtiene un loop infinito de <function> que son los elementos de lista de suenios.
+-}
