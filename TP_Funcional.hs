@@ -149,17 +149,8 @@ fuenteMasHabilidades fuentes persona = fuenteGanadora (length.habilidades) (>) p
 --Ejercicio 6
 
 --Punto A (Integrante 1: Maximiliano Fiandrino)
-
-{-
-La condicion seria algo como (felicidonios.unSuenio $ persona > (+100).felicidonios.unSuenio $ persona) 
-pero no se como individualizar cada suenio para ponerlo en la condicion
--}
-
---sueniosValioso :: Persona -> [Suenio]
---sueniosValioso persona = filter () (suenios persona)
-
 sueniosValiosos :: Persona -> [Suenio]
-sueniosValiosos persona = filter (\sue -> (>100).felicidonios $ (sue persona)) (suenios persona)
+sueniosValiosos persona = filter (\unSuenio -> (>100).felicidonios $ (unSuenio persona)) (suenios persona)
 
 --Punto B (Integrante 2: Rodrigo Mollon)
 tieneAlgunSuenioRaro :: Persona -> Bool

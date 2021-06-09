@@ -71,4 +71,14 @@ Ejercicio 6
 Punto A
 ---------------------------------------------------------
 
+*Main> sueniosValiosos persona1
+[<function>,<function>]
 
+*Main> sueniosValiosos persona3
+[<function>,<function>]
+
+*Main> sueniosValiosos persona4
+[<function>,<function>]
+
+*Main> sueniosValiosos persona6 (Aca se puede ver que quita al sueño queTodoSigaIgual ya que no llega a los 100 felicidonios)
+[<function>,<function>]
