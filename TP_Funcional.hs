@@ -142,7 +142,8 @@ fuenteMinimosFelicidonios :: Fuentes -> Persona -> Fuente
 fuenteMinimosFelicidonios fuentes persona = fuenteGanadora felicidonios (<) persona fuentes
 
 --Punto C (Integrante 3: Daniel Kesel)
-
+fuenteMasHabilidades :: Fuentes -> Persona -> Fuente
+fuenteMasHabilidades fuentes persona = fuenteGanadora (length.habilidades) (>) persona fuentes
 
 
 --Ejercicio 6
@@ -157,18 +158,23 @@ pero no se como individualizar cada suenio para ponerlo en la condicion
 --sueniosValioso :: Persona -> [Suenio]
 --sueniosValioso persona = filter () (suenios persona)
 
+sueniosValiosos :: Persona -> [Suenio]
+sueniosValiosos persona = filter (\sue -> (>100).felicidonios $ (sue persona)) (suenios persona)
+
 --Punto B (Integrante 2: Rodrigo Mollon)
 tieneAlgunSuenioRaro :: Persona -> Bool
 tieneAlgunSuenioRaro persona = elem (felicidonios persona) (map felicidonios (map (flip ($) persona) (suenios persona)))
 
 --Punto C (Integrante 3: Daniel Kesel)
+type Personas = [Persona]
+listaPersonas = [persona1, persona2, persona6]
 
-
+felicidadTotalGrupo :: Personas -> Int
+felicidadTotalGrupo personas = sum (map felicidonios (map accionFuenteCopada personas))
 
 
 --Ejercicio 7
 personaSueniosInfinitos = Persona 12 (cycle [cumplirSuenioViajar ["Barcelona", "Lima", "Caracas"],unaPersonaSeEnamoraDeOtra persona4, queTodoSigaIgual]) "Nicolas" 46 ["Construir maquetas","Photoshop"]
-
 
 
 --Punto A (Integrante 1: Maximiliano Fiandrino)
