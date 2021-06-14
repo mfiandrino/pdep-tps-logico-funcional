@@ -94,7 +94,7 @@ comboPerfecto persona = (agregarFelicidonios 100).(cumplirSuenioViajar ["Berazat
 
 ---------- 2da Parte -----------
 
-data Fuente = Fuente {titulo :: String, accion :: Persona -> Persona} deriving Show
+type Fuente = (Persona -> Persona)
 
 --Ejercicio 4
 quitarSuenios :: [Suenio] -> Persona -> Persona
@@ -106,9 +106,8 @@ fuenteMinimalista :: Persona -> Persona
 fuenteMinimalista persona = quitarSuenios (tail.suenios $ persona) ((head.suenios $ persona) persona)
 
 --Punto B (Integrante 2: Rodrigo Mollon)
-fuenteCopada = Fuente "Fuente Copada" accionFuenteCopada
-accionFuenteCopada :: Persona -> Persona
-accionFuenteCopada persona = quitarSuenios [] (foldl (flip ($)) persona (suenios persona))
+fuenteCopada :: Fuente
+fuenteCopada persona = (quitarSuenios []).foldl (flip ($)) persona $ (suenios persona)
 
 --Punto C (Integrante 3: Daniel Kesel)
 cumplirSuenio :: Persona -> Int -> Suenio
@@ -126,24 +125,24 @@ fuenteSorda = queTodoSigaIgual
 
 --Ejercicio 5
 type Fuentes = [Fuente]
-listaFuentes = [Fuente "Fuente Sorda" fuenteSorda , Fuente "Fuente Minimalista" fuenteMinimalista, Fuente "Fuente A Pedido" (fuenteAPedido 1)]
+listaFuentes = [fuenteSorda , fuenteMinimalista, (fuenteAPedido 1)]
 
-fuenteGanadora :: (Persona -> Int) -> (Int -> Int -> Bool) -> Persona -> Fuentes -> Fuente
-fuenteGanadora _ _ _ [ultimoElemento] = ultimoElemento
-fuenteGanadora criterio signo persona (fuente1:fuente2:restoDeFuentes)  | signo (criterio.(accion fuente1) $ persona) (criterio.(accion fuente2) $ persona) = fuenteGanadora criterio signo persona (fuente1:restoDeFuentes)
-                                                                        | otherwise = fuenteGanadora criterio signo persona (fuente2:restoDeFuentes) 
+fuenteGanadora :: (Persona -> Int) -> Persona -> Fuentes -> Fuente
+fuenteGanadora _ _ [ultimoElemento] = ultimoElemento
+fuenteGanadora criterio persona (fuente1:fuente2:restoDeFuentes)  | (criterio (fuente1 $ persona)) > (criterio (fuente2 $ persona)) = fuenteGanadora criterio persona (fuente1:restoDeFuentes)
+                                                                  | otherwise = fuenteGanadora criterio persona (fuente2:restoDeFuentes) 
 
 --Punto A (Integrante 1: Maximiliano Fiandrino)
 fuenteMaximosFelicidonios :: Fuentes -> Persona -> Fuente
-fuenteMaximosFelicidonios fuentes persona = fuenteGanadora felicidonios (>) persona fuentes
+fuenteMaximosFelicidonios fuentes persona = fuenteGanadora felicidonios persona fuentes
 
 --Punto B (Integrante 2: Rodrigo Mollon)
 fuenteMinimosFelicidonios :: Fuentes -> Persona -> Fuente
-fuenteMinimosFelicidonios fuentes persona = fuenteGanadora felicidonios (<) persona fuentes
+fuenteMinimosFelicidonios fuentes persona = fuenteGanadora (felicidonios) persona fuentes --CORREGIR, USAR ORDEN SUPERIOR
 
 --Punto C (Integrante 3: Daniel Kesel)
 fuenteMasHabilidades :: Fuentes -> Persona -> Fuente
-fuenteMasHabilidades fuentes persona = fuenteGanadora (length.habilidades) (>) persona fuentes
+fuenteMasHabilidades fuentes persona = fuenteGanadora (length.habilidades) persona fuentes
 
 
 --Ejercicio 6
@@ -154,14 +153,14 @@ sueniosValiosos persona = filter (\unSuenio -> (>100).felicidonios $ (unSuenio p
 
 --Punto B (Integrante 2: Rodrigo Mollon)
 tieneAlgunSuenioRaro :: Persona -> Bool
-tieneAlgunSuenioRaro persona = elem (felicidonios persona) (map felicidonios (map (flip ($) persona) (suenios persona)))
+tieneAlgunSuenioRaro persona = any (== (felicidonios persona)) (map (felicidonios.flip ($) persona) (suenios persona))
 
 --Punto C (Integrante 3: Daniel Kesel)
 type Personas = [Persona]
 listaPersonas = [persona1, persona2, persona6]
 
 felicidadTotalGrupo :: Personas -> Int
-felicidadTotalGrupo personas = sum (map felicidonios (map accionFuenteCopada personas))
+felicidadTotalGrupo personas =  foldl1 (+) (map (felicidonios.fuenteCopada) personas)
 
 
 --Ejercicio 7
