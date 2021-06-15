@@ -102,7 +102,7 @@ quitarSuenios sueniosQueQuedan persona = persona {suenios = sueniosQueQuedan}
 
 
 --Punto A (Integrante 1: Maximiliano Fiandrino)
-fuenteMinimalista :: Persona -> Persona
+fuenteMinimalista :: Fuente
 fuenteMinimalista persona = quitarSuenios (tail.suenios $ persona) ((head.suenios $ persona) persona)
 
 --Punto B (Integrante 2: Rodrigo Mollon)
@@ -123,26 +123,35 @@ fuenteSorda = queTodoSigaIgual
 
 
 
+
 --Ejercicio 5
 type Fuentes = [Fuente]
 listaFuentes = [fuenteSorda , fuenteMinimalista, (fuenteAPedido 1)]
 
-fuenteGanadora :: (Persona -> Int) -> Persona -> Fuentes -> Fuente
-fuenteGanadora _ _ [ultimoElemento] = ultimoElemento
-fuenteGanadora criterio persona (fuente1:fuente2:restoDeFuentes)  | (criterio (fuente1 $ persona)) > (criterio (fuente2 $ persona)) = fuenteGanadora criterio persona (fuente1:restoDeFuentes)
-                                                                  | otherwise = fuenteGanadora criterio persona (fuente2:restoDeFuentes) 
+fuenteGanadora :: (Fuente -> Fuente -> Fuente) -> Fuentes -> Fuente
+fuenteGanadora criterio (fuente1:resto) = foldl (criterio) fuente1 resto
 
 --Punto A (Integrante 1: Maximiliano Fiandrino)
+masFelicidonios persona fuente otraFuente   | (felicidonios.fuente $ persona) > (felicidonios.otraFuente $ persona) = fuente 
+                                            | otherwise = otraFuente
+
 fuenteMaximosFelicidonios :: Fuentes -> Persona -> Fuente
-fuenteMaximosFelicidonios fuentes persona = fuenteGanadora felicidonios persona fuentes
+fuenteMaximosFelicidonios fuentes persona = fuenteGanadora (masFelicidonios persona) fuentes
 
 --Punto B (Integrante 2: Rodrigo Mollon)
+menosFelicidonios persona fuente otraFuente | (felicidonios.fuente $ persona) < (felicidonios.otraFuente $ persona) = fuente 
+                                            | otherwise = otraFuente
+
 fuenteMinimosFelicidonios :: Fuentes -> Persona -> Fuente
-fuenteMinimosFelicidonios fuentes persona = fuenteGanadora (felicidonios) persona fuentes --CORREGIR, USAR ORDEN SUPERIOR
+fuenteMinimosFelicidonios fuentes persona = fuenteGanadora (menosFelicidonios persona) fuentes
 
 --Punto C (Integrante 3: Daniel Kesel)
+masHabilidades persona fuente otraFuente    | (length.habilidades.fuente $ persona) > (length.habilidades.otraFuente $ persona) = fuente 
+                                            | otherwise = otraFuente
+
 fuenteMasHabilidades :: Fuentes -> Persona -> Fuente
-fuenteMasHabilidades fuentes persona = fuenteGanadora (length.habilidades) persona fuentes
+fuenteMasHabilidades fuentes persona = fuenteGanadora (masHabilidades persona) fuentes
+
 
 
 --Ejercicio 6
