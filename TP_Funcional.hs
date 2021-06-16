@@ -110,11 +110,10 @@ fuenteCopada :: Fuente
 fuenteCopada persona = (quitarSuenios []).foldl (flip ($)) persona $ (suenios persona)
 
 --Punto C (Integrante 3: Daniel Kesel)
-cumplirSuenio :: Persona -> Int -> Suenio
-cumplirSuenio persona nSuenio = (suenios persona) !! nSuenio
+fuenteAPedido :: Int -> Fuente
+fuenteAPedido nSuenio persona  = ((suenios persona) !! nSuenio) persona
 
-fuenteAPedido :: Int -> Persona -> Persona
-fuenteAPedido nSuenio persona = (cumplirSuenio persona nSuenio) persona
+
 
 --Punto D (General)
 fuenteSorda :: Persona -> Persona
@@ -170,6 +169,7 @@ listaPersonas = [persona1, persona2, persona6]
 
 felicidadTotalGrupo :: Personas -> Int
 felicidadTotalGrupo personas =  foldl1 (+) (map (felicidonios.fuenteCopada) personas)
+
 
 
 --Ejercicio 7
