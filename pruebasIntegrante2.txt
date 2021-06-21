@@ -61,22 +61,15 @@ Persona {edad = 26, suenios = [], nombre = "Maximiliano", felicidonios = 12300, 
 Ejercicio 5
 Punto B
 ---------------------------------------------------------
-*Main> felicidonios ((accion ((!!) listaFuentes 0)) persona1) --primer fuente
-100
-*Main> felicidonios ((accion ((!!) listaFuentes 1)) persona1) --segunda fuente
-12100
-*Main> felicidonios ((accion ((!!) listaFuentes 1)) persona1) --tercer fuente
-300
-*Main> fuenteMinimosFelicidonios listaFuentes persona1
-Fuente {titulo = "Fuente Sorda", accion = <function>}
-*Main> felicidonios (fuenteSorda persona1)
-100
-{- segun fuenteMinimosFelicidonios la que deja a la persona con menos felicidonios
-es fuenteSorda, que lo deja con 100 felicidonios.
-comparando manualmente las 3 fuentes de la lista de ejemplos
-la que deja menos felicidonios es la que lo deja con 100.
-Por lo tanto se comprueba que fuenteMinimosFelicidonios devuelve la fuente pedida.
--}
+
+*Main> fuenteGanadoraPor menosFelicidonios persona1 listaFuentes 
+<function>
+
+*Main> fuenteGanadoraPor menosFelicidonios persona2 listaFuentes 
+<function>
+
+*Main> fuenteGanadoraPor menosFelicidonios persona3 listaFuentes 
+<function>
 
 
 Ejercicio 6

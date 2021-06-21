@@ -56,14 +56,14 @@ Punto A
 ---------------------------------------------------------
 listaFuentes = [Fuente "Fuente Sorda" fuenteSorda , Fuente "Fuente Minimalista" fuenteMinimalista, Fuente "Fuente A Pedido" (fuenteAPedido 1)]
 
-*Main> fuenteMaximosFelicidonios listaFuentes persona1
-Fuente {titulo = "Fuente Minimalista", accion = <function>}
+*Main> fuenteGanadoraPor masFelicidonios persona1 listaFuentes 
+<function>
 
-*Main> fuenteMaximosFelicidonios listaFuentes persona3
-Fuente {titulo = "Fuente Minimalista", accion = <function>}
+*Main> fuenteGanadoraPor masFelicidonios persona2 listaFuentes 
+<function>
 
-*Main> fuenteMaximosFelicidonios listaFuentes persona4
-Fuente {titulo = "Fuente A Pedido", accion = <function>}
+*Main> fuenteGanadoraPor masFelicidonios persona3 listaFuentes 
+<function>
 
 
 ---------------------------------------------------------
