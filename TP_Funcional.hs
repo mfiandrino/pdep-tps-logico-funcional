@@ -127,29 +127,36 @@ fuenteSorda = queTodoSigaIgual
 type Fuentes = [Fuente]
 listaFuentes = [fuenteSorda , fuenteMinimalista, (fuenteAPedido 1)]
 
-fuenteGanadora :: (Fuente -> Fuente -> Fuente) -> Fuentes -> Fuente
-fuenteGanadora criterio (fuente1:resto) = foldl (criterio) fuente1 resto
+fuenteGanadoraPor :: (Persona -> Int) -> Persona -> Fuentes -> Fuente
+fuenteGanadoraPor criterio persona (fuente:restoDeFuentes) = foldl (fuenteGanadora criterio persona) fuente restoDeFuentes
+
+fuenteGanadora :: (Persona -> Int) -> Persona -> Fuente -> Fuente -> Fuente
+fuenteGanadora criterio persona unaFuente otraFuente    | (criterio.unaFuente $ persona) > (criterio.otraFuente $ persona) = unaFuente
+                                                        | otherwise = otraFuente
+
 
 --Punto A (Integrante 1: Maximiliano Fiandrino)
-masFelicidonios persona fuente otraFuente   | (felicidonios.fuente $ persona) > (felicidonios.otraFuente $ persona) = fuente 
-                                            | otherwise = otraFuente
+masFelicidonios :: Persona -> Int 
+masFelicidonios = felicidonios
 
-fuenteMaximosFelicidonios :: Fuentes -> Persona -> Fuente
-fuenteMaximosFelicidonios fuentes persona = fuenteGanadora (masFelicidonios persona) fuentes
+-- *Main> fuenteGanadoraPor masFelicidonios persona1 listaFuentes 
+-- <function>
+
 
 --Punto B (Integrante 2: Rodrigo Mollon)
-menosFelicidonios persona fuente otraFuente | (felicidonios.fuente $ persona) < (felicidonios.otraFuente $ persona) = fuente 
-                                            | otherwise = otraFuente
+menosFelicidonios :: Persona -> Int
+menosFelicidonios = (*(-1)).felicidonios
 
-fuenteMinimosFelicidonios :: Fuentes -> Persona -> Fuente
-fuenteMinimosFelicidonios fuentes persona = fuenteGanadora (menosFelicidonios persona) fuentes
+-- *Main> fuenteGanadoraPor menosFelicidonios persona1 listaFuentes 
+-- <function>
 
 --Punto C (Integrante 3: Daniel Kesel)
-masHabilidades persona fuente otraFuente    | (length.habilidades.fuente $ persona) > (length.habilidades.otraFuente $ persona) = fuente 
-                                            | otherwise = otraFuente
+masHabilidades :: Persona -> Int
+masHabilidades = length.habilidades
 
-fuenteMasHabilidades :: Fuentes -> Persona -> Fuente
-fuenteMasHabilidades fuentes persona = fuenteGanadora (masHabilidades persona) fuentes
+-- *Main> fuenteGanadoraPor masHabilidades persona1 listaFuentes 
+-- <function>
+
 
 
 
