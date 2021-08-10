@@ -46,11 +46,12 @@ esLibre(ingles2).
 esCorrelativa(am2, am1).
 esCorrelativa(sintaxis, mateDiscreta).
 esCorrelativa(sintaxis, ayed).
+esCorrelativa(paradigmas, ayed).
 esCorrelativa(economia, ads).
 esCorrelativa(ads, syo).
 
 materiasIniciales(algebra).
-materiasIniciales(aml).
+materiasIniciales(am1).
 materiasIniciales(ingles1).
 materiasIniciales(syo).
 materiasIniciales(ayed).
@@ -68,5 +69,5 @@ materiasIniciales(MateriasIniciales):-
 
 % c.
 
-  /* materiasQueHabilita(Asignatura, MateriasQueHabilita):-materia(NombreMateria, _),
-    findall(MateriaQueHabilita, (necesariasParaCursar(MateriaQueHabilita, MateriasNecesarias), member(NombreMateria, MateriasNecesarias)), MateriasQueHabilita).*/
+materiasQueHabilita(Asignatura, MateriasQueHabilita):-materia(Asignatura, _),
+    findall(MateriaQueHabilita, (esCorrelativa(MateriaQueHabilita, Asignatura)), MateriasQueHabilita).
