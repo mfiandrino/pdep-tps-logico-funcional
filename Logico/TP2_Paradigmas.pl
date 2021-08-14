@@ -1,4 +1,4 @@
-materia(algebra, 5).
+materia(algebra, 5). % las horas se deben corregir, son totales, no semanales %
 materia(am1, 5).
 materia(mateDiscreta, 3).
 materia(ayed, 5).
