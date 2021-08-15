@@ -202,6 +202,7 @@ regularizoCursada(Nombre, Materia):-
     Nota <8.
 
 materiaEsFiltro(Materia):-
+    nota(Nombre,Materia,_),
     forall(nota(Nombre,Materia,_), regularizoCursada(Nombre, Materia)).
 
 % Integrante 3
