@@ -1,3 +1,4 @@
+% Listado de materias con total de horas de cursada
 materia(algebra, 160).            
 materia(am1, 160).                
 materia(mateDiscreta, 96).       
@@ -33,6 +34,8 @@ materia(proyectoFinal, 192).
 materia(inteligenciaArtificial, 96).         
 materia(administracionGerencial, 96).            
 materia(sistemasDeGestion, 128).              
+
+% Materias integradoras y libres
 esIntegradora(ads).
 esIntegradora(syo).
 esIntegradora(disenioDeSistemas).
@@ -41,14 +44,65 @@ esIntegradora(administracionDeRecursos).
 esLibre(ingles).
 esLibre(ingles2).
 
+%  --------------------- Parte 1 -----------------
+/* Punto 1 */
+
 
 /* punto 2 */
+% Base de conocimiento
 esCorrelativa(am2, am1).
+esCorrelativa(am2, algebra).
+esCorrelativa(fisica2, am1).
+esCorrelativa(fisica2, fisica1).
+esCorrelativa(ads, syo).
+esCorrelativa(ads, ayed).
 esCorrelativa(sintaxis, mateDiscreta).
 esCorrelativa(sintaxis, ayed).
+esCorrelativa(paradigmas, mateDiscreta).
 esCorrelativa(paradigmas, ayed).
+esCorrelativa(sistemasOperativos, mateDiscreta).
+esCorrelativa(sistemasOperativos, ayed).
+esCorrelativa(sistemasOperativos, arqCompu).
+esCorrelativa(proba, am1).
+esCorrelativa(proba, algebra).
+esCorrelativa(disenioDeSistemas, ads).
+esCorrelativa(disenioDeSistemas, paradigmas).
+esCorrelativa(comunicaciones, arqCompu).
+esCorrelativa(comunicaciones, am2).
+esCorrelativa(fisica2).
+esCorrelativa(matematicaSuperior, am2).
+esCorrelativa(gestionDeDatos, ads).
+esCorrelativa(gestionDeDatos, sintaxis).
+esCorrelativa(gestionDeDatos, paradigmas).
 esCorrelativa(economia, ads).
-esCorrelativa(ads, syo).
+esCorrelativa(redesDeInformacion, sistemasOperativos).
+esCorrelativa(redesDeInformacion, comunicaciones).
+esCorrelativa(administracionDeRecursos, sistemasOperativos).
+esCorrelativa(administracionDeRecursos, disenioDeSistemas).
+esCorrelativa(administracionDeRecursos, economia).
+esCorrelativa(investigacionOperativa, proba).
+esCorrelativa(investigacionOperativa, matematicaSuperior).
+esCorrelativa(simulacion, proba).
+esCorrelativa(simulacion, matematicaSuperior).
+esCorrelativa(ingenieriaDeSoftware, proba).
+esCorrelativa(ingenieriaDeSoftware, disenioDeSistemas).
+esCorrelativa(ingenieriaDeSoftware, gestionDeDatos).
+esCorrelativa(teoriaDeControl, quimica).
+esCorrelativa(teoriaDeControl, matematicaSuperior).
+esCorrelativa(legislacion, ads).
+esCorrelativa(legislacion, ingysoc).
+esCorrelativa(proyectoFinal, redesDeInformacion).
+esCorrelativa(proyectoFinal, administracionDeRecursos).
+esCorrelativa(proyectoFinal, ingenieriaDeSoftware).
+esCorrelativa(proyectoFinal, legislacion).
+esCorrelativa(inteligenciaArtificial, investigacionOperativa).
+esCorrelativa(inteligenciaArtificial, simulacion).
+esCorrelativa(administracionGerencial, administracionDeRecursos).
+esCorrelativa(administracionGerencial, investigacionOperativa).
+esCorrelativa(sistemasDeGestion, administracionDeRecursos).
+esCorrelativa(sistemasDeGestion, investigacionOperativa).
+esCorrelativa(sistemasDeGestion, simulacion).
+
 
 materiasIniciales(algebra).
 materiasIniciales(am1).
@@ -61,13 +115,18 @@ materiasIniciales(quimica).
 materiasIniciales(ingysoc).
 materiasIniciales(sistDeRep).
 materiasIniciales(fisica1).
-/* PUNTO 2 */
-% a.
+
+% a.  - Todos los integrantes -
 materiasIniciales(MateriasIniciales):-
     findall(MateriaInicial, materiasIniciales(MateriaInicial), MateriasIniciales).
 
+% b. Integrante 2
+todasLasCorrelativas(Materia, Correlativa):- esCorrelativa(Materia, Correlativa).
+todasLasCorrelativas(Materia, Correlativa):- esCorrelativa(SiguienteCorrelativa, Correlativa),
+    todasLasCorrelativas(Materia, SiguienteCorrelativa).
+    
 
-% c.
+% c. Integrante 3
 
 materiasQueHabilita(Asignatura, MateriasQueHabilita):-materia(Asignatura, _),
     findall(MateriaQueHabilita, (esCorrelativa(MateriaQueHabilita, Asignatura)), MateriasQueHabilita).
