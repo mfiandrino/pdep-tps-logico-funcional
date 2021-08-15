@@ -69,7 +69,7 @@ esCorrelativa(disenioDeSistemas, ads).
 esCorrelativa(disenioDeSistemas, paradigmas).
 esCorrelativa(comunicaciones, arqCompu).
 esCorrelativa(comunicaciones, am2).
-esCorrelativa(fisica2).
+esCorrelativa(fisica2, fisica1).
 esCorrelativa(matematicaSuperior, am2).
 esCorrelativa(gestionDeDatos, ads).
 esCorrelativa(gestionDeDatos, sintaxis).
@@ -129,7 +129,7 @@ todasLasCorrelativas(Materia, Correlativa):- esCorrelativa(SiguienteCorrelativa,
 % c. Integrante 3
 
 materiasQueHabilita(Asignatura, MateriasQueHabilita):-materia(Asignatura, _),
-    findall(MateriaQueHabilita, (esCorrelativa(MateriaQueHabilita, Asignatura)), MateriasQueHabilita).
+esCorrelativa(MateriasQueHabilita, Asignatura). 
 
 /* Parte 2 - c*/
 
