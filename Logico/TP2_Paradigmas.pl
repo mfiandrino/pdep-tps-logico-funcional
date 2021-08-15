@@ -75,6 +75,7 @@ esCorrelativa(gestionDeDatos, ads).
 esCorrelativa(gestionDeDatos, sintaxis).
 esCorrelativa(gestionDeDatos, paradigmas).
 esCorrelativa(economia, ads).
+esCorrelativa(ingles2, ingles1).
 esCorrelativa(redesDeInformacion, sistemasOperativos).
 esCorrelativa(redesDeInformacion, comunicaciones).
 esCorrelativa(administracionDeRecursos, sistemasOperativos).
@@ -130,3 +131,27 @@ todasLasCorrelativas(Materia, Correlativa):- esCorrelativa(SiguienteCorrelativa,
 
 materiasQueHabilita(Asignatura, MateriasQueHabilita):-materia(Asignatura, _),
     findall(MateriaQueHabilita, (esCorrelativa(MateriaQueHabilita, Asignatura)), MateriasQueHabilita).
+
+
+%  --------------------- Parte 2 -----------------
+/* Requerimiento base */
+
+alumno(Nombre, Materia, Periodo, Anio, Nota).
+alumno(pedro, sintaxis, anual, 2020, 8).
+
+% Integrante 1
+
+% Integrante 2
+aproboCursada(alumno(Nombre, Materia, Periodo, Anio, Nota)):-
+    Nota >= 6.
+
+% Integrante 3
+
+
+%  --------------------- Parte 3 -----------------
+
+% Integrante 1
+
+% Integrante 2
+
+% Integrante 3
