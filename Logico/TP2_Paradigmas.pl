@@ -134,15 +134,12 @@ materiasQueHabilita(Asignatura, MateriasQueHabilita):-materia(Asignatura, _),
 
 
 %  --------------------- Parte 2 -----------------
-/* Requerimiento base */
-
-alumno(Nombre, Materia, Periodo, Anio, Nota).
-alumno(pedro, sintaxis, anual, 2020, 8).
-
+algo(alguien).
 % Integrante 1
-
+algo(alguien).
 % Integrante 2
-aproboCursada(alumno(Nombre, Materia, Periodo, Anio, Nota)):-
+aproboCursada(Nombre, Materia):-
+    nota(Nombre, Materia, Nota),
     Nota >= 6.
 
 % Integrante 3
@@ -184,6 +181,23 @@ Cuatri \= OtroCuatri.
 % Integrante 1
 
 % Integrante 2
+nota(alicia, sintaxis, 7).
+nota(juan, sintaxis, 8).
+nota(pedro, sintaxis, 7).
+nota(jose, sintaxis, 7).
+nota(alicia, paradigmas, 7).
+nota(juan, paradigmas, 6).
+nota(pedro, paradigmas, 7).
+nota(jose, paradigmas, 7).
+
+
+regularizoCursada(Nombre, Materia):-
+    nota(Nombre, Materia, Nota),
+    Nota >=6,
+    Nota <8.
+
+materiaEsFiltro(Materia):-
+    forall(nota(Nombre,Materia,_), regularizoCursada(Nombre, Materia)).
 
 % Integrante 3
 /* Punto c */
