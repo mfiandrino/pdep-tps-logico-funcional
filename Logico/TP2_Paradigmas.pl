@@ -138,9 +138,11 @@ materiasQueHabilita(Asignatura, MateriasQueHabilita):-materia(Asignatura, _),
     esCorrelativa(MateriasQueHabilita, Asignatura). 
 
 
-%  --------------------- Parte 2 -----------------
-
+%  --------------------- Parte 2: Cursada -----------------
 % Integrante 1
+anioCursada(Persona,Materia,Anio) :- cursada(Persona,Materia,anual(Anio)).
+anioCursada(Persona,Materia,Anio) :- cursada(Persona,Materia,cuatrimestral(Anio,_)).
+anioCursada(Persona,Materia,Anio) :- cursada(Persona,Materia,verano(Anio2,_)), Anio is Anio2-1.
 
 % Integrante 2
 aproboCursada(Nombre, Materia):-
@@ -164,6 +166,7 @@ cursada(danielLarusso,algebra, cuatrimestral(2015, 2)).
 cursada(danielLarusso,mateDiscreta, anual(2015)).
 cursada(danielLarusso,mateDiscreta, anual(2021)).
 cursada(danielLarusso,fisica1, anual(2019)).
+cursada(eric,algebra,verano(2018,2)).
 
 recurso(Estudiante, MateriasRecursada):-
     cursada(Estudiante, MateriasRecursada, anual(UnAnio)),
@@ -181,7 +184,7 @@ recurso(Estudiante, MateriasRecursada):-
 Cuatri \= OtroCuatri.
 
 
-%  --------------------- Parte 3 -----------------
+%  --------------------- Parte 3: Personas que estudian-----------------
 
 % Integrante 1
 
