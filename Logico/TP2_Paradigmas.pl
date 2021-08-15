@@ -44,8 +44,13 @@ esIntegradora(administracionDeRecursos).
 esLibre(ingles).
 esLibre(ingles2).
 
-%  --------------------- Parte 1 -----------------
+%  --------------------- Parte 1: Las Materias -----------------
 /* Punto 1 */
+tieneMasDeCienHoras(Materia) :- materia(Materia,Horas), Horas>100.
+tieneNombreLargo(Materia) :- materia(Materia,_) , string_length(Materia, Length) , Length > 25.
+
+esPesada(Materia) :- tieneMasDeCienHoras(Materia), esIntegradora(Materia).
+esPesada(Materia) :- tieneNombreLargo(Materia).
 
 
 /* punto 2 */
