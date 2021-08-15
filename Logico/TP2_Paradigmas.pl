@@ -130,3 +130,62 @@ todasLasCorrelativas(Materia, Correlativa):- esCorrelativa(SiguienteCorrelativa,
 
 materiasQueHabilita(Asignatura, MateriasQueHabilita):-materia(Asignatura, _),
     findall(MateriaQueHabilita, (esCorrelativa(MateriaQueHabilita, Asignatura)), MateriasQueHabilita).
+
+/* Parte 2 - c*/
+
+
+cursada(rocky,am1, anual(2018)).
+cursada(rocky,algebra, cuatrimestral(2018, 2)).
+cursada(rocky,algebra, cuatrimestral(2018, 1)).
+cursada(rocky,mateDiscreta, anual(2019)).
+cursada(rocky,mateDiscreta, anual(2020)).
+cursada(rocky,fisica1, anual(2018)).
+cursada(terminator,am1, anual(2015)).
+cursada(terminator,algebra, cuatrimestral(2014, 2)).
+cursada(terminator,mateDiscreta, anual(2009)).
+cursada(terminator,fisica1, anual(2017)).
+cursada(terminator,fisica1, anual(2018)).
+cursada(danielLarusso,am1, anual(2016)).
+cursada(danielLarusso,algebra, cuatrimestral(2015, 2)).
+cursada(danielLarusso,mateDiscreta, anual(2015)).
+cursada(danielLarusso,mateDiscreta, anual(2021)).
+cursada(danielLarusso,fisica1, anual(2019)).
+
+recurso(Estudiante, MateriasRecursada):-
+    cursada(Estudiante, MateriasRecursada, anual(UnAnio)),
+    cursada(Estudiante, MateriasRecursada, anual(OtroAnio)),
+UnAnio \= OtroAnio.
+
+recurso(Estudiante, MateriasRecursada):-
+    cursada(Estudiante, MateriasRecursada, cuatrimestral(UnAnio, _)),
+    cursada(Estudiante, MateriasRecursada, cuatrimestral(OtroAnio, _)),
+UnAnio \= OtroAnio.
+
+recurso(Estudiante, MateriasRecursada):-
+    cursada(Estudiante, MateriasRecursada, cuatrimestral(_, Cuatri)),
+    cursada(Estudiante, MateriasRecursada, cuatrimestral(_, OtroCuatri)),
+Cuatri \= OtroCuatri.
+
+/* Parte3.c */
+
+promedioMateriaAlumno(rocky, am1, 6).
+promedioMateriaAlumno(rocky, algebra, 5).
+promedioMateriaAlumno(rocky, algebra, 6).
+promedioMateriaAlumno(rocky, mateDiscreta, 5).
+promedioMateriaAlumno(rocky, mateDiscreta, 8).
+promedioMateriaAlumno(rocky, fisica1, 6).
+promedioMateriaAlumno(terminator, am1, 6).
+promedioMateriaAlumno(terminator, algebra, 9).
+promedioMateriaAlumno(terminator, mateDiscreta, 9).
+promedioMateriaAlumno(terminator, fisica1, 5).
+promedioMateriaAlumno(terminator, fisica1, 6).
+promedioMateriaAlumno(danielLarusso, am1, 6).
+promedioMateriaAlumno(danielLarusso, algebra, 9).
+promedioMateriaAlumno(danielLarusso, mateDiscreta, 2).
+promedioMateriaAlumno(danielLarusso, mateDiscreta, 9).
+promedioMateriaAlumno(danielLarusso, fisica1, 5).
+
+esTrivial(Materia):-
+    promedioMateriaAlumno(_, Materia, 6),
+    not(recurso(_, Materia)).
+
