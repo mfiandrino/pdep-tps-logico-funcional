@@ -139,9 +139,9 @@ materiasQueHabilita(Asignatura, MateriasQueHabilita):-materia(Asignatura, _),
 
 
 %  --------------------- Parte 2 -----------------
-algo(alguien).
+
 % Integrante 1
-algo(alguien).
+
 % Integrante 2
 aproboCursada(Nombre, Materia):-
     nota(Nombre, Materia, Nota),
@@ -194,16 +194,25 @@ nota(alicia, paradigmas, 7).
 nota(juan, paradigmas, 6).
 nota(pedro, paradigmas, 7).
 nota(jose, paradigmas, 7).
+nota(alicia, proba, 7).
+nota(juan, proba, 8).
+nota(pedro, matematicaSuperior, 7).
+nota(jose, matematicaSuperior, 7).
+nota(alicia, ingles1, 7).
+nota(alicia, ingles2, 7).
+nota(alicia, ads, 6).
+nota(pedro, paradigmas, 7).
+nota(jose, paradigmas, 7).
 
 
-regularizoCursada(Nombre, Materia):-
+soloRegularizoCursada(Nombre, Materia):-
     nota(Nombre, Materia, Nota),
     Nota >=6,
     Nota <8.
 
 materiaEsFiltro(Materia):-
     nota(Nombre,Materia,_),
-    forall(nota(Nombre,Materia,_), regularizoCursada(Nombre, Materia)).
+    forall(nota(Nombre,Materia,_), soloRegularizoCursada(Nombre, Materia)).
 
 % Integrante 3
 /* Punto c */
@@ -228,3 +237,14 @@ promedioMateriaAlumno(danielLarusso, fisica1, 5).
 esTrivial(Materia):-
     promedioMateriaAlumno(_, Materia, 6),
     not(recurso(_, Materia)).
+
+%  --------------------- Parte 4 -----------------
+
+% Integrante 1
+
+% Integrante 2
+disponibleParaCursar(Nombre, ListaMaterias):-
+    aproboCursada(Nombre,Materia),
+    findall(MateriaDisponible, (esCorrelativa(MateriaDisponible, Materia), not(aproboCursada(Nombre,MateriaDisponible)) ), ListaMaterias).
+
+% Integrante 3
