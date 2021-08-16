@@ -123,8 +123,7 @@ materiasIniciales(sistDeRep).
 materiasIniciales(fisica1).
 
 % a.  - Todos los integrantes -
-materiasIniciales(MateriasIniciales):-
-    findall(MateriaInicial, materiasIniciales(MateriaInicial), MateriasIniciales).
+cualesSonLasMateriasIniciales(Materia):- materiasIniciales(Materia).
 
 % b. Integrante 2
 todasLasCorrelativas(Materia, Correlativa):- esCorrelativa(Materia, Correlativa).
@@ -139,10 +138,11 @@ materiasQueHabilita(Asignatura, MateriasQueHabilita):-materia(Asignatura, _),
 
 
 %  --------------------- Parte 2: Cursada -----------------
+% Requerimientos base
 % Integrante 1
-anioCursada(Persona,Materia,Anio) :- cursada(Persona,Materia,anual(Anio)).
-anioCursada(Persona,Materia,Anio) :- cursada(Persona,Materia,cuatrimestral(Anio,_)).
-anioCursada(Persona,Materia,Anio) :- cursada(Persona,Materia,verano(Anio2,_)), Anio is Anio2-1.
+anioCursada(Persona,Materia,Anio) :- cursada2(Persona,Materia,anual(Anio),_).
+anioCursada(Persona,Materia,Anio) :- cursada2(Persona,Materia,cuatrimestral(Anio,_),_).
+anioCursada(Persona,Materia,Anio) :- cursada2(Persona,Materia,verano(Anio2,_),_), Anio is Anio2-1.
 
 % Integrante 2
 aproboCursada(Nombre, Materia):-
@@ -168,6 +168,15 @@ cursada(danielLarusso,mateDiscreta, anual(2021)).
 cursada(danielLarusso,fisica1, anual(2019)).
 cursada(eric,algebra,verano(2018,2)).
 
+cursada2(rocky,mateDiscreta, anual(2020),8).
+cursada2(rocky,algebra, cuatrimestral(2018, 2),7).
+cursada2(rocky,algebra, cuatrimestral(2018, 1),6).
+cursada2(rocky,fisica1, anual(2018),5).
+cursada2(terminator,am1, anual(2015),10).
+cursada2(terminator,algebra, cuatrimestral(2014, 2),4).
+cursada2(danielLarusso,fisica1, anual(2019),7).
+cursada2(eric,algebra,verano(2018,2),6).
+
 recurso(Estudiante, MateriasRecursada):-
     cursada(Estudiante, MateriasRecursada, anual(UnAnio)),
     cursada(Estudiante, MateriasRecursada, anual(OtroAnio)),
@@ -182,6 +191,31 @@ recurso(Estudiante, MateriasRecursada):-
     cursada(Estudiante, MateriasRecursada, cuatrimestral(_, Cuatri)),
     cursada(Estudiante, MateriasRecursada, cuatrimestral(_, OtroCuatri)),
 Cuatri \= OtroCuatri.
+
+% Desempeño academico
+% a) 
+indiceAcademicoTotal(Persona,Sumatoria) :- 
+    findall(Indice,indiceAcademico(Persona,Indice),ListaIndices),
+    sumlist(ListaIndices, Sumatoria).
+
+indiceAcademico(Persona,Indice) :- cursada2(Persona,_,anual(_),Nota), indiceAnual(Nota,Indice).
+indiceAcademico(Persona,Indice) :- cursada2(Persona,_,cuatrimestral(_,Cuatri),Nota), indiceCuatrimestral(Cuatri,Nota,Indice).
+indiceAcademico(Persona,Indice) :- cursada2(Persona,_,verano(_,_),Nota) , indiceVerano(Nota,Indice).
+
+indiceAnual(Nota,Indice) :- Indice = Nota.
+indiceCuatrimestral(Cuatri,Nota,Indice) :- Indice is Nota - (Cuatri - 1).
+indiceVerano(Nota,Indice) :- between(0,10,Nota), Nota < 9 , Indice is Nota.
+indiceVerano(Nota,Indice) :- between(0,10,Nota), Nota >= 9 , Indice is 8.
+
+
+%b)
+indiceAcademicoTotalPorMateria(Persona,Materia,Sumatoria) :- 
+    findall(Indice,indiceAcademicoDeMateria(Persona,Materia,Indice),ListaIndices),
+    sumlist(ListaIndices, Sumatoria).
+
+indiceAcademicoDeMateria(Persona,Materia,Indice) :- cursada2(Persona,Materia,anual(_),Nota), indiceAnual(Nota,Indice).
+indiceAcademicoDeMateria(Persona,Materia,Indice) :- cursada2(Persona,Materia,cuatrimestral(_,Cuatri),Nota), indiceCuatrimestral(Cuatri,Nota,Indice).
+indiceAcademicoDeMateria(Persona,Materia,Indice) :- cursada2(Persona,Materia,verano(_,_),Nota) , indiceVerano(Nota,Indice).
 
 
 %  --------------------- Parte 3: Personas que estudian-----------------
@@ -231,3 +265,5 @@ promedioMateriaAlumno(danielLarusso, fisica1, 5).
 esTrivial(Materia):-
     promedioMateriaAlumno(_, Materia, 6),
     not(recurso(_, Materia)).
+
+
