@@ -170,7 +170,7 @@ cursada(eric,algebra,verano(2018,2)).
 
 cursada2(rocky,mateDiscreta, anual(2020),8).
 cursada2(rocky,algebra, cuatrimestral(2018, 2),7).
-cursada2(rocky,algebra, cuatrimestral(2018, 1),6).
+cursada2(rocky,algebra, cuatrimestral(2018, 1),4).
 cursada2(rocky,fisica1, anual(2018),5).
 cursada2(terminator,am1, anual(2015),10).
 cursada2(terminator,algebra, cuatrimestral(2014, 2),4).
@@ -221,6 +221,13 @@ indiceAcademicoDeMateria(Persona,Materia,Indice) :- cursada2(Persona,Materia,ver
 %  --------------------- Parte 3: Personas que estudian-----------------
 
 % Integrante 1
+notaFinal(rocky,algebra,5).
+notaFinal(danielLarusso,fisica1,6).
+notaFinal(eric,algebra,10).
+
+esProcrastinadora(Persona) :-
+    notaFinal(Persona,_,_),
+    forall(notaFinal(Persona,_,Nota),Nota < 6).
 
 % Integrante 2
 nota(alicia, sintaxis, 7).
@@ -274,6 +281,9 @@ promedioMateriaAlumno(danielLarusso, fisica1, 5).
 esTrivial(Materia):-
     promedioMateriaAlumno(_, Materia, 6),
     not(recurso(_, Materia)).
+
+% El concepto al que hacen referencia en la Parte 3 es el de inversibilidad.
+
 
 %  --------------------- Parte 4 -----------------
 
