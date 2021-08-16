@@ -140,9 +140,9 @@ materiasQueHabilita(Asignatura, MateriasQueHabilita):-materia(Asignatura, _),
 %  --------------------- Parte 2: Cursada -----------------
 % Requerimientos base
 % Integrante 1
-anioCursada(Persona,Materia,Anio) :- cursada2(Persona,Materia,anual(Anio),_).
-anioCursada(Persona,Materia,Anio) :- cursada2(Persona,Materia,cuatrimestral(Anio,_),_).
-anioCursada(Persona,Materia,Anio) :- cursada2(Persona,Materia,verano(Anio2,_),_), Anio is Anio2-1.
+anioCursada(Persona,Materia,Anio) :- cursada(Persona,Materia,anual(Anio),_).
+anioCursada(Persona,Materia,Anio) :- cursada(Persona,Materia,cuatrimestral(Anio,_),_).
+anioCursada(Persona,Materia,Anio) :- cursada(Persona,Materia,verano(Anio2,_),_), Anio is Anio2-1.
 
 % Integrante 2
 aproboCursada(Nombre, Materia):-
@@ -150,47 +150,47 @@ aproboCursada(Nombre, Materia):-
     Nota >= 6.
 
 % Integrante 3
-cursada(rocky,am1, anual(2018)).
-cursada(rocky,algebra, cuatrimestral(2018, 2)).
-cursada(rocky,algebra, cuatrimestral(2018, 1)).
-cursada(rocky,mateDiscreta, anual(2019)).
-cursada(rocky,mateDiscreta, anual(2020)).
-cursada(rocky,fisica1, anual(2018)).
-cursada(terminator,am1, anual(2015)).
-cursada(terminator,algebra, cuatrimestral(2014, 2)).
-cursada(terminator,mateDiscreta, anual(2009)).
-cursada(terminator,fisica1, anual(2017)).
-cursada(terminator,fisica1, anual(2018)).
-cursada(danielLarusso,am1, anual(2016)).
-cursada(danielLarusso,algebra, cuatrimestral(2015, 2)).
-cursada(danielLarusso,mateDiscreta, anual(2015)).
-cursada(danielLarusso,mateDiscreta, anual(2021)).
-cursada(danielLarusso,fisica1, anual(2019)).
-cursada(eric,algebra,verano(2018,2)).
 
-cursada2(rocky,mateDiscreta, anual(2020),8).
-cursada2(rocky,algebra, cuatrimestral(2018, 2),7).
-cursada2(rocky,algebra, cuatrimestral(2018, 1),6).
-cursada2(rocky,fisica1, anual(2018),5).
-cursada2(terminator,am1, anual(2015),10).
-cursada2(terminator,algebra, cuatrimestral(2014, 2),4).
-cursada2(danielLarusso,fisica1, anual(2019),7).
-cursada2(eric,algebra,verano(2018,2),6).
+cursada(rocky,mateDiscreta, anual(2020),8).
+cursada(rocky,algebra, cuatrimestral(2018, 2),5).
+cursada(rocky,algebra, cuatrimestral(2018, 1),6).
+cursada(rocky,fisica1, anual(2018),5).
+cursada(terminator,am1, anual(2015),10).
+cursada(terminator,algebra, cuatrimestral(2014, 2),4).
+cursada(terminator,mateDiscreta, anual(2009),7).
+cursada(terminator,fisica1, anual(2017),2).
+cursada(terminator,fisica1, anual(2018),8).
+cursada(danielLarusso,fisica1, anual(2019),7).
+cursada(danielLarusso,algebra, cuatrimestral(2015, 2),10).
+cursada(danielLarusso,mateDiscreta, anual(2015),1).
+cursada(danielLarusso,mateDiscreta, anual(2021),6).
+cursada(danielLarusso,fisica1, anual(2019),8).
+cursada(eric,algebra,verano(2018,2),6).
 
 recurso(Estudiante, MateriasRecursada):-
-    cursada(Estudiante, MateriasRecursada, anual(UnAnio)),
-    cursada(Estudiante, MateriasRecursada, anual(OtroAnio)),
+    cursada(Estudiante, MateriasRecursada, anual(UnAnio), _),
+    cursada(Estudiante, MateriasRecursada, anual(OtroAnio), _),
 UnAnio \= OtroAnio.
 
 recurso(Estudiante, MateriasRecursada):-
-    cursada(Estudiante, MateriasRecursada, cuatrimestral(UnAnio, _)),
-    cursada(Estudiante, MateriasRecursada, cuatrimestral(OtroAnio, _)),
+    cursada(Estudiante, MateriasRecursada, cuatrimestral(UnAnio, _), _),
+    cursada(Estudiante, MateriasRecursada, cuatrimestral(OtroAnio, _),_),
 UnAnio \= OtroAnio.
 
 recurso(Estudiante, MateriasRecursada):-
-    cursada(Estudiante, MateriasRecursada, cuatrimestral(_, Cuatri)),
-    cursada(Estudiante, MateriasRecursada, cuatrimestral(_, OtroCuatri)),
+    cursada(Estudiante, MateriasRecursada, cuatrimestral(_, Cuatri),_),
+    cursada(Estudiante, MateriasRecursada, cuatrimestral(_, OtroCuatri),_),
 Cuatri \= OtroCuatri.
+
+recurso(Estudiante, MateriasRecursada):-
+    cursada(Estudiante, MateriasRecursada, verano(Anio,_ ),_),
+    cursada(Estudiante, MateriasRecursada, verano(OtroAnio,_ ),_),
+    Anio \= OtroAnio.
+
+recurso(Estudiante, MateriasRecursada):-
+    cursada(Estudiante, MateriasRecursada, verano(_, Mes),_),
+    cursada(Estudiante, MateriasRecursada, verano(_, OtroMes),_),
+    Mes \= OtroMes.
 
 % Desempeño academico
 % a) 
@@ -198,9 +198,9 @@ indiceAcademicoTotal(Persona,Sumatoria) :-
     findall(Indice,indiceAcademico(Persona,Indice),ListaIndices),
     sumlist(ListaIndices, Sumatoria).
 
-indiceAcademico(Persona,Indice) :- cursada2(Persona,_,anual(_),Nota), indiceAnual(Nota,Indice).
-indiceAcademico(Persona,Indice) :- cursada2(Persona,_,cuatrimestral(_,Cuatri),Nota), indiceCuatrimestral(Cuatri,Nota,Indice).
-indiceAcademico(Persona,Indice) :- cursada2(Persona,_,verano(_,_),Nota) , indiceVerano(Nota,Indice).
+indiceAcademico(Persona,Indice) :- cursada(Persona,_,anual(_),Nota), indiceAnual(Nota,Indice).
+indiceAcademico(Persona,Indice) :- cursada(Persona,_,cuatrimestral(_,Cuatri),Nota), indiceCuatrimestral(Cuatri,Nota,Indice).
+indiceAcademico(Persona,Indice) :- cursada(Persona,_,verano(_,_),Nota) , indiceVerano(Nota,Indice).
 
 indiceAnual(Nota,Indice) :- Indice = Nota.
 indiceCuatrimestral(Cuatri,Nota,Indice) :- Indice is Nota - (Cuatri - 1).
@@ -213,9 +213,9 @@ indiceAcademicoTotalPorMateria(Persona,Materia,Sumatoria) :-
     findall(Indice,indiceAcademicoDeMateria(Persona,Materia,Indice),ListaIndices),
     sumlist(ListaIndices, Sumatoria).
 
-indiceAcademicoDeMateria(Persona,Materia,Indice) :- cursada2(Persona,Materia,anual(_),Nota), indiceAnual(Nota,Indice).
-indiceAcademicoDeMateria(Persona,Materia,Indice) :- cursada2(Persona,Materia,cuatrimestral(_,Cuatri),Nota), indiceCuatrimestral(Cuatri,Nota,Indice).
-indiceAcademicoDeMateria(Persona,Materia,Indice) :- cursada2(Persona,Materia,verano(_,_),Nota) , indiceVerano(Nota,Indice).
+indiceAcademicoDeMateria(Persona,Materia,Indice) :- cursada(Persona,Materia,anual(_),Nota), indiceAnual(Nota,Indice).
+indiceAcademicoDeMateria(Persona,Materia,Indice) :- cursada(Persona,Materia,cuatrimestral(_,Cuatri),Nota), indiceCuatrimestral(Cuatri,Nota,Indice).
+indiceAcademicoDeMateria(Persona,Materia,Indice) :- cursada(Persona,Materia,verano(_,_),Nota) , indiceVerano(Nota,Indice).
 
 
 %  --------------------- Parte 3: Personas que estudian-----------------
@@ -254,25 +254,26 @@ materiaEsFiltro(Materia):-
 % Integrante 3
 /* Punto c */
 
-promedioMateriaAlumno(rocky, am1, 6).
-promedioMateriaAlumno(rocky, algebra, 5).
-promedioMateriaAlumno(rocky, algebra, 6).
-promedioMateriaAlumno(rocky, mateDiscreta, 5).
-promedioMateriaAlumno(rocky, mateDiscreta, 8).
-promedioMateriaAlumno(rocky, fisica1, 6).
-promedioMateriaAlumno(terminator, am1, 6).
-promedioMateriaAlumno(terminator, algebra, 9).
-promedioMateriaAlumno(terminator, mateDiscreta, 9).
-promedioMateriaAlumno(terminator, fisica1, 5).
-promedioMateriaAlumno(terminator, fisica1, 6).
-promedioMateriaAlumno(danielLarusso, am1, 6).
-promedioMateriaAlumno(danielLarusso, algebra, 9).
-promedioMateriaAlumno(danielLarusso, mateDiscreta, 2).
-promedioMateriaAlumno(danielLarusso, mateDiscreta, 9).
-promedioMateriaAlumno(danielLarusso, fisica1, 5).
+
 
 esTrivial(Materia):-
-    promedioMateriaAlumno(_, Materia, 6),
+    cursada(_, Materia, _,6),
+    not(recurso(_, Materia)).
+
+esTrivial(Materia):-
+    cursada(_, Materia, _,7),
+    not(recurso(_, Materia)).
+
+esTrivial(Materia):-
+    cursada(_, Materia, _,8),
+    not(recurso(_, Materia)).
+
+esTrivial(Materia):-
+    cursada(_, Materia, _,9),
+    not(recurso(_, Materia)).
+
+esTrivial(Materia):-
+    cursada(_, Materia, _,10),
     not(recurso(_, Materia)).
 
 %  --------------------- Parte 4 -----------------
@@ -285,3 +286,15 @@ disponibleParaCursar(Nombre, ListaMaterias):-
     findall(MateriaDisponible, (esCorrelativa(MateriaDisponible, Materia), not(aproboCursada(Nombre,MateriaDisponible)) ), ListaMaterias).
 
 % Integrante 3
+
+esTranqui(am1).
+esTranqui(fisica1).
+esTranqui(mateDiscreta).
+esTranqui(syo).
+esTranqui(legislacion).
+esTranqui(quimica).
+esTranqui(ingles1).
+esTranqui(am1).
+
+esTranqui(am1)
+
