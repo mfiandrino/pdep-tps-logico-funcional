@@ -44,17 +44,7 @@ esIntegradora(administracionDeRecursos).
 esLibre(ingles).
 esLibre(ingles2).
 
-%  --------------------- Parte 1: Las Materias -----------------
-/* Punto 1 */
-tieneMasDeCienHoras(Materia) :- materia(Materia,Horas), Horas>100.
-tieneNombreLargo(Materia) :- materia(Materia,_) , string_length(Materia, Length) , Length > 25.
-
-esPesada(Materia) :- tieneMasDeCienHoras(Materia), esIntegradora(Materia).
-esPesada(Materia) :- tieneNombreLargo(Materia).
-
-
-/* punto 2 */
-% Base de conocimiento
+% Correlatividades
 esCorrelativa(am2, am1).
 esCorrelativa(am2, algebra).
 esCorrelativa(fisica2, am1).
@@ -109,49 +99,7 @@ esCorrelativa(sistemasDeGestion, administracionDeRecursos).
 esCorrelativa(sistemasDeGestion, investigacionOperativa).
 esCorrelativa(sistemasDeGestion, simulacion).
 
-
-materiasIniciales(algebra).
-materiasIniciales(am1).
-materiasIniciales(ingles1).
-materiasIniciales(syo).
-materiasIniciales(ayed).
-materiasIniciales(mateDiscreta).
-materiasIniciales(arqCompu).
-materiasIniciales(quimica).
-materiasIniciales(ingysoc).
-materiasIniciales(sistDeRep).
-materiasIniciales(fisica1).
-
-% a.  - Todos los integrantes -
-cualesSonLasMateriasIniciales(Materia):- materiasIniciales(Materia).
-
-% b. Integrante 2
-todasLasCorrelativas(Materia, Correlativa):- esCorrelativa(Materia, Correlativa).
-todasLasCorrelativas(Materia, Correlativa):- esCorrelativa(SiguienteCorrelativa, Correlativa),
-    todasLasCorrelativas(Materia, SiguienteCorrelativa).
-    
-
-% c. Integrante 3
-
-materiasQueHabilita(Asignatura, MateriasQueHabilita):-materia(Asignatura, _),
-    esCorrelativa(MateriasQueHabilita, Asignatura). 
-
-
-%  --------------------- Parte 2: Cursada -----------------
-% Requerimientos base
-% Integrante 1
-anioCursada(Persona,Materia,Anio) :- cursada(Persona,Materia,anual(Anio),_).
-anioCursada(Persona,Materia,Anio) :- cursada(Persona,Materia,cuatrimestral(Anio,_),_).
-anioCursada(Persona,Materia,Anio) :- cursada(Persona,Materia,verano(Anio2,_),_), Anio is Anio2-1.
-
-% Integrante 2
-aproboCursada(Nombre, Materia):-
-    nota(Nombre, Materia, Nota),
-    Nota >= 6.
-
-% Integrante 3
-
-
+% Cursadas
 cursada(rocky,mateDiscreta, anual(2020),8).
 cursada(rocky,algebra, cuatrimestral(2018, 2),5).
 cursada(rocky,algebra, cuatrimestral(2018, 1),6).
@@ -169,7 +117,44 @@ cursada(danielLarusso,fisica1, anual(2019),8).
 cursada(eric,algebra,verano(2018,2),6).
 
 
+%  --------------------- Parte 1: Las Materias -----------------
+/* Punto 1 - Intergrante 1*/
+tieneMasDeCienHoras(Materia) :- materia(Materia,Horas), Horas>100.
+tieneNombreLargo(Materia) :- materia(Materia,_) , string_length(Materia, Length) , Length > 25.
 
+esPesada(Materia) :- tieneMasDeCienHoras(Materia), esIntegradora(Materia).
+esPesada(Materia) :- tieneNombreLargo(Materia).
+
+
+/* punto 2 */
+% a.  - Todos los integrantes -
+materiasIniciales(Materia) :- 
+    materia(Materia,_),
+    not(esCorrelativa(Materia,_)).
+
+% b. Integrante 2
+todasLasCorrelativas(Materia, Correlativa):- esCorrelativa(Materia, Correlativa).
+todasLasCorrelativas(Materia, Correlativa):- esCorrelativa(SiguienteCorrelativa, Correlativa),
+    todasLasCorrelativas(Materia, SiguienteCorrelativa).
+
+% c. Integrante 3
+materiasQueHabilita(Asignatura, MateriasQueHabilita):-materia(Asignatura, _),
+    esCorrelativa(MateriasQueHabilita, Asignatura). 
+
+
+%  --------------------- Parte 2: Cursada -----------------
+% Requerimientos base
+% a. Integrante 1
+anioCursada(Persona,Materia,Anio) :- cursada(Persona,Materia,anual(Anio),_).
+anioCursada(Persona,Materia,Anio) :- cursada(Persona,Materia,cuatrimestral(Anio,_),_).
+anioCursada(Persona,Materia,Anio) :- cursada(Persona,Materia,verano(Anio2,_),_), Anio is Anio2-1.
+
+% b. Integrante 2
+aproboCursada(Nombre,Materia) :-
+    cursada(Nombre,Materia,_,Nota),
+    Nota >= 6.
+
+% c. Integrante 3
 recurso(Estudiante, MateriasRecursada):-
     cursada(Estudiante, MateriasRecursada, anual(UnAnio), _),
     cursada(Estudiante, MateriasRecursada, anual(OtroAnio), _),
@@ -196,7 +181,7 @@ recurso(Estudiante, MateriasRecursada):-
     Mes \= OtroMes.
 
 % Desempeño academico
-% a) 
+% a. Todos los integrantes
 indiceAcademicoTotal(Persona,Sumatoria) :- 
     findall(Indice,indiceAcademico(Persona,Indice),ListaIndices),
     sumlist(ListaIndices, Sumatoria).
@@ -211,7 +196,7 @@ indiceVerano(Nota,Indice) :- between(0,10,Nota), Nota < 9 , Indice is Nota.
 indiceVerano(Nota,Indice) :- between(0,10,Nota), Nota >= 9 , Indice is 8.
 
 
-%b)
+% b. Todos los integrantes
 indiceAcademicoTotalPorMateria(Persona,Materia,Sumatoria) :- 
     findall(Indice,indiceAcademicoDeMateria(Persona,Materia,Indice),ListaIndices),
     sumlist(ListaIndices, Sumatoria).
@@ -223,49 +208,29 @@ indiceAcademicoDeMateria(Persona,Materia,Indice) :- cursada(Persona,Materia,vera
 
 %  --------------------- Parte 3: Personas que estudian-----------------
 
-% Integrante 1
+% a. Integrante 1
 notaFinal(rocky,algebra,5).
+notaFinal(terminator,mateDiscreta,3).
 notaFinal(danielLarusso,fisica1,6).
+notaFinal(danielLarusso,mateDiscreta,3).
 notaFinal(eric,algebra,10).
 
 esProcrastinadora(Persona) :-
     notaFinal(Persona,_,_),
     forall(notaFinal(Persona,_,Nota),Nota < 6).
 
-% Integrante 2
-nota(alicia, sintaxis, 7).
-nota(juan, sintaxis, 8).
-nota(pedro, sintaxis, 7).
-nota(jose, sintaxis, 7).
-nota(alicia, paradigmas, 7).
-nota(juan, paradigmas, 6).
-nota(pedro, paradigmas, 7).
-nota(jose, paradigmas, 7).
-nota(alicia, proba, 7).
-nota(juan, proba, 8).
-nota(pedro, matematicaSuperior, 7).
-nota(jose, matematicaSuperior, 7).
-nota(alicia, ingles1, 7).
-nota(alicia, ingles2, 7).
-nota(alicia, ads, 6).
-nota(pedro, paradigmas, 7).
-nota(jose, paradigmas, 7).
-
-
+% b. Integrante 2
 soloRegularizoCursada(Nombre, Materia):-
-    nota(Nombre, Materia, Nota),
+    cursada(Nombre,Materia,_,Nota),
     Nota >=6,
     Nota <8.
 
 materiaEsFiltro(Materia):-
-    nota(Nombre,Materia,_),
-    forall(nota(Nombre,Materia,_), soloRegularizoCursada(Nombre, Materia)).
-
-% Integrante 3
-/* Punto c */
+    cursada(Nombre,Materia,_,_),
+    forall(cursada(Nombre,Materia,_,_), soloRegularizoCursada(Nombre, Materia)).
 
 
-
+% c. Integrante 3
 esTrivial(Materia):-
     cursada(_, Materia, _,6),
     not(recurso(_, Materia)).
@@ -291,14 +256,14 @@ esTrivial(Materia):-
 
 %  --------------------- Parte 4 -----------------
 
-% Integrante 1
+% a. Integrante 1
 
-% Integrante 2
+% b. Integrante 2
 disponibleParaCursar(Nombre, ListaMaterias):-
     aproboCursada(Nombre,Materia),
     findall(MateriaDisponible, (esCorrelativa(MateriaDisponible, Materia), not(aproboCursada(Nombre,MateriaDisponible)) ), ListaMaterias).
 
-% Integrante 3
+% c. Integrante 3
 
 esTranqui(am1).
 esTranqui(fisica1).
