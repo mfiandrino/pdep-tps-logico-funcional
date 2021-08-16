@@ -151,6 +151,7 @@ aproboCursada(Nombre, Materia):-
 
 % Integrante 3
 
+
 cursada(rocky,mateDiscreta, anual(2020),8).
 cursada(rocky,algebra, cuatrimestral(2018, 2),5).
 cursada(rocky,algebra, cuatrimestral(2018, 1),6).
@@ -166,6 +167,8 @@ cursada(danielLarusso,mateDiscreta, anual(2015),1).
 cursada(danielLarusso,mateDiscreta, anual(2021),6).
 cursada(danielLarusso,fisica1, anual(2019),8).
 cursada(eric,algebra,verano(2018,2),6).
+
+
 
 recurso(Estudiante, MateriasRecursada):-
     cursada(Estudiante, MateriasRecursada, anual(UnAnio), _),
@@ -221,6 +224,13 @@ indiceAcademicoDeMateria(Persona,Materia,Indice) :- cursada(Persona,Materia,vera
 %  --------------------- Parte 3: Personas que estudian-----------------
 
 % Integrante 1
+notaFinal(rocky,algebra,5).
+notaFinal(danielLarusso,fisica1,6).
+notaFinal(eric,algebra,10).
+
+esProcrastinadora(Persona) :-
+    notaFinal(Persona,_,_),
+    forall(notaFinal(Persona,_,Nota),Nota < 6).
 
 % Integrante 2
 nota(alicia, sintaxis, 7).
@@ -276,6 +286,9 @@ esTrivial(Materia):-
     cursada(_, Materia, _,10),
     not(recurso(_, Materia)).
 
+% El concepto al que hacen referencia en la Parte 3 es el de inversibilidad.
+
+
 %  --------------------- Parte 4 -----------------
 
 % Integrante 1
@@ -296,5 +309,5 @@ esTranqui(quimica).
 esTranqui(ingles1).
 esTranqui(am1).
 
-esTranqui(am1)
+esTranqui(am1).
 
