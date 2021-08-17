@@ -276,3 +276,11 @@ esTranqui(am1).
 
 esTranqui(am1).
 
+combinacionMateriasTranquis(Estudiante, Combinacion):-
+    findall(Materias, (cursada(Estudiante,Materia,_,_), materiasQueHabilita(Materia, Materias);
+not(cursada(Estudiante, Materias,_,_)), materiasIniciales(Materias)),
+CombinacionDada),
+list_to_set(CombinacionDada, Combinacion).
+combinacionMateriasTranquilas(Estudiante, Combinacion):-
+    combinacionMateriasTranquilas(Estudiante, CombinacionDada),
+    findall(Materia,(member(Materia, CombinacionDada),not(materiaEsFiltro(Materia))), Combinacion).
