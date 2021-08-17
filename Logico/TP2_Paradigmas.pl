@@ -3,11 +3,11 @@ materia(algebra, 160).
 materia(am1, 160).                
 materia(mateDiscreta, 96).       
 materia(ayed, 160).              
-materia(arqCompu, 128).          
-materia(syo, 96).                
+materia(arqCompu, 128).                     
 materia(quimica, 48).            
-materia(ingysoc, 64).            
-materia(ads, 192).               
+materia(ingysoc, 64).   
+materia(syo, 96).    
+materia(ads, 192).      
 materia(sistDeRep, 96).          
 materia(am2, 160).               
 materia(sintaxis, 128).          
@@ -33,7 +33,8 @@ materia(simulacion, 128).
 materia(proyectoFinal, 192).              
 materia(inteligenciaArtificial, 96).         
 materia(administracionGerencial, 96).            
-materia(sistemasDeGestion, 128).              
+materia(sistemasDeGestion, 128).     
+
 
 % Materias integradoras y libres
 esIntegradora(ads).
@@ -115,7 +116,6 @@ cursada(danielLarusso,mateDiscreta, anual(2015),1).
 cursada(danielLarusso,mateDiscreta, anual(2021),6).
 cursada(danielLarusso,fisica1, anual(2019),8).
 cursada(eric,algebra,verano(2018,2),6).
-
 
 %  --------------------- Parte 1: Las Materias -----------------
 /* Punto 1 - Intergrante 1*/
@@ -217,7 +217,7 @@ notaFinal(eric,algebra,10).
 
 esProcrastinadora(Persona) :-
     notaFinal(Persona,_,_),
-    forall(notaFinal(Persona,_,Nota),Nota < 6).
+    forall((aproboCursada(Persona,Materia),notaFinal(Persona,Materia,Nota)),Nota < 6).
 
 % b. Integrante 2
 soloRegularizoCursada(Nombre, Materia):-
@@ -228,7 +228,6 @@ soloRegularizoCursada(Nombre, Materia):-
 materiaEsFiltro(Materia):-
     cursada(Nombre,Materia,_,_),
     forall(cursada(Nombre,Materia,_,_), soloRegularizoCursada(Nombre, Materia)).
-
 
 % c. Integrante 3
 esTrivial(Materia):-
@@ -251,12 +250,102 @@ esTrivial(Materia):-
     cursada(_, Materia, _,10),
     not(recurso(_, Materia)).
 
+% Predicado para saber si aprobo el final.
+aproboFinal(Persona,Materia) :-
+    notaFinal(Persona,Materia,Nota),
+    Nota >= 6.
 % El concepto al que hacen referencia en la Parte 3 es el de inversibilidad.
 
 
-%  --------------------- Parte 4 -----------------
-
+%  --------------------- Parte 4 --------------------
 % a. Integrante 1
+quiereCursar(eric,economia).
+quiereCursar(eric,fisica2).
+quiereCursar(eric,disenioDeSistemas).
+quiereCursar(eric,ads).
+quiereCursar(eric,syo).
+quiereCursar(eric,sintaxis).
+quiereCursar(eric,fisica1).
+quiereCursar(eric,paradigmas).
+quiereCursar(eric,ingles1).
+quiereCursar(eric,proba).
+
+leGusta(eric,ads).
+leGusta(eric,fisica1).
+leGusta(eric,paradigmas).
+leGusta(eric,ingles1).
+leGusta(eric,proba).
+
+leGusta(seba,so).
+
+
+
+% Caso que tiene las 3 materias
+posibilidadesDeCursada(Nombre,MateriaLinda,MateriaPesada,MateriaIntegradora) :-
+    cursarMateriaLinda(Nombre,MateriaLinda),
+    cursarMateriaPesada(Nombre,MateriaPesada),
+    cursarMateriaIntegradora(Nombre,MateriaIntegradora).
+
+% Caso de que no tiene materia linda
+posibilidadesDeCursada(Nombre,_,MateriaPesada,MateriaIntegradora) :-
+    noQuiereCursarMateriaLinda(Nombre),
+    cursarMateriaPesada(Nombre,MateriaPesada),
+    cursarMateriaIntegradora(Nombre,MateriaIntegradora).
+
+% Caso de que no tiene materia pesada
+posibilidadesDeCursada(Nombre,MateriaLinda,_,MateriaIntegradora) :-
+    cursarMateriaLinda(Nombre,MateriaLinda),
+    noQuiereCursarMateriaPesada(Nombre),
+    cursarMateriaIntegradora(Nombre,MateriaIntegradora).
+
+% Caso de que no tiene materia integradora
+posibilidadesDeCursada(Nombre,MateriaLinda,MateriaPesada,_) :-
+    cursarMateriaLinda(Nombre,MateriaLinda),
+    cursarMateriaPesada(Nombre,MateriaPesada),
+    noQuiereCursarMateriaIntegradora(Nombre).
+
+% Caso de que no tiene materia linda ni pesada
+posibilidadesDeCursada(Nombre,_,_,MateriaIntegradora) :-
+    noQuiereCursarMateriaLinda(Nombre),
+    noQuiereCursarMateriaPesada(Nombre),
+    cursarMateriaIntegradora(Nombre,MateriaIntegradora).
+
+% Caso de que no tiene materia linda ni integradora
+posibilidadesDeCursada(Nombre,_,MateriaPesada,_) :-
+    noQuiereCursarMateriaLinda(Nombre),
+    cursarMateriaPesada(Nombre,MateriaPesada),
+    noQuiereCursarMateriaIntegradora(Nombre).
+
+% Caso de que no tiene materia pesada ni integradora
+posibilidadesDeCursada(Nombre,MateriaLinda,_,_) :-
+    cursarMateriaLinda(Nombre,MateriaLinda),
+    noQuiereCursarMateriaPesada(Nombre),
+    noQuiereCursarMateriaIntegradora(Nombre).
+
+% Predicados auxiliares
+noQuiereCursarMateriaIntegradora(Nombre) :-
+    quiereCursar(Nombre,_),
+    forall(quiereCursar(Nombre,MateriaIntegradora), not(esIntegradora(MateriaIntegradora))).
+
+noQuiereCursarMateriaPesada(Nombre) :-
+    quiereCursar(Nombre,_),
+    forall(quiereCursar(Nombre,MateriaPesada), not(esPesada(MateriaPesada))).
+
+noQuiereCursarMateriaLinda(Nombre) :-
+    quiereCursar(Nombre,_),
+    forall(quiereCursar(Nombre,MateriaLinda), not(leGusta(Nombre,MateriaLinda))).
+
+cursarMateriaLinda(Nombre,MateriaLinda) :-
+    quiereCursar(Nombre,MateriaLinda),
+    leGusta(Nombre,MateriaLinda).
+
+cursarMateriaPesada(Nombre,MateriaPesada) :-
+    quiereCursar(Nombre,MateriaPesada),
+    esPesada(MateriaPesada).
+
+cursarMateriaIntegradora(Nombre,MateriaIntegradora) :-
+    quiereCursar(Nombre,MateriaIntegradora),
+    esIntegradora(MateriaIntegradora).
 
 % b. Integrante 2
 disponibleParaCursar(Nombre, ListaMaterias):-
@@ -264,15 +353,7 @@ disponibleParaCursar(Nombre, ListaMaterias):-
     findall(MateriaDisponible, (esCorrelativa(MateriaDisponible, Materia), not(aproboCursada(Nombre,MateriaDisponible)) ), ListaMaterias).
 
 % c. Integrante 3
-
-esTranqui(am1).
-esTranqui(fisica1).
-esTranqui(mateDiscreta).
-esTranqui(syo).
-esTranqui(legislacion).
-esTranqui(quimica).
-esTranqui(ingles1).
-esTranqui(am1).
-
-esTranqui(am1).
+materiaTranqui(Materia) :-
+    materia(Materia,_), 
+    not(materiaEsFiltro(Materia)).
 
