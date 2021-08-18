@@ -356,10 +356,6 @@ materiasNecesarias(Materia, Lista):-
     findall(MateriaDisponible, (esCorrelativa(MateriaDisponible, Materia)), Lista).
 
 % c. Integrante 3
-materiaTranqui(Materia) :-
-    materia(Materia,_), 
-    not(materiaEsFiltro(Materia)).
-
 combinacionMateriasTranquis(Estudiante, Combinacion):-
     findall(Materias, (cursada(Estudiante,Materia,_,_), materiasQueHabilita(Materia, Materias);
 not(cursada(Estudiante, Materias,_,_)), materiasIniciales(Materias)),
