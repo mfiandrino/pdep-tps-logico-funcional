@@ -114,8 +114,9 @@ cursada(danielLarusso,algebra, cuatrimestral(2015, 2),10).
 cursada(danielLarusso,mateDiscreta, anual(2015),1).
 cursada(danielLarusso,mateDiscreta, anual(2021),6).
 cursada(danielLarusso,fisica1, anual(2019),8).
+cursada(eric,mateDiscreta,verano(2018,2),6).
+cursada(eric,ayed,verano(2018,2),6).
 cursada(eric,algebra,verano(2018,2),6).
-
 
 %  --------------------- Parte 1: Las Materias -----------------
 /* Punto 1 - Intergrante 1*/
@@ -259,12 +260,17 @@ esTrivial(Materia):-
 % a. Integrante 1
 
 % b. Integrante 2
-disponibleParaCursar(Nombre, ListaMaterias):-
+disponibleParaCursar(Nombre, ListaF):-
     aproboCursada(Nombre,Materia),
-    forall(not(aproboCursada(Nombre,MateriaDisponible)), ListaMaterias).
+    esCorrelativa(MateriaNueva,Materia),
+    intersection(materiasNecesarias(MateriaNueva, Lista1), materiasAprobadas(Nombre, Lista2), ListaF),
+    materiasNecesarias(MateriaNueva, Lista1) = ListaF. 
 
-materiasNecesarias(Materia, Lista):- 
-    findall(MateriaDisponible, (esCorrelativa(MateriaDisponible, Materia)), Lista).
+materiasNecesarias(Materia, Lista1):- 
+    findall(MateriaDisponible, (esCorrelativa(Materia, MateriaDisponible)), Lista1).
+
+materiasAprobadas(Nombre, Lista2):- 
+    findall(MateriaDisponible, (aproboCursada(Nombre, MateriaDisponible)), Lista2).
 
 % c. Integrante 3
 
