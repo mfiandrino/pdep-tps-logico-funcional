@@ -350,10 +350,21 @@ cursarMateriaIntegradora(Nombre,MateriaIntegradora) :-
 % b. Integrante 2
 disponibleParaCursar(Nombre, ListaMaterias):-
     aproboCursada(Nombre,Materia),
-    findall(MateriaDisponible, (esCorrelativa(MateriaDisponible, Materia), not(aproboCursada(Nombre,MateriaDisponible)) ), ListaMaterias).
+    forall(not(aproboCursada(Nombre,MateriaDisponible)), ListaMaterias).
+
+materiasNecesarias(Materia, Lista):- 
+    findall(MateriaDisponible, (esCorrelativa(MateriaDisponible, Materia)), Lista).
 
 % c. Integrante 3
 materiaTranqui(Materia) :-
     materia(Materia,_), 
     not(materiaEsFiltro(Materia)).
 
+combinacionMateriasTranquis(Estudiante, Combinacion):-
+    findall(Materias, (cursada(Estudiante,Materia,_,_), materiasQueHabilita(Materia, Materias);
+not(cursada(Estudiante, Materias,_,_)), materiasIniciales(Materias)),
+CombinacionDada),
+list_to_set(CombinacionDada, Combinacion).
+combinacionMateriasTranquilas(Estudiante, Combinacion):-
+    combinacionMateriasTranquilas(Estudiante, CombinacionDada),
+    findall(Materia,(member(Materia, CombinacionDada),not(materiaEsFiltro(Materia))), Combinacion).
