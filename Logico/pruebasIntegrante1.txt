@@ -1,0 +1,148 @@
+PARTE 1--------------------------
+
+esPesada(Materia).
+Materia = ads ;
+Materia = disenioDeSistemas ;
+Materia = administracionDeRecursos ;
+Materia = proyectoFinal ;
+false.
+
+
+PARTE 2--------------------------
+
+anioCursada(Persona,Materia,Anio).
+Persona = rocky,
+Materia = mateDiscreta,
+Anio = 2020 ;
+Persona = rocky,
+Materia = fisica1,
+Anio = 2018 ;
+Persona = terminator,
+Materia = am1,
+Anio = 2015 ;
+Persona = terminator,
+Materia = mateDiscreta,
+Anio = 2009 ;
+Persona = terminator,
+Materia = fisica1,
+Anio = 2017 ;
+Persona = terminator,
+Materia = fisica1,
+Anio = 2018 ;
+Persona = danielLarusso,
+Materia = fisica1,
+Anio = 2019 ;
+Persona = danielLarusso,
+Materia = mateDiscreta,
+Anio = 2015 ;
+Persona = danielLarusso,
+Materia = mateDiscreta,
+Anio = 2021 ;
+Persona = danielLarusso,
+Materia = fisica1,
+Anio = 2019 ;
+Persona = rocky,
+Materia = algebra,
+Anio = 2018 ;
+Persona = rocky,
+Materia = algebra,
+Anio = 2018 ;
+Persona = terminator,
+Materia = algebra,
+Anio = 2014 ;
+Persona = danielLarusso,
+Materia = algebra,
+Anio = 2015 ;
+Persona = eric,
+Materia = algebra,
+Anio = 2017.
+
+
+PARTE 3--------------------------
+
+esProcrastinadora(Persona).
+Persona = rocky ;
+Persona = terminator ;
+false.
+
+
+PARTE 4--------------------------
+
+posibilidadesDeCursada(eric,Linda,Pesada,Integrador).
+Linda = ads,
+Pesada = Integrador, Integrador = disenioDeSistemas ;
+Linda = Integrador, Integrador = ads,
+Pesada = disenioDeSistemas ;
+Linda = ads,
+Pesada = disenioDeSistemas,
+Integrador = syo ;
+Linda = Pesada, Pesada = ads,
+Integrador = disenioDeSistemas ;
+Linda = Pesada, Pesada = Integrador, Integrador = ads ;
+Linda = Pesada, Pesada = ads,
+Integrador = syo ;
+Linda = fisica1,
+Pesada = Integrador, Integrador = disenioDeSistemas ;
+Linda = fisica1,
+Pesada = disenioDeSistemas,
+Integrador = ads ;
+Linda = fisica1,
+Pesada = disenioDeSistemas,
+Integrador = syo ;
+Linda = fisica1,
+Pesada = ads,
+Integrador = disenioDeSistemas ;
+Linda = fisica1,
+Pesada = Integrador, Integrador = ads ;
+Linda = fisica1,
+Pesada = ads,
+Integrador = syo ;
+Linda = paradigmas,
+Pesada = Integrador, Integrador = disenioDeSistemas ;
+Linda = paradigmas,
+Pesada = disenioDeSistemas,
+Integrador = ads ;
+Linda = paradigmas,
+Pesada = disenioDeSistemas,
+Integrador = syo ;
+Linda = paradigmas,
+Pesada = ads,
+Integrador = disenioDeSistemas ;
+Linda = paradigmas,
+Pesada = Integrador, Integrador = ads ;
+Linda = paradigmas,
+Pesada = ads,
+Integrador = syo ;
+Linda = ingles1,
+Pesada = Integrador, Integrador = disenioDeSistemas ;
+Linda = ingles1,
+Pesada = disenioDeSistemas,
+Integrador = ads ;
+Linda = ingles1,
+Pesada = disenioDeSistemas,
+Integrador = syo ;
+Linda = ingles1,
+Pesada = ads,
+Integrador = disenioDeSistemas ;
+Linda = ingles1,
+Pesada = Integrador, Integrador = ads ;
+Linda = ingles1,
+Pesada = ads,
+Integrador = syo ;
+Linda = proba,
+Pesada = Integrador, Integrador = disenioDeSistemas ;
+Linda = proba,
+Pesada = disenioDeSistemas,
+Integrador = ads ;
+Linda = proba,
+Pesada = disenioDeSistemas,
+Integrador = syo ;
+Linda = proba,
+Pesada = ads,
+Integrador = disenioDeSistemas ;
+Linda = proba,
+Pesada = Integrador, Integrador = ads ;
+Linda = proba,
+Pesada = ads,
+Integrador = syo ;
+false.
