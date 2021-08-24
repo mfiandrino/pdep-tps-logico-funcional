@@ -116,14 +116,13 @@ cursada(terminator,algebra, cuatrimestral(2014, 2),4).
 cursada(terminator,mateDiscreta, anual(2009),7).
 cursada(terminator,fisica1, anual(2017),2).
 cursada(terminator,fisica1, anual(2018),8).
-cursada(danielLarusso,fisica1, anual(2019),7).
 cursada(danielLarusso,algebra, cuatrimestral(2015, 2),10).
 cursada(danielLarusso,mateDiscreta, anual(2015),1).
 cursada(danielLarusso,mateDiscreta, anual(2021),6).
 cursada(danielLarusso,fisica1, anual(2019),8).
 cursada(eric,mateDiscreta,verano(2018,2),6).
 cursada(eric,ayed,verano(2018,2),6).
-cursada(eric,algebra,verano(2018,2),6).
+cursada(eric,algebra,verano(2018,2),7).
 
 esPersona(Persona) :- cursada(Persona,_,_,_).
 
@@ -205,35 +204,20 @@ recurso(Estudiante, MateriasRecursada):-
 
 % Desempeño academico
 % a. Todos los integrantes
-indiceAcademicoTotal(Persona,Sumatoria) :- 
-    esPersona(Persona),
-    findall(Indice,indiceAcademico(Persona,Indice),ListaIndices),
-    sumlist(ListaIndices, Sumatoria).
+indiceAcademicoDeMateria(Persona,Materia,Indice) :- cursada(Persona,Materia,anual(_),Indice).
+indiceAcademicoDeMateria(Persona,Materia,Indice) :- cursada(Persona,Materia,cuatrimestral(_,Cuatri),Nota), Indice is Nota - (Cuatri - 1).
+indiceAcademicoDeMateria(Persona,Materia,Indice) :- cursada(Persona,Materia,verano(_,_),Nota) , indiceVerano(Nota,Indice).
 
-indiceAcademico(Persona,Indice) :- cursada(Persona,_,anual(_),Nota), indiceAnual(Nota,Indice).
-indiceAcademico(Persona,Indice) :- cursada(Persona,_,cuatrimestral(_,Cuatri),Nota), indiceCuatrimestral(Cuatri,Nota,Indice).
-indiceAcademico(Persona,Indice) :- cursada(Persona,_,verano(_,_),Nota) , indiceVerano(Nota,Indice).
-
-indiceAnual(Nota,Indice) :- Indice = Nota.
-indiceCuatrimestral(Cuatri,Nota,Indice) :- Indice is Nota - (Cuatri - 1).
-indiceVerano(Nota,Indice) :- between(0,10,Nota), Nota < 9 , Indice is Nota.
-indiceVerano(Nota,Indice) :- between(0,10,Nota), Nota >= 9 , Indice is 8.
-
+indiceVerano(Nota,Nota) :- between(0,10,Nota), Nota < 9.
+indiceVerano(Nota,8) :- between(0,10,Nota), Nota >= 9.
 
 % b. Todos los integrantes
-indiceAcademicoTotalPorMateria(Persona,Materia,Sumatoria) :- 
-    esPersona(Persona),
-    esMateria(Materia),
+indiceAcademicoDeTodasLasCursadasDeLaMateria(Persona,Materia,Sumatoria) :- 
+    cursada(Persona,Materia,_,_),
     findall(Indice,indiceAcademicoDeMateria(Persona,Materia,Indice),ListaIndices),
     sumlist(ListaIndices, Sumatoria).
 
-indiceAcademicoDeMateria(Persona,Materia,Indice) :- cursada(Persona,Materia,anual(_),Nota), indiceAnual(Nota,Indice).
-indiceAcademicoDeMateria(Persona,Materia,Indice) :- cursada(Persona,Materia,cuatrimestral(_,Cuatri),Nota), indiceCuatrimestral(Cuatri,Nota,Indice).
-indiceAcademicoDeMateria(Persona,Materia,Indice) :- cursada(Persona,Materia,verano(_,_),Nota) , indiceVerano(Nota,Indice).
-
-
 %  --------------------- Parte 3: Personas que estudian-----------------
-
 % a. Integrante 1
 notaFinal(rocky,algebra,5).
 notaFinal(terminator,mateDiscreta,3).
@@ -246,24 +230,33 @@ esProcrastinadora(Persona) :-
     forall((aproboCursada(Persona,Materia),notaFinal(Persona,Materia,Nota)),Nota < 6).
 
 % b. Integrante 2
-soloRegularizoCursada(Nombre, Materia):-
-    cursada(Nombre,Materia,_,Nota),
-    Nota >=6,
-    Nota <8.
-
-materiaEsFiltro(Materia):-
-    cursada(Nombre,Materia,_,_),
-    forall(cursada(Nombre,Materia,_,_), soloRegularizoCursada(Nombre, Materia)).
+materiaEsFiltro(Materia) :-
+    cursada(_,Materia,_,_),
+    forall(aproboCursada(Persona,Materia),not(promocionoCursada(Persona,Materia))).
 
 % c. Integrante 3
 esTrivial(Materia) :-
     cursada(_,Materia,_,_),
     forall(cursada(_,Materia,_,Nota), Nota >=6).
 
-% Predicado para saber si aprobo el final.
+% Predicados auxiliares.
 aproboFinal(Persona,Materia) :-
     notaFinal(Persona,Materia,Nota),
     Nota >= 6.
+aproboFinal(Persona,Materia) :-
+    rindioLibre(Persona,Materia,aprobado).
+
+promocionoCursada(Persona,Materia) :- 
+    cursada(Persona,Materia,_,Nota),
+    Nota >= 8.
+
+soloRegularizoCursada(Nombre, Materia):-
+    aproboCursada(Nombre,Materia),
+    not(promocionoCursada(Nombre,Materia)).
+
+aproboMateria(Persona,Materia) :- aproboFinal(Persona,Materia).
+aproboMateria(Persona,Materia) :- promocionoCursada(Persona,Materia).
+
 % El concepto al que hacen referencia en la Parte 3 es el de inversibilidad.
 
 
