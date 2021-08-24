@@ -262,106 +262,21 @@ aproboMateria(Persona,Materia) :- promocionoCursada(Persona,Materia).
 
 %  --------------------- Parte 4 --------------------
 % a. Integrante 1
-quiereCursar(eric,economia).
-quiereCursar(eric,fisica2).
-quiereCursar(eric,disenioDeSistemas).
-quiereCursar(eric,ads).
-quiereCursar(eric,syo).
-quiereCursar(eric,sintaxis).
-quiereCursar(eric,fisica1).
-quiereCursar(eric,paradigmas).
-quiereCursar(eric,ingles1).
-quiereCursar(eric,proba).
-
-
 leGusta(eric,ads).
 leGusta(eric,fisica1).
 leGusta(eric,paradigmas).
 leGusta(eric,ingles1).
 leGusta(eric,proba).
-
-
 leGusta(seba,so).
 
 sinRepetidos(ListaRepetidos,ListaSinRepetir) :-
     list_to_set(ListaRepetidos, ListaSinRepetir).
 
-% Caso que quiere cursar los 3 tipos de materias
 alternativa(Persona,Lista) :-
-    cursarMateriaLinda(Persona,MateriaLinda),
-    cursarMateriaPesada(Persona,MateriaPesada),
-    cursarMateriaIntegradora(Persona,MateriaIntegradora),
+    leGusta(Persona,MateriaLinda),
+    esPesada(MateriaPesada),
+    esIntegradora(MateriaIntegradora),
     sinRepetidos([MateriaLinda,MateriaPesada,MateriaIntegradora], Lista).
-
-% Caso de que no quiere cursar una materia linda
-alternativa(Persona,Lista) :-
-    noQuiereCursarMateriaLinda(Persona),
-    cursarMateriaPesada(Persona,MateriaPesada),
-    cursarMateriaIntegradora(Persona,MateriaIntegradora),
-    sinRepetidos([MateriaPesada,MateriaIntegradora], Lista).
-
-% Caso de que no quiere cursar una materia pesada
-alternativa(Persona,Lista) :-
-    cursarMateriaLinda(Persona,MateriaLinda),
-    noQuiereCursarMateriaPesada(Persona),
-    cursarMateriaIntegradora(Persona,MateriaIntegradora),
-    sinRepetidos([MateriaLinda,MateriaIntegradora], Lista).
-
-% Caso de que no quiere cursar una materia integradora
-alternativa(Persona,Lista) :-
-    cursarMateriaLinda(Persona,MateriaLinda),
-    cursarMateriaPesada(Persona,MateriaPesada),
-    noQuiereCursarMateriaIntegradora(Persona),
-    sinRepetidos([MateriaLinda,MateriaPesada], Lista).
-
-% Caso de que no quiere cursar ni una materia linda ni una pesada
-alternativa(Persona,[MateriaIntegradora]) :-
-    noQuiereCursarMateriaLinda(Persona),
-    noQuiereCursarMateriaPesada(Persona),
-    cursarMateriaIntegradora(Persona,MateriaIntegradora).
-
-% Caso de que no quiere cursar ni una materia linda ni una integradora
-alternativa(Persona,[MateriaPesada]) :-
-    noQuiereCursarMateriaLinda(Persona),
-    cursarMateriaPesada(Persona,MateriaPesada),
-    noQuiereCursarMateriaIntegradora(Persona).
-
-% Caso de que no quiere cursar ni una materia pesada ni una integradora
-alternativa(Persona,[MateriaLinda]) :-
-    cursarMateriaLinda(Persona,MateriaLinda),
-    noQuiereCursarMateriaPesada(Persona),
-    noQuiereCursarMateriaIntegradora(Persona).
-
-% Caso de que no quiere cursar ni una materia linda ni una pesada ni una integradora
-alternativa(Persona,[]) :-
-    noQuiereCursarMateriaLinda(Persona),
-    noQuiereCursarMateriaPesada(Persona),
-    noQuiereCursarMateriaIntegradora(Persona).
-
-% Predicados auxiliares
-noQuiereCursarMateriaIntegradora(Nombre) :-
-    quiereCursar(Nombre,_),
-    forall(quiereCursar(Nombre,MateriaIntegradora), not(esIntegradora(MateriaIntegradora))).
-
-noQuiereCursarMateriaPesada(Nombre) :-
-    quiereCursar(Nombre,_),
-    forall(quiereCursar(Nombre,MateriaPesada), not(esPesada(MateriaPesada))).
-
-noQuiereCursarMateriaLinda(Nombre) :-
-    quiereCursar(Nombre,_),
-    forall(quiereCursar(Nombre,MateriaLinda), not(leGusta(Nombre,MateriaLinda))).
-
-cursarMateriaLinda(Nombre,MateriaLinda) :-
-    quiereCursar(Nombre,MateriaLinda),
-    leGusta(Nombre,MateriaLinda).
-
-cursarMateriaPesada(Nombre,MateriaPesada) :-
-    quiereCursar(Nombre,MateriaPesada),
-    esPesada(MateriaPesada).
-
-cursarMateriaIntegradora(Nombre,MateriaIntegradora) :-
-    quiereCursar(Nombre,MateriaIntegradora),
-    esIntegradora(MateriaIntegradora).
 
 % b. Integrante 2
 disponibleParaCursar(Nombre, ListaF):-
