@@ -269,8 +269,9 @@ leGusta(eric,ingles1).
 leGusta(eric,proba).
 leGusta(seba,so).
 
-sinRepetidos(ListaRepetidos,ListaSinRepetir) :-
-    list_to_set(ListaRepetidos, ListaSinRepetir).
+sinRepetidos([],[]).
+sinRepetidos([Cabeza|Cola], ListaSinRepetidos):- member(Cabeza, Cola), !, sinRepetidos(Cola, ListaSinRepetidos).
+sinRepetidos([Cabeza|Cola],[Cabeza|ListaSinRepetidos]) :- sinRepetidos(Cola,ListaSinRepetidos).
 
 alternativa(Persona,Lista) :-
     leGusta(Persona,MateriaLinda),
