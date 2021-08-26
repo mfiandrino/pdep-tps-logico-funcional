@@ -178,29 +178,12 @@ aproboCursada(Nombre,Materia) :-
 
 % c. Integrante 3
 recurso(Estudiante, MateriasRecursada):-
-    cursada(Estudiante, MateriasRecursada, anual(UnAnio), _),
-    cursada(Estudiante, MateriasRecursada, anual(OtroAnio), _),
-UnAnio \= OtroAnio.
+    anioCursada(Estudiante, MateriasRecursada, Anio),
+    anioCursada(Estudiante, MateriasRecursada, OtroAnio),
+Anio \= OtroAnio.
 
-recurso(Estudiante, MateriasRecursada):-
-    cursada(Estudiante, MateriasRecursada, cuatrimestral(UnAnio, _), _),
-    cursada(Estudiante, MateriasRecursada, cuatrimestral(OtroAnio, _),_),
-UnAnio \= OtroAnio.
 
-recurso(Estudiante, MateriasRecursada):-
-    cursada(Estudiante, MateriasRecursada, cuatrimestral(_, Cuatri),_),
-    cursada(Estudiante, MateriasRecursada, cuatrimestral(_, OtroCuatri),_),
-Cuatri \= OtroCuatri.
 
-recurso(Estudiante, MateriasRecursada):-
-    cursada(Estudiante, MateriasRecursada, verano(Anio,_ ),_),
-    cursada(Estudiante, MateriasRecursada, verano(OtroAnio,_ ),_),
-    Anio \= OtroAnio.
-
-recurso(Estudiante, MateriasRecursada):-
-    cursada(Estudiante, MateriasRecursada, verano(_, Mes),_),
-    cursada(Estudiante, MateriasRecursada, verano(_, OtroMes),_),
-    Mes \= OtroMes.
 
 % Desempeño academico
 % a. Todos los integrantes
