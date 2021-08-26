@@ -109,6 +109,8 @@ rindioLibre(danielLarusso,ingles1,desaprobado).
 % Cursadas
 cursada(rocky,mateDiscreta, anual(2020),8).
 cursada(rocky,algebra, cuatrimestral(2018, 2),5).
+cursada(rocky,algebra, cuatrimestra(2018, 1),6).
+cursada(rocky,quimica, anual(2015),6).
 cursada(rocky,algebra, cuatrimestral(2018, 1),6).
 cursada(rocky,fisica1, anual(2018),5).
 cursada(terminator,am1, anual(2015),10).
@@ -178,12 +180,29 @@ aproboCursada(Nombre,Materia) :-
 
 % c. Integrante 3
 recurso(Estudiante, MateriasRecursada):-
-    anioCursada(Estudiante, MateriasRecursada, Anio),
-    anioCursada(Estudiante, MateriasRecursada, OtroAnio),
-Anio \= OtroAnio.
+    cursada(Estudiante, MateriasRecursada, anual(UnAnio), _),
+    cursada(Estudiante, MateriasRecursada, anual(OtroAnio), _),
+UnAnio \= OtroAnio.
 
+recurso(Estudiante, MateriasRecursada):-
+    cursada(Estudiante, MateriasRecursada, cuatrimestral(UnAnio, _), _),
+    cursada(Estudiante, MateriasRecursada, cuatrimestral(OtroAnio, _),_),
+UnAnio \= OtroAnio.
 
+recurso(Estudiante, MateriasRecursada):-
+    cursada(Estudiante, MateriasRecursada, cuatrimestral(_, Cuatri),_),
+    cursada(Estudiante, MateriasRecursada, cuatrimestral(_, OtroCuatri),_),
+Cuatri \= OtroCuatri.
 
+recurso(Estudiante, MateriasRecursada):-
+    cursada(Estudiante, MateriasRecursada, verano(Anio,_ ),_),
+    cursada(Estudiante, MateriasRecursada, verano(OtroAnio,_ ),_),
+    Anio \= OtroAnio.
+
+recurso(Estudiante, MateriasRecursada):-
+    cursada(Estudiante, MateriasRecursada, verano(_, Mes),_),
+    cursada(Estudiante, MateriasRecursada, verano(_, OtroMes),_),
+    Mes \= OtroMes.
 
 % Desempeño academico
 % a. Todos los integrantes
@@ -275,17 +294,26 @@ materiasNecesarias(Materia, Lista1):-
 materiasAprobadas(Nombre, Lista2):- 
     findall(MateriaDisponible, (aproboCursada(Nombre, MateriaDisponible)), Lista2).
 
-/*
-% c. Integrante 3
-combinacionMateriasTranquis(Estudiante, Combinacion):-
-    findall(Materias, (cursada(Estudiante,Materia,_,_), materiasQueHabilita(Materia, Materias);
-not(cursada(Estudiante, Materias,_,_)), materiasIniciales(Materias)),
-CombinacionDada),
-list_to_set(CombinacionDada, Combinacion).
-combinacionMateriasTranquilas(Estudiante, Combinacion):-
-    combinacionMateriasTranquilas(Estudiante, CombinacionDada),
-    findall(Materia,(member(Materia, CombinacionDada),not(materiaEsFiltro(Materia))), Combinacion).
-*/
+%c. Integrante 3 Generar estudiante, luego materias posibles, Abstraccion de Materia Tranqui por ej esTranqui (No Filtro)
+% Materia posible = que no haya aprobado pero si las cursada de las correlativas. 
+% generar findall de materias tranqui, con la condicion que sea tranqui y posible, se genera una lista y con esa trabajo.
+% Y ahi hacer la combinatoria. Para eliminar el repetido, no suar list_to:set, usar un predicado auxiliar que sea sin repetidos, con recursividad
+% c. Integrante 3 . 
+alumnosCursando([rocky, terminator, danielLarusso,eric]).
+esTranqui(Materia):-not(materiaEsFiltro(Materia)).
+materiaPosible(Estudiante, Materia):-not(aproboCursada(Estudiante, Materia)), correlativa(Materia, Correlativa), aproboCursada(Estudiante, Correlativa).
+todasMateriasTranquis(Materias):-findall(Materia, (esTranqui(Materia), materiaPosible(_, Materia)), Materias).
 
+    
+combinacionTranquis(Estudiante, Tranquis):-
+    todasMateriasTranquis(Tranquis).
+  
 
+tranquis([], []).
+tranquis([MateriasPosible|MateriasPosibles], [MateriasPosible|Tranquis]):-
+	puedeCursar(MateriasPosible), 
+tranquis(Posibles, Tranquis).
+tranquis([_|MateriasPosibles], Tranquis):-
+	tranquis(MateriasPosibles, Tranquis).
 
+ 
