@@ -300,7 +300,7 @@ materiasAprobadas(Nombre, Lista2):-
 % Y ahi hacer la combinatoria. Para eliminar el repetido, no suar list_to:set, usar un predicado auxiliar que sea sin repetidos, con recursividad
 % c. Integrante 3 . 
 alumnosCursando([rocky, terminator, danielLarusso,eric]).
-esTranqui(Materia):-not(materiaEsFiltro(Materia)).
+esTranqui(Materia):-cursada(_, Materia, _ ,_), not(materiaEsFiltro(Materia)).
 materiaPosible(Estudiante, Materia):-not(aproboCursada(Estudiante, Materia)), correlativa(Materia, Correlativa), aproboCursada(Estudiante, Correlativa).
 todasMateriasTranquis(Materias):-findall(Materia, (esTranqui(Materia), materiaPosible(_, Materia)), Materias).
 
@@ -311,7 +311,7 @@ combinacionTranquis(Estudiante, Tranquis):-
 
 tranquis([], []).
 tranquis([MateriasPosible|MateriasPosibles], [MateriasPosible|Tranquis]):-
-	puedeCursar(MateriasPosible), 
+todasMateriasTranquis(MateriasPosible), 
 tranquis(Posibles, Tranquis).
 tranquis([_|MateriasPosibles], Tranquis):-
 	tranquis(MateriasPosibles, Tranquis).
