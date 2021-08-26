@@ -280,29 +280,42 @@ alternativa(Persona,Lista) :-
     sinRepetidos([MateriaLinda,MateriaPesada,MateriaIntegradora], Lista).
 
 % b. Integrante 2
-disponibleParaCursar(Nombre, ListaF):-
-    aproboCursada(Nombre,Materia),
-    esCorrelativa(MateriaNueva,Materia),
-    intersection(materiasNecesarias(MateriaNueva, Lista1), materiasAprobadas(Nombre, Lista2), ListaF),
-    materiasNecesarias(MateriaNueva, Lista1) = ListaF. 
+materiasQuePuedeCursar(Estudiante,ListaMaterias) :-
+    cursada(Estudiante,_,_,_),
+    findall(Materia,materiaQuePuedeCursar(Estudiante,Materia),Materias),
+    sinRepetidos(Materias,ListaMaterias).
 
-materiasNecesarias(Materia, Lista1):- 
-    findall(MateriaDisponible, (esCorrelativa(Materia, MateriaDisponible)), Lista1).
+materiaQuePuedeCursar(Estudiante,Materia) :-
+    esMateria(Materia),
+    cursada(Estudiante,_,_,_),
+    forall(correlativa(Materia,Correlativa) , aproboCursada(Estudiante,Correlativa)),
+    not(aproboCursada(Estudiante,Materia)).
 
-materiasAprobadas(Nombre, Lista2):- 
-    findall(MateriaDisponible, (aproboCursada(Nombre, MateriaDisponible)), Lista2).
+combinatoria([],[]).
 
-/*
+combinatoria([Materia|Materias],[Materia|MateriasCombinatoria]) :-
+    combinatoria(Materias,MateriasCombinatoria).
+
+combinatoria([_|Materias],MateriasCombinatoria) :-
+    combinatoria(Materias,MateriasCombinatoria).
+
+
+combinatoriaMateriasQuePuedeCursar(Persona,Combinatoria) :-
+    materiasQuePuedeCursar(Persona,MateriasTranqui),
+    combinatoria(MateriasTranqui,Combinatoria).
+
+
 % c. Integrante 3
-combinacionMateriasTranquis(Estudiante, Combinacion):-
-    findall(Materias, (cursada(Estudiante,Materia,_,_), materiasQueHabilita(Materia, Materias);
-not(cursada(Estudiante, Materias,_,_)), materiasIniciales(Materias)),
-CombinacionDada),
-list_to_set(CombinacionDada, Combinacion).
-combinacionMateriasTranquilas(Estudiante, Combinacion):-
-    combinacionMateriasTranquilas(Estudiante, CombinacionDada),
-    findall(Materia,(member(Materia, CombinacionDada),not(materiaEsFiltro(Materia))), Combinacion).
-*/
 
+esTranqui(Materia) :- 
+    cursada(_,Materia,_,_),
+    not(materiaEsFiltro(Materia)).
 
+materiasTranquiQuePuedeCursar(Persona,MateriasTranqui) :- 
+    cursada(Persona,_,_,_),
+    findall(MateriaTranqui,(esTranqui(MateriaTranqui),materiaQuePuedeCursar(Persona,MateriaTranqui)),MateriasTranquiAux),
+    sinRepetidos(MateriasTranquiAux,MateriasTranqui).
 
+combinatoriaMateriasTranquis(Persona,Combinatoria) :-
+    materiasTranquiQuePuedeCursar(Persona,MateriasTranqui),
+    combinatoria(MateriasTranqui,Combinatoria).
