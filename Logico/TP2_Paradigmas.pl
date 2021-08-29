@@ -147,7 +147,7 @@ materiasIniciales(Materia) :-
 todasLasCorrelativas(Materia,ListaCorrelativas) :-
     esMateria(Materia),
     findall(Correlativa,correlativa(Materia,Correlativa),ListaCorrelativasAux),
-    list_to_set(ListaCorrelativasAux, ListaCorrelativas).
+    sinRepetidos(ListaCorrelativasAux, ListaCorrelativas).
     
 
 correlativa(Materia, Correlativa):- esCorrelativa(Materia, Correlativa).
@@ -158,7 +158,7 @@ correlativa(Materia, Correlativa):- esCorrelativa(SiguienteCorrelativa, Correlat
 todasLasMateriasQueHabilita(Asignatura,ListaDeMateriasQueHabilita) :- 
     esMateria(Asignatura),
     findall(MateriaQueHabilita,materiaQueHabilita(Asignatura, MateriaQueHabilita),ListaDeMateriasQueHabilitaAux),
-    list_to_set(ListaDeMateriasQueHabilitaAux, ListaDeMateriasQueHabilita).
+    sinRepetidos(ListaDeMateriasQueHabilitaAux, ListaDeMateriasQueHabilita).
     
 materiaQueHabilita(Asignatura, MateriaQueHabilita):-materia(Asignatura, _),
     esCorrelativa(MateriaQueHabilita, Asignatura). 
@@ -251,9 +251,23 @@ leGusta(eric,ingles1).
 leGusta(eric,proba).
 leGusta(seba,so).
 
+sinRepetidos2([],[]).
+sinRepetidos2([Cabeza|Cola], ListaSinRepetidos):- member(Cabeza, Cola), !, sinRepetidos(Cola, ListaSinRepetidos).
+sinRepetidos2([Cabeza|Cola],[Cabeza|ListaSinRepetidos]) :- sinRepetidos(Cola,ListaSinRepetidos).
+
 sinRepetidos([],[]).
-sinRepetidos([Cabeza|Cola], ListaSinRepetidos):- member(Cabeza, Cola), !, sinRepetidos(Cola, ListaSinRepetidos).
+sinRepetidos([Cabeza|Cola], ListaSinRepetidos):- 
+    member(Cabeza, Cola),
+    sinRepetidos(Cola, ListaSinRepetidos).
+sinRepetidos([Cabeza|Cola],[Cabeza|ListaSinRepetidos]) :- 
+    not(member(Cabeza, Cola)),
+    sinRepetidos(Cola,ListaSinRepetidos).
+
+/*
+Deberían definir 2 reglas recursivas mutuamente excluyentes, es decir en un lugar de esta regla:
 sinRepetidos([Cabeza|Cola],[Cabeza|ListaSinRepetidos]) :- sinRepetidos(Cola,ListaSinRepetidos).
+Deberían verificar que la Cabeza no este en la Cola y eliminar el (!) de la regla anterior.
+*/
 
 alternativa(Persona,Lista) :-
     leGusta(Persona,MateriaLinda),
