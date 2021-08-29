@@ -249,7 +249,6 @@ leGusta(eric,fisica1).
 leGusta(eric,paradigmas).
 leGusta(eric,ingles1).
 leGusta(eric,proba).
-leGusta(seba,so).
 
 sinRepetidos2([],[]).
 sinRepetidos2([Cabeza|Cola], ListaSinRepetidos):- member(Cabeza, Cola), !, sinRepetidos(Cola, ListaSinRepetidos).
@@ -262,12 +261,6 @@ sinRepetidos([Cabeza|Cola], ListaSinRepetidos):-
 sinRepetidos([Cabeza|Cola],[Cabeza|ListaSinRepetidos]) :- 
     not(member(Cabeza, Cola)),
     sinRepetidos(Cola,ListaSinRepetidos).
-
-/*
-Deberían definir 2 reglas recursivas mutuamente excluyentes, es decir en un lugar de esta regla:
-sinRepetidos([Cabeza|Cola],[Cabeza|ListaSinRepetidos]) :- sinRepetidos(Cola,ListaSinRepetidos).
-Deberían verificar que la Cabeza no este en la Cola y eliminar el (!) de la regla anterior.
-*/
 
 alternativa(Persona,Lista) :-
     leGusta(Persona,MateriaLinda),
