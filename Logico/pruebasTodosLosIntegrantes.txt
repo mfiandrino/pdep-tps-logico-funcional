@@ -1,0 +1,128 @@
+PARTE 1--------------------------
+
+materiasIniciales(Materia).
+Materia = algebra ;
+Materia = am1 ;
+Materia = mateDiscreta ;
+Materia = ayed ;
+Materia = arqCompu ;
+Materia = quimica ;
+Materia = ingysoc ;
+Materia = syo ;
+Materia = sistDeRep ;
+Materia = fisica1 ;
+Materia = ingles1 ;
+false.
+
+PARTE 2--------------------------
+
+indiceAcademicoDeMateria(Persona,Materia,Indice).
+Persona = rocky,
+Materia = mateDiscreta,
+Indice = 8 ;
+Persona = rocky,
+Materia = quimica,
+Indice = 6 ;
+Persona = rocky,
+Materia = fisica1,
+Indice = 5 ;
+Persona = terminator,
+Materia = am1,
+Indice = 10 ;
+Persona = terminator,
+Materia = mateDiscreta,
+Indice = 7 ;
+Persona = terminator,
+Materia = fisica1,
+Indice = 2 ;
+Persona = terminator,
+Materia = fisica1,
+Indice = 8 ;
+Persona = danielLarusso,
+Materia = mateDiscreta,
+Indice = 1 ;
+Persona = danielLarusso,
+Materia = mateDiscreta,
+Indice = 6 ;
+Persona = danielLarusso,
+Materia = fisica1,
+Indice = 8 ;
+Persona = rocky,
+Materia = algebra,
+Indice = 4 ;
+Persona = rocky,
+Materia = algebra,
+Indice = 6 ;
+Persona = terminator,
+Materia = algebra,
+Indice = 3 ;
+Persona = danielLarusso,
+Materia = algebra,
+Indice = 9 ;
+Persona = eric,
+Materia = mateDiscreta,
+Indice = 6 ;
+Persona = eric,
+Materia = ayed,
+Indice = 6 ;
+Persona = eric,
+Materia = algebra,
+Indice = 7 ;
+false.
+
+
+indiceAcademicoDeTodasLasCursadasDeLaMateria(Persona,Materia,Sumatoria).
+Persona = rocky,
+Materia = mateDiscreta,
+Sumatoria = 8 ;
+Persona = rocky,
+Materia = algebra,
+Sumatoria = 10 ;
+Persona = rocky,
+Materia = algebra,
+Sumatoria = 10 ;
+Persona = rocky,
+Materia = quimica,
+Sumatoria = 6 ;
+Persona = rocky,
+Materia = algebra,
+Sumatoria = 10 ;
+Persona = rocky,
+Materia = fisica1,
+Sumatoria = 5 ;
+Persona = terminator,
+Materia = am1,
+Sumatoria = 10 ;
+Persona = terminator,
+Materia = algebra,
+Sumatoria = 3 ;
+Persona = terminator,
+Materia = mateDiscreta,
+Sumatoria = 7 ;
+Persona = terminator,
+Materia = fisica1,
+Sumatoria = 10 ;
+Persona = terminator,
+Materia = fisica1,
+Sumatoria = 10 ;
+Persona = danielLarusso,
+Materia = algebra,
+Sumatoria = 9 ;
+Persona = danielLarusso,
+Materia = mateDiscreta,
+Sumatoria = 7 ;
+Persona = danielLarusso,
+Materia = mateDiscreta,
+Sumatoria = 7 ;
+Persona = danielLarusso,
+Materia = fisica1,
+Sumatoria = 8 ;
+Persona = eric,
+Materia = mateDiscreta,
+Sumatoria = 6 ;
+Persona = eric,
+Materia = ayed,
+Sumatoria = 6 ;
+Persona = eric,
+Materia = algebra,
+Sumatoria = 7.
